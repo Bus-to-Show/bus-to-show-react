@@ -2,8 +2,8 @@
 
 Production URLs:
 
-* https://bustoshow.org/
-* https://cosmic-kataifi-559176.netlify.app/
+* https://bustoshow.org/tickets/
+* https://cosmic-kataifi-559176.netlify.app/tickets/
 
 Netlify dashboard: https://app.netlify.com/sites/cosmic-kataifi-559176/
 
@@ -21,4 +21,4 @@ Netlify dashboard: https://app.netlify.com/sites/cosmic-kataifi-559176/
 2. Run the site with `npm start`
 
 3. Ensure the API is listening on http://localhost:3000/ and browse to
-   http://localhost:4200/
+   http://localhost:4200/tickets/
