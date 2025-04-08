@@ -395,7 +395,7 @@ const App = (props) => {
   }, []);
 
   return (
-    <Router>
+    <Router basename="/tickets">
       <div>
         {!headerHidden ? (
           <Header
