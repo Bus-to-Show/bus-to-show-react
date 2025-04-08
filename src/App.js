@@ -17,8 +17,10 @@ import Header from './Components/Header';
 import LoginView from './Components/LoginView/LoginView';
 import { useStore } from './Store';
 
-ReactGA.initialize('UA-17782248-2');
-ReactGA.pageview('/app');
+if (process.env.NODE_ENV === 'production') {
+  ReactGA.initialize('UA-17782248-2');
+  ReactGA.pageview('/app');
+}
 
 const fetchUrl = `${process.env.REACT_APP_API_URL}`;
 const verifyEmailUrl = `${fetchUrl}/users/confirm-email`;
@@ -58,7 +60,7 @@ const App = (props) => {
   const [displayShowList, setDisplayShowList] = useState(null);
   const [displaySuccess, setDisplaySuccess] = useState(false);
   const [filterString, setFilterString] = useState('')
-  
+
 
   const [showRegisterForm, setShowRegisterForm] = useState(false);
 
@@ -160,7 +162,7 @@ const App = (props) => {
     }
   };
 
-  
+
   const requestRegistration = async (request) => {
     const password = sha256(request.password)
     const usersInfo = await fetch(`${fetchUrl}/users`, {
@@ -178,7 +180,7 @@ const App = (props) => {
     const userObj = await usersInfo.json()
     setRegisterResponse(userObj)
   }
-  
+
   const reservationEditField = (e) => {
     setWillCallEdits({
       ...willCallEdits,
@@ -190,7 +192,7 @@ const App = (props) => {
   const responseLogin = async (loginInfo) => {
     const {email, password} = loginInfo
     const hashedPassword = sha256(password);
-    
+
     const usersInfo = await fetch(`${fetchUrl}/users/login`, {
       method: 'POST',
       body: JSON.stringify({
@@ -202,7 +204,7 @@ const App = (props) => {
       }
     })
     const userObj = await usersInfo.json()
-    
+
     if (userObj && userObj.token) {
       localStorage.setItem('jwt', userObj.token);
       setBtsUser({
@@ -220,7 +222,7 @@ const App = (props) => {
             isStaff: userObj.isStaff || false
           },
           userDetails:userObj
-      }); 
+      });
 
       onLoad();
     }
@@ -230,7 +232,7 @@ const App = (props) => {
   const showsExpandClick = async (event) => {
     //immediately clear previously selected pickupPartyId from State.
     setPickupPartyId(null);
- 
+
     const clickedShow = userShows.find(show => (parseInt(show.id) === parseInt(event.target.id)))
     if(clickedShow.external){
       setDisplayShowDetails(false);
@@ -281,7 +283,7 @@ const App = (props) => {
   const toggleEditSuccess=()=>{
     setDisplayEditSuccess(!displayEditSuccess);
   }
-  
+
   const toggleFuturePast = (e) => {
     if(e.target.id==='future'){
       setDisplayPast(false);
@@ -309,9 +311,9 @@ const App = (props) => {
         localStorage.setItem('jwt', '')
       }
     }
-    
+
   const toggleRegister = () => {
-    setShowRegisterForm(!showRegisterForm);  
+    setShowRegisterForm(!showRegisterForm);
   }
 
   const toggleReservationView = (e) => {
@@ -384,13 +386,13 @@ const App = (props) => {
         toggleLoggedIn(false)
         onLoad()
       }
-  
+
     }
     checkAuth()
     const getPickupLocations = async () => {
-      const pickups =  await fetch(`${fetchUrl}/pickup_locations`) 
+      const pickups =  await fetch(`${fetchUrl}/pickup_locations`)
       setPickupLocations(pickups.json())
-    } 
+    }
     getPickupLocations();
   }, []);
 

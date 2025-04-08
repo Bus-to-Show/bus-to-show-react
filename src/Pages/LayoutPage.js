@@ -17,11 +17,7 @@ import SponsorBox from '../Components/SponsorBox'
 import DetailCartView from '../Components/DetailCartView'
 import BannerRotator from '../Components/BannerRotator'
 import NavButtons from '../Components/NavButtons'
-import ReactGA from 'react-ga';
 import { useStore } from '../Store'
-
-ReactGA.initialize('UA-17782248-2');
-ReactGA.pageview('/app');
 
 const fetchUrl = `${process.env.REACT_APP_API_URL}`
 
@@ -377,7 +373,7 @@ class LayoutPage extends Component {
         ticketQuantity: ticketQuantity,
         totalPrice: totalPrice,
         eventId: eventId,
-        applyOrRelease: applyOrRelease === 'release' ? 'release' : 'apply' 
+        applyOrRelease: applyOrRelease === 'release' ? 'release' : 'apply'
       }),
       headers: {
         'Content-Type': 'application/json'
