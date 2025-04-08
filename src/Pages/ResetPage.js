@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { sha256 } from 'js-sha256';
-import env from 'react-dotenv'
 import MediaQuery from 'react-responsive';
 
 const ResetPage = (props) => {
@@ -47,7 +46,7 @@ const ResetPage = (props) => {
     } else if (values.password.length < 8) {
       passwordError = "Password must be at least 8 characters";
     } else if (!passwordValidator(values.password)){
-      passwordError = "Password must contain at least 1 of each of the following: Uppercase, Lowercase, Number, Special Character"  
+      passwordError = "Password must contain at least 1 of each of the following: Uppercase, Lowercase, Number, Special Character"
     }
 
     if (!values.confirmPassword) {
@@ -142,7 +141,7 @@ const ResetPage = (props) => {
             </div>
           </MediaQuery>
         </div>
-        
+
     )
   }
   if (resendResponse){
@@ -174,7 +173,7 @@ const ResetPage = (props) => {
                 </div>
               </MediaQuery>
             </div>
-            
+
         )
     } else if(resendResponse.code === '202'){
         return (
@@ -200,9 +199,9 @@ const ResetPage = (props) => {
                 </div>
               </MediaQuery>
             </div>
-            
+
         )
-    } 
+    }
 } else if (resetResponse) {
     return(
         <div>
@@ -217,15 +216,15 @@ const ResetPage = (props) => {
                                 <h3 className="bts-white-bg">Your password has been reset. You may now log in!</h3>
                                 <div className="btn btn-block-admin detail-btn my-2 col-12" onClick={()=>{props.history.push('/')}}>Go to Dashboard</div>
                             </div>
-                        : 
+                        :
                             resetResponse.code ==='203'
                                 ?
                                     <div>
                                     <h3 className="bts-white-bg">Verification failed. Please try again or click here to send another</h3>
                                         <p>Message: {JSON.stringify(resetResponse.message)}</p>
                                         <div className="btn btn-block-admin detail-btn my-2 col-12" onClick={()=> {resendEmail(resetResponse.email)}} >Send another one!</div>
-                                    </div> 
-                                : 
+                                    </div>
+                                :
                                     <div>
                                         <h3 className="bts-white-bg">Error Requesting Verification.  Please try again or click here to send another </h3>
                                         <div>
@@ -248,15 +247,15 @@ const ResetPage = (props) => {
                                 <h3 className="bts-white-bg">Your password has been reset. You may now log in!</h3>
                                 <div className="btn btn-block-admin detail-btn my-2 col-12" onClick={()=>{props.history.push('/')}}>Go to Dashboard</div>
                             </div>
-                        : 
+                        :
                             resetResponse.code ==='203'
                                 ?
                                     <div>
                                     <h3 className="bts-white-bg">Verification failed. Please try again or click here to send another</h3>
                                         <p>Message: {JSON.stringify(resetResponse.message)}</p>
                                         <div className="btn btn-block-admin detail-btn my-2 col-12" onClick={()=> {resendEmail(resetResponse.email)}} >Send another one!</div>
-                                    </div> 
-                                : 
+                                    </div>
+                                :
                                     <div>
                                         <h3 className="bts-white-bg">Error Requesting Verification.  Please try again or click here to send another </h3>
                                         <div>
@@ -269,7 +268,7 @@ const ResetPage = (props) => {
             </div>
           </MediaQuery>
         </div>
-        
+
     )
 
 }  else {
@@ -349,7 +348,7 @@ const ResetPage = (props) => {
 
       </MediaQuery>
     </div>
-    
+
   );
     }
 };

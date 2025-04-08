@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { sha256 } from 'js-sha256';
-import env from 'react-dotenv';
 import MediaQuery from 'react-responsive';
 
 const fetchUrl = `${process.env.REACT_APP_API_URL}`
@@ -65,7 +64,7 @@ const VerifyPage = (props) => {
                                 <h3 className="bts-white-bg">Message: {JSON.stringify(resentResponse.message)}</h3>
                                 <button className="btn btn-block-admin detail-btn my-2 col-12" onClick={()=>{props.history.push('/')}}>Go to Dashboard</button>
                             </div>
-                        :   
+                        :
                             <div>
                                 Something bad happened. Please keep trying, or give up.
                                 <h3 className="bts-white-bg">Message: {JSON.stringify(resentResponse.message)}</h3>
@@ -86,7 +85,7 @@ const VerifyPage = (props) => {
                                 <h3 className="bts-white-bg">Message: {JSON.stringify(resentResponse.message)}</h3>
                                 <button className="btn btn-block-admin detail-btn my-2 col-12" onClick={()=>{props.history.push('/')}}>Go to Dashboard</button>
                             </div>
-                        :   
+                        :
                             <div>
                                 Something bad happened. Please keep trying, or give up.
                                 <h3 className="bts-white-bg">Message: {JSON.stringify(resentResponse.message)}</h3>
@@ -97,7 +96,7 @@ const VerifyPage = (props) => {
                 </div>
               </MediaQuery>
             </div>
-            
+
         )
 
     }
@@ -116,15 +115,15 @@ const VerifyPage = (props) => {
                                     <h3 className="bts-white-bg">Your account has been verified. You may now log in!</h3>
                                     <div className="btn btn-block-admin detail-btn my-2 col-12" onClick={()=>{props.history.push('/')}}>Go to Dashboard</div>
                                 </div>
-                            : 
+                            :
                                 verifiedResponse.code ==='203'
                                     ?
                                         <div>
                                         <h3 className="bts-white-bg">Verification failed. Please try again or click here to send another</h3>
                                             <p>Message: {JSON.stringify(verifiedResponse.message)}</p>
                                             <div className="btn btn-block-admin detail-btn my-2 col-12" onClick={()=> {resendVerificationEmail()}} >Send another one!</div>
-                                        </div> 
-                                    : 
+                                        </div>
+                                    :
                                         <div>
                                             <h3 className="bts-white-bg">Error Requesting Verification.  Please try again or click here to send another </h3>
                                             <div>
@@ -147,15 +146,15 @@ const VerifyPage = (props) => {
                                     <h3 className="bts-white-bg">Your account has been verified. You may now log in!</h3>
                                     <div className="btn btn-block-admin detail-btn my-2 col-12" onClick={()=>{props.history.push('/')}}>Go to Dashboard</div>
                                 </div>
-                            : 
+                            :
                                 verifiedResponse.code ==='203'
                                     ?
                                         <div>
                                         <h3 className="bts-white-bg">Verification failed. Please try again or click here to send another</h3>
                                             <p>Message: {JSON.stringify(verifiedResponse.message)}</p>
                                             <div className="btn btn-block-admin detail-btn my-2 col-12" onClick={()=> {resendVerificationEmail()}} >Send another one!</div>
-                                        </div> 
-                                    : 
+                                        </div>
+                                    :
                                         <div>
                                             <h3 className="bts-white-bg">Error Requesting Verification.  Please try again or click here to send another </h3>
                                             <div>
@@ -168,7 +167,7 @@ const VerifyPage = (props) => {
                 </div>
               </MediaQuery>
             </div>
-            
+
         )
 
     } else {

@@ -1,6 +1,5 @@
 import React from 'react';
 import StripeCheckout from 'react-stripe-checkout'
-import env from "react-dotenv";
 const stripePublic = `${process.env.REACT_APP_STRIPE_PUBLIC}`;
 
 

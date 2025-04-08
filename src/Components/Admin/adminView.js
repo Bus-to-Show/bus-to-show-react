@@ -2,7 +2,6 @@ import React from 'react'
 import '../../App.css';
 import UserCheckin from './userCheckin'
 import AdminEdit from './Edit/AdminEdit'
-import env from "react-dotenv";
 
 
 const fetchUrl = `${process.env.REACT_APP_API_URL}`
@@ -91,7 +90,7 @@ class AdminView extends React.Component {
         //time.ampm = ampm
         result.push(time)
       }
-    
+
     return result
   }
 
@@ -190,7 +189,7 @@ class AdminView extends React.Component {
     }
     this.setState({showToAdd: newState.showToAdd})
     console.log('this.state.showToAdd', this.state.showToAdd)
-    
+
   }
 
   handleAddShowSubmit = async (e) => {
@@ -205,7 +204,7 @@ class AdminView extends React.Component {
     //Post pickup Parties
     await this.postPickupParties(this.state.showToAdd)
     this.resetAfterAddShow()
-    
+
   }
 
   resetAfterAddShow = async () => {
@@ -262,12 +261,12 @@ class AdminView extends React.Component {
       venue: showToAdd.venue,
       headliner: showToAdd.headliner,
       support1: showToAdd.support1,
-      support2: showToAdd.support2, 
-      support3: showToAdd.support3, 
+      support2: showToAdd.support2,
+      support3: showToAdd.support3,
       headlinerImgLink: showToAdd.headlinerImgLink,
-      headlinerBio: showToAdd.headlinerBio, 
+      headlinerBio: showToAdd.headlinerBio,
       external: showToAdd.external
-    } 
+    }
 
     const response = await fetch(`${fetchUrl}/events`, {
     method: 'POST',

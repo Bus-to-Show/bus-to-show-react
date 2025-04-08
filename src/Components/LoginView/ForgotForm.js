@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import env from 'react-dotenv'
 import MediaQuery from 'react-responsive'
 import { useStore } from '../../Store';
 
@@ -75,7 +74,7 @@ const ForgotForm = (props) => {
         email: '',
         emailError: '',
       });
-      
+
     }
   };
 
@@ -133,7 +132,7 @@ const ForgotForm = (props) => {
                 </div>
                 </MediaQuery>
             </div>
-            
+
         )
   } else {
       return (
@@ -187,7 +186,7 @@ const ForgotForm = (props) => {
             <div className="btn btn-block-admin detail-btn my-2 col-12" onClick={() => {toggleShowForgotForm(false)}}>Back to Login</div>
             </MediaQuery>
         </div>
-        
+
       );
   }
 };
