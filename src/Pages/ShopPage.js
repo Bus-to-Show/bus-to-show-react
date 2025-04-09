@@ -1,7 +1,5 @@
 import React from 'react'
 import MediaQuery from 'react-responsive'
-import logo from '../Images/Logos/bustoshow-text-logo--white-outline-no-fill-328x46.png'
-import { useNavigate } from 'react-router-dom';
 import ProductList from '../Components/Products/ProductList';
 
 import { useState, useEffect } from 'react';
@@ -9,11 +7,9 @@ import { useStore } from '../Store';
 
 const fetchUrl = `${process.env.REACT_APP_API_URL}`;
 
-
 const ShopPage = () => {
   const [products, setProducts] = useState([]);
-  const {displayLoadingScreen, setDisplayLoadingScreen} = useStore();
-
+  const {setDisplayLoadingScreen} = useStore();
 
   useEffect(() => {
     setDisplayLoadingScreen(false);
@@ -53,6 +49,5 @@ const ShopPage = () => {
 
   );
 }
-
 
 export default ShopPage

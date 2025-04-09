@@ -1,5 +1,5 @@
 import React, { useEffect} from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';import '../App.css';
+import '../App.css';
 import spacebus from '../Images/bus-to-show-space-bus-forward.png'
 import Zoom from 'react-reveal/Zoom'
 import MediaQuery from 'react-responsive'
@@ -10,8 +10,6 @@ const {setDisplayLoadingScreen, setHideHeader} = useStore();
 
 let bus2 = true
 let bus3 = true
-
-const location = useLocation()
 
 const handleClick = () => {
   console.log('button clicked ==>>==>> ');

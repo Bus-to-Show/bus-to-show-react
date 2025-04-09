@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef}  from 'react'
+import React, {useEffect, useRef}  from 'react'
 import '../../App.css'
 import CartItem from './CartItem'
 import Checkout from './Stripe_Checkout'
@@ -6,26 +6,21 @@ import MediaQuery from 'react-responsive'
 import logo from '../../Images/Logos/bts-logo-gray.png'
 import {useStore} from '../../Store'
 
-
 const Cart = (props) => {
   const {btsUser, passStatus, setPassStatus} = useStore();
   const myRef = useRef(null);
-
 
   let cTSendId = props.cartToSend && props.cartToSend.eventId
 
   const showInfo = props.shows.find(show => parseInt(show.id) === parseInt(cTSendId))
 
   let savings = Number(props.afterDiscountObj.totalSavings)
-  let costAfterSavings = Number(props.afterDiscountObj.totalPriceAfterDiscount)
-  let finalTotalCost = costAfterSavings
 
   useEffect(() => {
     //check API to see if user season pass has been used for this show.
     //if not, set discountCode to match user's season pass code.
     //if so, disable use season pass checkBox
 
-   
     const checkSeasonPassEventStatus = async () => {
       const response = await  fetch(`${process.env.REACT_APP_API_URL}/discount_codes/${btsUser.userID}/${props.displayShow.id}`)
       let result = await response.json()
@@ -34,8 +29,6 @@ const Cart = (props) => {
     }
 
     if(btsUser.isLoggedIn) checkSeasonPassEventStatus()
-
-    
 
   }, []);
 
@@ -198,23 +191,23 @@ const Cart = (props) => {
                           <div className="col-md-8 mb-3">
                             {//checkbox for Use Season Pass to purchase tickets
                             }
-                            { passStatus && passStatus.message === 'Season pass discount code is available.' ?  
-                            <div className="form-check" ref={myRef} data-toggle="tooltip" data-placement="bottom" title={props.checked ? "To enable season pass, clear and close the Reserving for Someone Else fields." 
+                            { passStatus && passStatus.message === 'Season pass discount code is available.' ?
+                            <div className="form-check" ref={myRef} data-toggle="tooltip" data-placement="bottom" title={props.checked ? "To enable season pass, clear and close the Reserving for Someone Else fields."
                             : "Use your season pass to purchase tickets."}>
                               <input
-                                type={'checkbox'} 
+                                type={'checkbox'}
                                 disabled={props.checked}
-                                className="form-check-input" 
+                                className="form-check-input"
                                 id="useSeasonPass"
                                 onChange={props.updatePurchaseField} />
                               <label className="form-check-label" htmlFor="useSeasonPass">Use Season Pass</label>
                             </div>
-                            : 
+                            :
                             <div></div>
                           }
                           </div>
                         </div>
-                      
+
                         {/* Ternary to display will call name fields or button to show fields */}
                         {props.checked ?
                         //close button with onClick to remove will call name fields and set props.checked to false
@@ -223,10 +216,10 @@ const Cart = (props) => {
                               <div className="col-md-4 mb-3">
                                 <button
                                   onClick={props.handleCheck}
-                                  type="button" 
+                                  type="button"
                                   className="btn btn-outline-primary">Close</button>
                               </div>
-                            </div> 
+                            </div>
                             <div className="form-row">
                               <div className="col-md-4 mb-3">
                                 <label htmlFor="willCallFirstName">Will Call First Name</label>

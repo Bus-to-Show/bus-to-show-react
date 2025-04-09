@@ -8,10 +8,6 @@ const fetchUrl = `${process.env.REACT_APP_API_URL}`;
 
 const ShowReservation = (props) => {
   const {
-    btsUser,
-    setBtsUser,
-    showForgotForm,
-    toggleShowForgotForm,
     userReservations,
     displayUserReservationSummary,
     setDisplayUserReservationSummary,
@@ -20,7 +16,6 @@ const ShowReservation = (props) => {
     displayReservationDetail,
     setDisplayReservationDetail,
     displayEditSuccess,
-    setDisplayEditSuccess,
     displayEditReservation,
     setDisplayEditReservation
 
@@ -30,12 +25,12 @@ const ShowReservation = (props) => {
   const [reservationToEditId, setReservationToEditId] = useState(null);
   const [displayCancelWarning, setDisplayCancelWarning] = useState(false);
 
-  const createArrayOfEventIds = userReservations.length > 0 ? userReservations.map(show => show.status != '3' && show.eventsId ).sort() : []
+  const createArrayOfEventIds = userReservations.length > 0 ? userReservations.map(show => show.status !== '3' && show.eventsId ).sort() : []
   let countObj = {}
   for(let ii = 0; ii < createArrayOfEventIds.length; ii++){
     let count = 1;
     for(let jj = 0; jj < createArrayOfEventIds.length; jj++){
-      if(createArrayOfEventIds[ii] == createArrayOfEventIds[jj])
+      if(createArrayOfEventIds[ii] === createArrayOfEventIds[jj])
           countObj[createArrayOfEventIds[ii]] = count++;
       }
     }
@@ -43,7 +38,7 @@ const ShowReservation = (props) => {
   const reservationSummaryArr = []
   for (let property1 in countObj){
     for (let ii = 0; ii < props.userReservations.length; ii++){
-      if(props.userReservations[ii].eventsId == property1 && props.userReservations[ii].status != '3'){
+      if(props.userReservations[ii].eventsId === property1 && props.userReservations[ii].status !== '3'){
         console.log('props.userReservations[ii].status ==>>==>> ', props.userReservations[ii].status);
         props.userReservations[ii].ticketQuantity = countObj[props.userReservations[ii].eventsId]
         reservationSummaryArr.push(props.userReservations[ii])
@@ -55,7 +50,6 @@ const ShowReservation = (props) => {
     return new Date(a.date).getTime() - new Date(b.date).getTime()
   })
 
-  
   const toggleEditReservation = (e) =>{
     console.log(' toggleEditReservation e.target.id ==', e.target.id);
     setDisplayEditReservation(!displayEditReservation)
@@ -63,6 +57,7 @@ const ShowReservation = (props) => {
     setCancelTransferArray([]);
   }
 
+  /*
   const selectForTransferOrCancel = (e) => {
     const cancelTransferArrayCopy = [...cancelTransferArray];
     console.log('selectForTransferOrCancelb ==', e.target.id);
@@ -80,8 +75,8 @@ const ShowReservation = (props) => {
       }
     }
     console.log('cancelTransferArrayCopy ==>>==>> ', cancelTransferArrayCopy);
-
   }
+  */
 
   const cancelSelectedReservations = () => {
     console.log('cancelSelectedReservations clicked ==>>==>> ', cancelTransferArray);
@@ -99,7 +94,7 @@ const ShowReservation = (props) => {
      if(!jwtToken){
        return
      }
-     const response = await fetch(`${fetchUrl}/reservations/refund_minus_processing`, { method: 'PATCH', 
+     const response = await fetch(`${fetchUrl}/reservations/refund_minus_processing`, { method: 'PATCH',
          headers: {
            'Content-Type': 'application/json',
            'Authorization': `Bearer ${localStorage.getItem('jwt')}`
@@ -110,7 +105,7 @@ const ShowReservation = (props) => {
 
       const json = await response.json()
       console.log('refundMinusProcessing json ==>>==>> ', json);
-  
+
   }
 
   const cancelAndGiveCredit = () => {
@@ -121,8 +116,6 @@ const ShowReservation = (props) => {
     setDisplayCancelWarning(false);
     setCancelTransferArray([]);
   }
-
-  
 
   useEffect(() => {
     console.log('wht is use effect up to? ==>>==>> ', cancelTransferArray, displayCancelWarning);
@@ -179,16 +172,16 @@ const ShowReservation = (props) => {
             <div>
               {// <div> selected {cancelTransferArray.length} / {reservationSummaryArrSorted.filter((show, i) => show.eventsId === parseInt(reservationDetail.eventsId)).length} reservations </div>
               }
-              { 
+              {
                 displayCancelWarning ?
                  <div className="alert alert-danger m-4" role="alert">
-                      Heads up!  You are about to cancel {cancelTransferArray.length} of your {userReservations.filter((show, i) => show.eventsId === parseInt(reservationDetail.eventsId)).length} reservations for this show.  
+                      Heads up!  You are about to cancel {cancelTransferArray.length} of your {userReservations.filter((show, i) => show.eventsId === parseInt(reservationDetail.eventsId)).length} reservations for this show.
                     <button onClick={refundMinusProcessing} type="button" className="btn btn-danger ml-1">Cancel and refund (minus processing fees) </button>
                       <button onClick={cancelAndGiveCredit} type="button" className="btn btn-outline-secondary m-2">Cancel and send me a code for {cancelTransferArray.length} future spots </button>
                       <button onClick={transferSelectedReservations} type="button" className="btn btn-outline-secondary m-2">Transfer these spots to another event or pick-up if available </button>
                       <button onClick={neverMindKeepReservations} type="button" className="btn btn-outline-secondary m-2">Never mind. Keep my reservations.</button>
 
-                    </div> : 
+                    </div> :
                     <div></div>
               }
               {cancelTransferArray.length > 0 &&
@@ -248,8 +241,8 @@ const ShowReservation = (props) => {
                 </li>
                 {/* {<div className="form-check">
                   <input
-                    type={'checkbox'} 
-                    className="form-check-input" 
+                    type={'checkbox'}
+                    className="form-check-input"
                     id={show.reservationsId}
                     onChange={selectForTransferOrCancel}
                     checked={cancelTransferArray.includes(show.reservationsId.toString())}
@@ -259,7 +252,7 @@ const ShowReservation = (props) => {
                 </div>} */}
               </div>
             ) //end of userReservations.map function
-            : 
+            :
               <EditReservation
                 reservationDetail={reservationDetail}
                 userReservations={props.userReservations}
@@ -272,7 +265,6 @@ const ShowReservation = (props) => {
         </div>
       : ''
       }
-
 
       {!reservationSummaryArrSorted.length > 0 || reservationDetail ? '' : //if user has no reservations, or user has selected a reservation summary to view details for, then do nothing here.  otherwise, print reservations.
         props.displayFuture

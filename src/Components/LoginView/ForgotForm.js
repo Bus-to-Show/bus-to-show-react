@@ -1,17 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import MediaQuery from 'react-responsive'
 import { useStore } from '../../Store';
 
-
 const fetchUrl = `${process.env.REACT_APP_API_URL}`
 
-
 const ForgotForm = (props) => {
-    const {showForgotForm, toggleShowForgotForm} = useStore();
-
-
-    const navigate = useNavigate()
+    const {toggleShowForgotForm} = useStore();
 
     const [values, setValues] = useState({
         email: '',
@@ -62,7 +56,6 @@ const ForgotForm = (props) => {
     window.location.reload(false);
 
   }
-
 
   const handleSubmit = (event) => {
     event.preventDefault();

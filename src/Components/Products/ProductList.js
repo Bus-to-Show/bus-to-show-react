@@ -1,9 +1,5 @@
-import React, { useState, useEffect } from 'react';
 import MediaQuery from 'react-responsive'
-//import logo from '../Images/Logos/bustoshow-text-logo--white-outline-no-fill-328x46.png'
-import { useNavigate } from 'react-router-dom';
 import {Product} from './Product';
-
 
 const ProductList = ({ products }) => {
     return (

@@ -1,15 +1,11 @@
-import React, { useRef, useState , useEffect} from 'react';
+import React, { useRef, useEffect} from 'react';
 import MediaQuery from 'react-responsive'
 import '../App.css';
-import logo from '../Images/Logos/bustoshow-text-logo--white-outline-no-fill-328x46.png'
 import { useNavigate } from 'react-router-dom';
-
 
 const NavButtons = (props) => {
   const navigate = useNavigate()
-  const [showDashboardButton, toggleShowDashboardButton] = useState(true);
   const myRef = useRef(null);
-
 
   useEffect(() => {
     window.$(myRef.current).tooltip();
@@ -89,6 +85,5 @@ const NavButtons = (props) => {
     </nav>
   );
 };
-
 
 export default NavButtons;

@@ -3,7 +3,6 @@ import '../../App.css';
 import UserCheckin from './userCheckin'
 import AdminEdit from './Edit/AdminEdit'
 
-
 const fetchUrl = `${process.env.REACT_APP_API_URL}`
 
  const d = new Date()
@@ -68,7 +67,7 @@ class AdminView extends React.Component {
   }
 
   populateTimes = () => {
-    let hours, minutes, ampm
+    let hours, minutes
     let result = []
     let increment = []
     for(let i = 0; i <= 1425; i += 15){
@@ -281,7 +280,6 @@ class AdminView extends React.Component {
   this.setState({showToAdd: newState.showToAdd})
   return json
   }
-
 
 //End Add Show Feature Functions ^^^^^
 
@@ -554,13 +552,11 @@ newName = (id, first, last) => {
   this.lastName = last
  }
 
-
  changeName = (event, reservationId)=>{
     let newValue
     let newState = {...this.state}
     let newNewFirst = newState.newFirst
     let newNewLast = newState.newLast
-
 
     switch (event.target.id) {
       case "willCallFirstName":
@@ -720,7 +716,7 @@ newName = (id, first, last) => {
             {isDriver &&
               <button type="button" className="btn bts-orange-bg btn-lg btn-block my-4" onClick={e=>console.log('also click')}>Driver Shifts</button>
             }
-            {isStaff || isAdmin &&
+            {(isStaff || isAdmin) &&
               <button type="button" className="btn bts-orange-bg btn-lg btn-block my-4" onClick={e=>this.toggleProperty('displayUserCheckin')}>Rider Check-In</button>
             }
           </div>

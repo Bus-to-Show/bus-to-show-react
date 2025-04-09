@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import MediaQuery from 'react-responsive'
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import StripeCheckout from 'react-stripe-checkout';
 
@@ -15,7 +14,7 @@ export const Product = ({ product }) => {
             <h5 className="card-header mb-2 ">{product.name}</h5>
             <h6 className="card-subtitle mb-2 text-muted">${product.price}</h6>
             <p className="card-text">{product.description}</p>
-              <Link 
+              <Link
                 to={`/products/${product.id}`}
                 state = { {product: product}}
                 className="card-link"
@@ -25,12 +24,11 @@ export const Product = ({ product }) => {
       </div>
     );
   }
-  
+
   export const ProductDetail = () => {
-    const { id } = useParams();
     const {state } = useLocation(); // get the location object
     const product = state.product
-    
+
     const [email, setEmail] = useState('');
 
     const buyNow = async (token) => {
@@ -47,7 +45,7 @@ export const Product = ({ product }) => {
 
           }),
         });
-  
+
         if (response.ok) {
           alert('Purchase successful!');
         } else {
@@ -59,7 +57,6 @@ export const Product = ({ product }) => {
       }
     };
 
-  
     console.log('ProductDetail component loaded ==>>==>> ', state);
     if (!useLocation() || !product) {
       return <div>Loading...</div>;
@@ -92,5 +89,5 @@ export const Product = ({ product }) => {
         </div>
       )
     }
-  
+
   };

@@ -32,7 +32,6 @@ const VerifyPage = (props) => {
             setResentResponse(userObj)
       };
 
-
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetch(`${verifyEmailUrl}/${token}`, {
