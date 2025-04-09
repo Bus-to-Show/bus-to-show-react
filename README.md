@@ -22,3 +22,9 @@ Netlify dashboard: https://app.netlify.com/sites/cosmic-kataifi-559176/
 
 3. Ensure the API is listening on http://localhost:3000/ and browse to
    http://localhost:4200/tickets/
+
+## More info
+
+* [Environment Variables](https://create-react-app.dev/docs/adding-custom-environment-variables/)
+  * Also see [Advanced Configuration](https://create-react-app.dev/docs/advanced-configuration/)
+* [Deployment](https://create-react-app.dev/docs/deployment/)
