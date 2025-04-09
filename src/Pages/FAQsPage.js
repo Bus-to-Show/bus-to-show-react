@@ -1,26 +1,17 @@
 import React from 'react'
 import MediaQuery from 'react-responsive'
-import logo from '../Images/Logos/bustoshow-text-logo--white-outline-no-fill-328x46.png'
 import { useNavigate } from 'react-router-dom';
-import ProductList from '../Components/Products/ProductList';
 
 import { useState, useEffect } from 'react';
-import { useStore } from '../Store';
-
-
-const fetchUrl = `${process.env.REACT_APP_API_URL}`;
-
 
 const FAQsPage = () => {
     const [FAQs, setFAQs] = useState([]);
     const navigate = useNavigate()
 
-  
-  
     useEffect(() => {
         setFAQs([
             {
-                faqId: 1, 
+                faqId: 1,
                 question: `All of my friends are riding on the same bus but it is now sold out - is there any way  to get an extra ticket? `,
                 answer: `Unfortunately, once a bus has sold out that means that we have reached capacity and cannot add any more tickets to that particular bus. However, sometimes we get cancellations and one or two tickets might open up. Keep an eye out on our website and you might be able to snag one and ride with your friends!  If you want, you can also email us at reservations@bustoshow.org, and sometimes we are able to notify people when more spots are released.`
             },
@@ -51,9 +42,8 @@ const FAQsPage = () => {
             }
          ])
 
-  
     }, []);
-  
+
     return (
       <div>
         <div className="row p-2">
@@ -101,9 +91,8 @@ const FAQsPage = () => {
         </div>
       </MediaQuery>
   </div>
-  
+
     );
   }
-  
-  
+
   export default FAQsPage

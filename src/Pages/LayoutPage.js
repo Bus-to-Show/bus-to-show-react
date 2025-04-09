@@ -17,11 +17,7 @@ import SponsorBox from '../Components/SponsorBox'
 import DetailCartView from '../Components/DetailCartView'
 import BannerRotator from '../Components/BannerRotator'
 import NavButtons from '../Components/NavButtons'
-import ReactGA from 'react-ga';
 import { useStore } from '../Store'
-
-ReactGA.initialize('UA-17782248-2');
-ReactGA.pageview('/app');
 
 const fetchUrl = `${process.env.REACT_APP_API_URL}`
 
@@ -117,10 +113,7 @@ class LayoutPage extends Component {
     navLocation: '',
   }
 
-
   async componentDidMount() {
-    const storeState = useStore.getState()
-
     await this.getVerify()
 
     const response = await fetch(`${fetchUrl}/events`)
@@ -155,14 +148,12 @@ class LayoutPage extends Component {
     this.setState({ pickupLocations, allShows, userShows })
   }
 
-
   getVerify = async () => {
     const response = await fetch(`${fetchUrl}/api`)
     const json = await response.json()
     //document.cookie = `token=; expires=Wed, 21 Oct 2015 07:28:00 GMT`
     document.cookie = `token=${json.token}; secure`
   }
-
 
   //status: in progress.  where: called in "loading.js".  why: adding interactive animation so that buses fly away on click.
   handleBus = event => {
@@ -322,7 +313,7 @@ class LayoutPage extends Component {
     const total = ((Number(subTotal) * .1) + Number(subTotal)).toFixed(2)
     newState.ticketQuantity = ~~event.target.value
 
-    newState.totalCost = newState.displayShow.id == 40300786 ? Number(subTotal).toFixed(2) : total
+    newState.totalCost = newState.displayShow.id === 40300786 ? Number(subTotal).toFixed(2) : total
     this.setState({
       displayAddBtn: newState.displayAddBtn,
       ticketQuantity: newState.ticketQuantity,
@@ -377,7 +368,7 @@ class LayoutPage extends Component {
         ticketQuantity: ticketQuantity,
         totalPrice: totalPrice,
         eventId: eventId,
-        applyOrRelease: applyOrRelease === 'release' ? 'release' : 'apply' 
+        applyOrRelease: applyOrRelease === 'release' ? 'release' : 'apply'
       }),
       headers: {
         'Content-Type': 'application/json'
@@ -444,8 +435,6 @@ class LayoutPage extends Component {
       displayEditReservation: newState.displayEditReservation
     })
   }
-
-
 
   toggleFuturePast = (e) => {
     const newState = { ...this.state }
@@ -541,7 +530,6 @@ class LayoutPage extends Component {
     }
   }
 
-
   requestRegistration = async (request) => {
     const password = sha256(request.password)
     const usersInfo = await fetch(`${fetchUrl}/users`, {
@@ -557,7 +545,7 @@ class LayoutPage extends Component {
       }
     })
     const userObj = await usersInfo.json()
-    const newState = { ... this.state }
+    const newState = { ...this.state }
     newState.registerResponse = userObj
     this.setState({ registerResponse: newState.registerResponse })
 
@@ -571,7 +559,6 @@ class LayoutPage extends Component {
     this.setState({ showRegisterForm: newState.showRegisterForm })
 
   }
-
 
   // Tab Functions
   tabClicked = event => {
@@ -650,13 +637,12 @@ class LayoutPage extends Component {
         displayShowList: newState.displayShowList
       })
 
-
     } else {
       const assignedPickupParties = await this.getPickupParties(clickedShow.id)
       const currentPickups = assignedPickupParties.map(party => party.pickupLocationId)
       const pickupLocations = newState.pickupLocations.filter(loc => currentPickups.includes(loc.id))
 
-      await assignedPickupParties.map(party => pickupLocations.map(location => {
+      await assignedPickupParties.forEach(party => pickupLocations.forEach(location => {
         if (location.id === party.pickupLocationId) {
           party.LocationName = location.locationName
         }
@@ -710,22 +696,13 @@ class LayoutPage extends Component {
   addToCart = async () => {
     this.ticketTimer(false)
     const newState = { ...this.state }
-    const pickupLocation = newState.pickupLocations.filter(location => parseInt(location.id) === parseInt(this.state.pickupLocationId))[0]
-    const basePrice = Number(pickupLocation.basePrice)
-    const ticketQuantity = parseInt(this.state.ticketQuantity)
-    const totalSavings = parseInt(this.state.afterDiscountObj.totalSavings)
-    const processingFee = Number((basePrice * ticketQuantity) * (0.1))
-    //const cost = ((this.state.totalCost * ticketQuantity) - totalSavings + processingFee)
-    const cost = this.state.totalCost
     const sPickupId = parseInt(this.state.pickupLocationId)
-    console.log('sEventId ==>>==>> ', sEventId);
     const sEventId = parseInt(this.state.displayShow.id)
     const pickupParty = this.state.assignedParties.find(party => party.pickupLocationId === sPickupId && party.eventId === sEventId)
     const firstBusLoad = pickupParty.firstBusLoadTime
     const lastDepartureTime = moment(pickupParty.lastBusDepartureTime, 'hhmm').format('h:mm')
 
     newState.purchaseSuccessful = false
-    //newState.totalCost =
     newState.cartToSend.eventId = null
     newState.cartToSend.pickupLocationId = null
     newState.cartToSend.firstName = ''
@@ -1219,10 +1196,6 @@ class LayoutPage extends Component {
       })
   }
 
-  postOldData = async () => {
-    const newEventsArr = this.state.oldStuff
-  }
-
   render() {
     return (
       <React.Fragment>
@@ -1233,7 +1206,6 @@ class LayoutPage extends Component {
                 handleBus={this.handleBus} />
               :
               <div>
-
 
                 {this.state.adminView ?
                   <AdminView

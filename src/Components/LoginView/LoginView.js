@@ -9,11 +9,9 @@ import ForgotForm from './ForgotForm';
 import { useStore } from '../../Store';
 import { useNavigate } from 'react-router-dom';
 
-
 const LoginView = (props) => {
   const {
     btsUser,
-    setBtsUser,
     showForgotForm,
     toggleShowForgotForm,
     userReservations,
@@ -22,21 +20,20 @@ const LoginView = (props) => {
     displayEditReservation,
   } = useStore();
 
-
   const myRef = useRef(null);
   const navigate = useNavigate()
-  
+
   useEffect(() => {
     // console.log(' reservationDetail ==>>==>> ', reservationDetail)
     // console.log('displayReservationDetail  ==>>==>> ', displayReservationDetail );
     // console.log('displayReservationDetail (from store) ==>>==>> ', displayReservationDetail );
     window.$(myRef.current).tooltip();
   }, [reservationDetail, displayReservationDetail]);
-  
+
   const { toggleLoggedIn, toggleRegister, showRegisterForm, requestRegistration, registerResponse, profileClick, responseLogin, displayReservations, toggleReservationView, displayShow, filterString, showsExpandClick, continueAsGuest, toggleAdminView } = props
-  
+
   const { isStaff, isAdmin, isDriver } = btsUser.userDetails
-  
+
 let futureClass = 'border'
   let pastClass = 'border'
   if (props.displayFuture){
@@ -64,11 +61,11 @@ let futureClass = 'border'
       <MediaQuery minWidth={800}>
         <div className="w-25 mx-auto">
           <div className='row p-2 mb-4'>
-            {!btsUser.isLoggedIn && !showRegisterForm? 
+            {!btsUser.isLoggedIn && !showRegisterForm?
             <>
             <div className='row'>
               <div className='col-12 text-center'>
-                <LoginForm 
+                <LoginForm
                   toggleLoggedIn={toggleLoggedIn}
                   profileClick={profileClick}
                   responseLogin={responseLogin}
@@ -85,7 +82,7 @@ let futureClass = 'border'
               </div>
                 <div className="row p-2">
                 <div className='col-12 text-center'>
-                  <button type="button" className="btn detail-btn mr-2" ref={myRef} data-toggle="tooltip" data-placement="bottom" 
+                  <button type="button" className="btn detail-btn mr-2" ref={myRef} data-toggle="tooltip" data-placement="bottom"
                     title="It's ok to reserve and ride without being signed into an account. Accounts just make it so you can manage your current reservations, view your past shows, etc."
                     onClick={()=>{navigate('/')}}>
                     <strong>Continue as Guest</strong>
@@ -103,9 +100,9 @@ let futureClass = 'border'
               </div>
             </div>
             </>
-            : 
-            showRegisterForm 
-              ? 
+            :
+            showRegisterForm
+              ?
               <div>
                 <RegistrationForm
                   toggleRegister={toggleRegister}
@@ -113,8 +110,7 @@ let futureClass = 'border'
                   />
                 {registerResponse.code && <RegisterUserToast response={registerResponse} />}
               </div>
-              
-              
+
               :
             <button
                 onClick={props.logout}
@@ -148,7 +144,7 @@ let futureClass = 'border'
                   }
                   </div>
                 }
-  
+
                 {!displayReservationDetail && props.displayUserReservationSummary ?
                 <div className="row">
                   <div className="col-12">
@@ -201,7 +197,7 @@ let futureClass = 'border'
                   <strong>Back to Events</strong>
                 </div>
               </div>
-  
+
             }
             </div>
             : ''
@@ -211,11 +207,11 @@ let futureClass = 'border'
         </MediaQuery>
         <MediaQuery maxWidth={799}>
           <div className='row p-2 mb-4'>
-            {!btsUser.isLoggedIn && !showRegisterForm? 
+            {!btsUser.isLoggedIn && !showRegisterForm?
             <>
             <div className='row'>
               <div className='col-12 text-center'>
-                <LoginForm 
+                <LoginForm
                   toggleLoggedIn={toggleLoggedIn}
                   profileClick={profileClick}
                   responseLogin={responseLogin}
@@ -232,7 +228,7 @@ let futureClass = 'border'
               </div>
                 <div className="row p-2">
                 <div className='col-12 text-center'>
-                  <button type="button" className="btn detail-btn mr-2" ref={myRef} data-toggle="tooltip" data-placement="bottom" 
+                  <button type="button" className="btn detail-btn mr-2" ref={myRef} data-toggle="tooltip" data-placement="bottom"
                     title="It's ok to reserve and ride without being signed into an account. Accounts just make it so you can manage your current reservations, view your past shows, etc."
                     onClick={()=> {props.toggleLoggedIn(false); props.profileClick()}}>
                     <strong>Continue as Guest</strong>
@@ -250,9 +246,9 @@ let futureClass = 'border'
               </div>
             </div>
             </>
-            : 
-            showRegisterForm 
-              ? 
+            :
+            showRegisterForm
+              ?
               <div>
                 <RegistrationForm
                   toggleRegister={toggleRegister}
@@ -260,8 +256,7 @@ let futureClass = 'border'
                   />
                 {registerResponse.code && <RegisterUserToast response={registerResponse} />}
               </div>
-              
-              
+
               :
             <button
                 onClick={props.logout}
@@ -295,7 +290,7 @@ let futureClass = 'border'
                   }
                   </div>
                 }
-  
+
                 {!displayReservationDetail && props.displayUserReservationSummary ?
                 <div className="row">
                   <div className="col-12">
@@ -348,7 +343,7 @@ let futureClass = 'border'
                   <strong>Back to Events</strong>
                 </div>
               </div>
-  
+
             }
             </div>
             : ''
@@ -358,7 +353,6 @@ let futureClass = 'border'
       </div>
     )
   }
-
 
 }
 

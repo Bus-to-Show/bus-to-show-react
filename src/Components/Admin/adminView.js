@@ -2,8 +2,6 @@ import React from 'react'
 import '../../App.css';
 import UserCheckin from './userCheckin'
 import AdminEdit from './Edit/AdminEdit'
-import env from "react-dotenv";
-
 
 const fetchUrl = `${process.env.REACT_APP_API_URL}`
 
@@ -69,7 +67,7 @@ class AdminView extends React.Component {
   }
 
   populateTimes = () => {
-    let hours, minutes, ampm
+    let hours, minutes
     let result = []
     let increment = []
     for(let i = 0; i <= 1425; i += 15){
@@ -91,7 +89,7 @@ class AdminView extends React.Component {
         //time.ampm = ampm
         result.push(time)
       }
-    
+
     return result
   }
 
@@ -190,7 +188,7 @@ class AdminView extends React.Component {
     }
     this.setState({showToAdd: newState.showToAdd})
     console.log('this.state.showToAdd', this.state.showToAdd)
-    
+
   }
 
   handleAddShowSubmit = async (e) => {
@@ -205,7 +203,7 @@ class AdminView extends React.Component {
     //Post pickup Parties
     await this.postPickupParties(this.state.showToAdd)
     this.resetAfterAddShow()
-    
+
   }
 
   resetAfterAddShow = async () => {
@@ -262,12 +260,12 @@ class AdminView extends React.Component {
       venue: showToAdd.venue,
       headliner: showToAdd.headliner,
       support1: showToAdd.support1,
-      support2: showToAdd.support2, 
-      support3: showToAdd.support3, 
+      support2: showToAdd.support2,
+      support3: showToAdd.support3,
       headlinerImgLink: showToAdd.headlinerImgLink,
-      headlinerBio: showToAdd.headlinerBio, 
+      headlinerBio: showToAdd.headlinerBio,
       external: showToAdd.external
-    } 
+    }
 
     const response = await fetch(`${fetchUrl}/events`, {
     method: 'POST',
@@ -282,7 +280,6 @@ class AdminView extends React.Component {
   this.setState({showToAdd: newState.showToAdd})
   return json
   }
-
 
 //End Add Show Feature Functions ^^^^^
 
@@ -555,13 +552,11 @@ newName = (id, first, last) => {
   this.lastName = last
  }
 
-
  changeName = (event, reservationId)=>{
     let newValue
     let newState = {...this.state}
     let newNewFirst = newState.newFirst
     let newNewLast = newState.newLast
-
 
     switch (event.target.id) {
       case "willCallFirstName":
@@ -721,7 +716,7 @@ newName = (id, first, last) => {
             {isDriver &&
               <button type="button" className="btn bts-orange-bg btn-lg btn-block my-4" onClick={e=>console.log('also click')}>Driver Shifts</button>
             }
-            {isStaff || isAdmin &&
+            {(isStaff || isAdmin) &&
               <button type="button" className="btn bts-orange-bg btn-lg btn-block my-4" onClick={e=>this.toggleProperty('displayUserCheckin')}>Rider Check-In</button>
             }
           </div>

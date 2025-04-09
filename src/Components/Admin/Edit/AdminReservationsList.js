@@ -3,7 +3,7 @@ import '../../../App.css';
 
 const AdminReservationsList = (props) => {
 
-  let { filterString, reservations, updateReservation, updateReservationName, cancelPrompt, cancelPromptId, newWillCallFirst, newWillCallLast } = props
+  let { filterString, reservations, updateReservation, cancelPrompt, cancelPromptId, newWillCallFirst, newWillCallLast } = props
 
   reservations = reservations.sort((a, b) => {
     let aLastName = a.willCallLastName.toLowerCase()
@@ -17,8 +17,6 @@ const AdminReservationsList = (props) => {
   filterString = filterString.toLowerCase()
   let filterRezzies = reservations.filter(rezzy => rezzy.orderedByFirstName.toLowerCase().includes(filterString) || rezzy.orderedByLastName.toLowerCase().includes(filterString) ||rezzy.willCallLastName.toLowerCase().includes(filterString) || rezzy.willCallFirstName.toLowerCase().includes(filterString) ||
   rezzy.orderedByEmail.toLowerCase().includes(filterString))
-
-
 
   return (
     <div className='Reservations'>

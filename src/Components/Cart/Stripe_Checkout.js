@@ -1,14 +1,11 @@
 import React from 'react';
 import StripeCheckout from 'react-stripe-checkout'
-import env from "react-dotenv";
-const stripePublic = `${process.env.REACT_APP_STRIPE_PUBLIC}`;
 
+const stripePublic = `${process.env.REACT_APP_STRIPE_PUBLIC}`;
 
 const fetchUrl = `${process.env.REACT_APP_API_URL}`
 
-
 export default class Checkout extends React.Component {
-
 
   onToken = (token) => {
     this.props.ticketTimer(false)
@@ -28,14 +25,13 @@ export default class Checkout extends React.Component {
       },
     }).then(async response => {
       const json = await response.json()
-      if (json.status == "succeeded") {
+      if (json.status === "succeeded") {
         this.props.purchase()
       } else {
         this.props.purchase(json)
       }
     })
   }
-
 
   render() {
     const email = this.props.cartToSend.email

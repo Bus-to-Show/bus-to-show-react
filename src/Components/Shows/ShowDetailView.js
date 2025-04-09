@@ -17,7 +17,6 @@ const ShowDetailView = (props) => {
 
   console.log('show ==>>==>> ', show);
 
-
   let basePrice;
   if (props.pickupPartyId) {
     basePrice = props.assignedParties.find(party => parseInt(party.id) === parseInt(props.pickupPartyId)).partyPrice.toFixed(2)
@@ -123,7 +122,7 @@ const ShowDetailView = (props) => {
                         <h5>
                           <span className='badge badge-secondary align-left'>
                             <div>${basePrice} per ticket</div>
-                            <div>+ ${show.id == 40300786 ? 0.00 : (basePrice * .1).toFixed(2)} processing fee</div>
+                            <div>+ ${show.id === 40300786 ? 0.00 : (basePrice * .1).toFixed(2)} processing fee</div>
                           </span>
                         </h5>
 
@@ -184,13 +183,9 @@ const ShowDetailView = (props) => {
       </MediaQuery>
       {/* End Desktop View */}
 
-
     </div>
 
   )
 }
-
-
-
 
 export default ShowDetailView;

@@ -1,18 +1,11 @@
 import React from 'react'
 import '../App.css';
-import Aboutus from './Aboutus/Aboutus.js'
-
-
 
 const Footer = (props) => {
-
 
   return (
 
     <div>
-
-
-
 
     <div className='Footer'>
 
@@ -85,7 +78,6 @@ const Footer = (props) => {
       </nav>
     </div>
     </div>
-
 
   )
 }
