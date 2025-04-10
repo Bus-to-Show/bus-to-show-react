@@ -2,8 +2,8 @@
 
 Production URLs:
 
-* https://bustoshow.org/tickets/
-* https://cosmic-kataifi-559176.netlify.app/tickets/
+* https://bustoshow.org/
+* https://cosmic-kataifi-559176.netlify.app/
 
 Netlify dashboard: https://app.netlify.com/sites/cosmic-kataifi-559176/
 
@@ -21,7 +21,7 @@ Netlify dashboard: https://app.netlify.com/sites/cosmic-kataifi-559176/
 2. Run the site with `npm start`
 
 3. Ensure the API is listening on http://localhost:3000/ and browse to
-   http://localhost:4200/tickets/
+   http://localhost:4200/
 
 ### Test
 
@@ -43,7 +43,7 @@ described below.
 
 The production build is served by GitHub Pages at https://bus-to-show.github.io/bus-to-show-react/.
 
-The bundled JS and CSS files are then injected into the page at https://bustoshow.org/tickets/.
+The bundled JS and CSS files are then injected into the page at https://bustoshow.org/.
 These file names change with every deployment and have to be updated manually (for now).
 
 You can see the new file names in the build log, e.g.:
