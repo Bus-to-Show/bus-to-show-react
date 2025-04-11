@@ -8,7 +8,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     permissions:
       contents: write
     concurrency:
@@ -29,8 +29,8 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Create embed snippet
-        run: npm run snippet
+      - name: Create embed script
+        run: node create-embed-script.mjs
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
