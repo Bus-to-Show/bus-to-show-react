@@ -29,21 +29,22 @@ const scripts = [...document.querySelectorAll('script')].map(el => {
 outStream.write(`const links = ${JSON.stringify(links)};
 
 for (const link of links) {
-    const element = document.createElement('link');
-    element.href = link.href;
-    if (link.integrity) element.integrity = link.integrity;
-    if (link.crossOrigin) element.crossOrigin = link.crossOrigin;
-    document.head.appendChild(element);
+    const el = document.createElement('link');
+    el.rel = 'stylesheet';
+    el.href = link.href;
+    if (link.integrity) el.integrity = link.integrity;
+    if (link.crossOrigin) el.crossOrigin = link.crossOrigin;
+    document.head.appendChild(el);
 }
 
 const scripts = ${JSON.stringify(scripts)};
 
 for (const script of scripts) {
-    const element = document.createElement('script');
-    element.src = script.src;
-    if (script.integrity) element.integrity = script.integrity;
-    if (script.crossOrigin) element.crossOrigin = script.crossOrigin;
-    if (script.defer) element.defer = true;
-    if (script.async) element.async = true;
-    document.body.appendChild(element);
+    const el = document.createElement('script');
+    el.src = script.src;
+    if (script.integrity) el.integrity = script.integrity;
+    if (script.crossOrigin) el.crossOrigin = script.crossOrigin;
+    if (script.defer) el.defer = true;
+    if (script.async) el.async = true;
+    document.body.appendChild(el);
 }`);
