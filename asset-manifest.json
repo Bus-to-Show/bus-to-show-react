@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "https://bus-to-show.github.io/bus-to-show-react/static/css/main.a8d72baf.css",
-    "main.js": "https://bus-to-show.github.io/bus-to-show-react/static/js/main.9ca04874.js",
-    "static/media/bts-future-selves-background-image.png": "https://bus-to-show.github.io/bus-to-show-react/static/media/bts-future-selves-background-image.8bcd0c0079df983d7817.png",
-    "static/media/BTS-redrocks-website-crop.png": "https://bus-to-show.github.io/bus-to-show-react/static/media/BTS-redrocks-website-crop.610be580f762bef0cfe1.png",
-    "static/media/phil.png": "https://bus-to-show.github.io/bus-to-show-react/static/media/phil.7046c0d056fb0252476b.png",
-    "static/media/jake.jpeg": "https://bus-to-show.github.io/bus-to-show-react/static/media/jake.cb7f661987c50b2bf29f.jpeg",
-    "static/media/BTS-redrocks-spacebus-mobile-flat.jpg": "https://bus-to-show.github.io/bus-to-show-react/static/media/BTS-redrocks-spacebus-mobile-flat.d62ac509490f9e0f5214.jpg",
-    "static/media/bts-planning-is-time-travel-2018-fb-cover.jpg": "https://bus-to-show.github.io/bus-to-show-react/static/media/bts-planning-is-time-travel-2018-fb-cover.8b91f69ca2da0f10d966.jpg",
-    "static/media/bus-to-show-space-bus-forward.png": "https://bus-to-show.github.io/bus-to-show-react/static/media/bus-to-show-space-bus-forward.a1698de926bf25989f75.png",
-    "static/media/bts-logo-gray.png": "https://bus-to-show.github.io/bus-to-show-react/static/media/bts-logo-gray.3e6c741ff48874370564.png",
-    "static/media/linkedin.jpg": "https://bus-to-show.github.io/bus-to-show-react/static/media/linkedin.8032cd28df5ce2b60e83.jpg",
-    "static/media/bts-logo-orange.png": "https://bus-to-show.github.io/bus-to-show-react/static/media/bts-logo-orange.565b7f58324f3d20515e.png",
-    "static/media/seth.jpeg": "https://bus-to-show.github.io/bus-to-show-react/static/media/seth.3d42a610ad5eeeaabc78.jpeg",
-    "static/media/dustin.jpeg": "https://bus-to-show.github.io/bus-to-show-react/static/media/dustin.e634ed6460073edd1448.jpeg",
-    "static/media/kevin.jpeg": "https://bus-to-show.github.io/bus-to-show-react/static/media/kevin.b2ed0130177d3e484862.jpeg",
-    "static/media/bustoshow-text-logo--white-outline-no-fill-328x46.png": "https://bus-to-show.github.io/bus-to-show-react/static/media/bustoshow-text-logo--white-outline-no-fill-328x46.88039530cc06d5c7f370.png",
-    "index.html": "https://bus-to-show.github.io/bus-to-show-react/index.html",
-    "main.a8d72baf.css.map": "https://bus-to-show.github.io/bus-to-show-react/static/css/main.a8d72baf.css.map",
-    "main.9ca04874.js.map": "https://bus-to-show.github.io/bus-to-show-react/static/js/main.9ca04874.js.map"
+    "main.css": "/bus-to-show-react/static/css/main.d2ea2a21.css",
+    "main.js": "/bus-to-show-react/static/js/main.b0a1cf0b.js",
+    "static/media/bts-future-selves-background-image.png": "/bus-to-show-react/static/media/bts-future-selves-background-image.8bcd0c0079df983d7817.png",
+    "static/media/BTS-redrocks-website-crop.png": "/bus-to-show-react/static/media/BTS-redrocks-website-crop.610be580f762bef0cfe1.png",
+    "static/media/phil.png": "/bus-to-show-react/static/media/phil.7046c0d056fb0252476b.png",
+    "static/media/jake.jpeg": "/bus-to-show-react/static/media/jake.cb7f661987c50b2bf29f.jpeg",
+    "static/media/BTS-redrocks-spacebus-mobile-flat.jpg": "/bus-to-show-react/static/media/BTS-redrocks-spacebus-mobile-flat.d62ac509490f9e0f5214.jpg",
+    "static/media/bts-planning-is-time-travel-2018-fb-cover.jpg": "/bus-to-show-react/static/media/bts-planning-is-time-travel-2018-fb-cover.8b91f69ca2da0f10d966.jpg",
+    "static/media/bus-to-show-space-bus-forward.png": "/bus-to-show-react/static/media/bus-to-show-space-bus-forward.a1698de926bf25989f75.png",
+    "static/media/bts-logo-gray.png": "/bus-to-show-react/static/media/bts-logo-gray.3e6c741ff48874370564.png",
+    "static/media/linkedin.jpg": "/bus-to-show-react/static/media/linkedin.8032cd28df5ce2b60e83.jpg",
+    "static/media/bts-logo-orange.png": "/bus-to-show-react/static/media/bts-logo-orange.565b7f58324f3d20515e.png",
+    "static/media/seth.jpeg": "/bus-to-show-react/static/media/seth.3d42a610ad5eeeaabc78.jpeg",
+    "static/media/dustin.jpeg": "/bus-to-show-react/static/media/dustin.e634ed6460073edd1448.jpeg",
+    "static/media/kevin.jpeg": "/bus-to-show-react/static/media/kevin.b2ed0130177d3e484862.jpeg",
+    "static/media/bustoshow-text-logo--white-outline-no-fill-328x46.png": "/bus-to-show-react/static/media/bustoshow-text-logo--white-outline-no-fill-328x46.88039530cc06d5c7f370.png",
+    "index.html": "/bus-to-show-react/index.html",
+    "main.d2ea2a21.css.map": "/bus-to-show-react/static/css/main.d2ea2a21.css.map",
+    "main.b0a1cf0b.js.map": "/bus-to-show-react/static/js/main.b0a1cf0b.js.map"
   },
   "entrypoints": [
-    "static/css/main.a8d72baf.css",
-    "static/js/main.9ca04874.js"
+    "static/css/main.d2ea2a21.css",
+    "static/js/main.b0a1cf0b.js"
   ]
 }
