@@ -10,10 +10,7 @@ import '../App.css';
 // Components
 import AdminView from '../Components/Admin/adminView'
 import ShowList from '../Components/Shows/ShowList'
-import SponsorBox from '../Components/SponsorBox'
 import DetailCartView from '../Components/DetailCartView'
-import BannerRotator from '../Components/BannerRotator'
-import NavButtons from '../Components/NavButtons'
 import { useStore } from '../Store'
 
 const fetchUrl = `${process.env.REACT_APP_API_URL}`
@@ -1249,26 +1246,21 @@ class LayoutPage extends Component {
         validatedElements={this.state.validatedElements} />;
     }
 
-    return <div>
-        <BannerRotator />
-        <SponsorBox />
-        <NavButtons />
-        <ShowList
-          confirmedRemove={this.confirmedRemove}
-          displayShow={this.state.displayShow}
-          filterString={this.state.filterString}
-          handleWarning={this.handleWarning}
-          inCart={this.state.inCart}
-          searchShows={this.searchShows}
-          shows={this.state.userShows}
-          showsExpandClick={this.showsExpandClick}
-          sortByArtist={this.sortByArtist}
-          sortByDate={this.sortByDate}
-          sortedByArtist={this.state.artistIcon}
-          sortedByDate={this.state.dateIcon}
-          tabClicked={this.tabClicked}
-          ticketsAvailable={this.state.ticketsAvailable} />
-      </div>;
+    return <ShowList
+      confirmedRemove={this.confirmedRemove}
+      displayShow={this.state.displayShow}
+      filterString={this.state.filterString}
+      handleWarning={this.handleWarning}
+      inCart={this.state.inCart}
+      searchShows={this.searchShows}
+      shows={this.state.userShows}
+      showsExpandClick={this.showsExpandClick}
+      sortByArtist={this.sortByArtist}
+      sortByDate={this.sortByDate}
+      sortedByArtist={this.state.artistIcon}
+      sortedByDate={this.state.dateIcon}
+      tabClicked={this.tabClicked}
+      ticketsAvailable={this.state.ticketsAvailable} />;
   }
 }
 
