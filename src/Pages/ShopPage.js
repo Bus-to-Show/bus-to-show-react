@@ -3,16 +3,13 @@ import MediaQuery from 'react-responsive'
 import ProductList from '../Components/Products/ProductList';
 
 import { useState, useEffect } from 'react';
-import { useStore } from '../Store';
 
 const fetchUrl = `${process.env.REACT_APP_API_URL}`;
 
 const ShopPage = () => {
   const [products, setProducts] = useState([]);
-  const {setDisplayLoadingScreen} = useStore();
 
   useEffect(() => {
-    setDisplayLoadingScreen(false);
     fetch(`${fetchUrl}/products`)
       .then(response => response.json())
       .then(data => {

@@ -317,37 +317,6 @@ padding: 0;
 margin-bottom: 0;
 }
 
-.loading-image {
-color: white;
-background: url('./Images/BTS-redrocks-website-crop.png');
-background-position: top;
-background-size: cover;
-background-repeat: no-repeat;
-height: 100vh;
-width: 100vw;
-}
-
-.loading-image-mobile {
-color: white;
-
-background: url('./Images/BTS-redrocks-spacebus-mobile-flat.jpg');
-background-position: top;
-background-size: cover;
-background-repeat: no-repeat;
-height: 100vh;
-width: 100vw;
-}
-
-.loading-header {
-margin-top: 35vh;
-text-align: center;
-/* background: rgba(0, 0, 0, .75) */
-}
-
-.loading-text-main {
-font-size: 75px;
-}
-
 .sort-btn {
 border: none;
 }
@@ -499,10 +468,6 @@ background-color: #ff420f;
   border-width: 1px;
   border-radius: 4px;
 
-}
-
-.loading-btn:hover {
-  color: #ff240f;
 }
 
 .logo-img {

@@ -11,7 +11,6 @@ import '../App.css';
 // Components
 import AdminView from '../Components/Admin/adminView'
 import ShowList from '../Components/Shows/ShowList'
-import Loading from '../Components/Loading'
 import SponsorBox from '../Components/SponsorBox'
 import DetailCartView from '../Components/DetailCartView'
 import BannerRotator from '../Components/BannerRotator'
@@ -53,7 +52,6 @@ class LayoutPage extends Component {
     displayAddBtn: false,
     displayBios: false,
     displayBorder: false,
-    displayBus: true,
     displayCart: false,
     displayConfirmRemove: false,
     displayDetailCartView: false,
@@ -151,16 +149,6 @@ class LayoutPage extends Component {
     const json = await response.json()
     //document.cookie = `token=; expires=Wed, 21 Oct 2015 07:28:00 GMT`
     document.cookie = `token=${json.token}; secure`
-  }
-
-  //status: in progress.  where: called in "loading.js".  why: adding interactive animation so that buses fly away on click.
-  handleBus = event => {
-
-    if (event.target.id === 'bus1') {
-      const newState = { ...this.state }
-      newState.displayBus = !newState.displayBus
-      this.setState({ displayBus: newState.displayBus })
-    }
   }
 
   getPickupParties = async (eventId) => {
@@ -1191,12 +1179,7 @@ class LayoutPage extends Component {
       <React.Fragment>
         <div className="App">
           <div>
-            {this.displayLoadingScreen && !useStore.getState().btsUser.isLoggedIn ?
-              <Loading
-                handleBus={this.handleBus} />
-              :
               <div>
-
                 {this.state.adminView ?
                   <AdminView
                     pickupLocations={this.state.pickupLocations}
@@ -1322,16 +1305,12 @@ class LayoutPage extends Component {
                               tabClicked={this.tabClicked}
                               ticketsAvailable={this.state.ticketsAvailable} />
                           </MediaQuery>
-
                         </div>
                       </React.Fragment>
                       :
-                      <Loading
-                        responseLogin={this.responseLogin}
-                      />
+                      <div className="p-4 text-center">Loading...</div>
                 }
               </div>
-            }
           </div>
         </div>
       </React.Fragment>

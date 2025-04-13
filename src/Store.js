@@ -11,16 +11,10 @@ export const useStore = create((set) => ({
   },
   setBtsUser: (user) => set((state) => ({ btsUser: user })),
 
-  displayLoadingScreen: false,
-  setDisplayLoadingScreen: (bool) => set((state) => ({ displayLoadingScreen: bool })),
-
-  displayBus1: true,
-  setDisplayBus1: (bool) => set((state) => ({ displayBus1: bool })),
-
   headerHidden: false,
   setHideHeader: (bool) => set((state) => ({ headerHidden: bool })),
 
-  isCheckedUseSeasonPass: false, 
+  isCheckedUseSeasonPass: false,
   toggleIsCheckedUseSeasonPass: (bool) => set((state) => ({ headerHidden: bool })),
 
   selectedDevent: {},
@@ -50,6 +44,4 @@ export const useStore = create((set) => ({
 
   displayEditReservation: false,
   setDisplayEditReservation: (bool) => set((state) => ({ displayEditReservation: bool })),
-
-
 }))

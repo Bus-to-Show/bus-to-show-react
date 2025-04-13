@@ -29,8 +29,6 @@ const App = (props) => {
   const {
      btsUser,
      setBtsUser,
-     displayLoadingScreen,
-     setDisplayLoadingScreen,
      headerHidden,
      setHideHeader,
      userReservations,
@@ -149,7 +147,6 @@ const App = (props) => {
   }
 
   const onLoad = () => {
-    setDisplayLoadingScreen(false);
     setHideHeader(false);
   }
 
@@ -404,7 +401,6 @@ const App = (props) => {
           />} />
           <Route exact path="/login" element={
             <LoginView
-              displayLoadingScreen={displayLoadingScreen}
               displayReservations={displayReservations}
               toggleLoggedIn={toggleLoggedIn}
               logout={logout}
@@ -459,7 +455,6 @@ const App = (props) => {
           />
           <Route element={
             <LayoutPage
-              displayLoadingScreen={displayLoadingScreen}
               btsUser={btsUser}
            />} />
         </Routes>
