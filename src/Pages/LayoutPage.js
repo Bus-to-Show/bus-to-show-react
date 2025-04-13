@@ -10,7 +10,6 @@ import '../App.css';
 
 // Components
 import AdminView from '../Components/Admin/adminView'
-import Aboutus from '../Components/Aboutus/Aboutus'
 import ShowList from '../Components/Shows/ShowList'
 import Loading from '../Components/Loading'
 import SponsorBox from '../Components/SponsorBox'
@@ -51,7 +50,6 @@ class LayoutPage extends Component {
     confirmRemove: false,
     dateIcon: true,
     discountApplied: false,
-    displayAboutus: false,
     displayAddBtn: false,
     displayBios: false,
     displayBorder: false,
@@ -1135,14 +1133,6 @@ class LayoutPage extends Component {
     this.setState({ displayBios: true })
   }
 
-  hideAboutus = () => {
-    this.setState({ displayAboutus: false })
-  }
-
-  showAboutus = () => {
-    this.setState({ displayAboutus: true })
-  }
-
   getEventbriteData = async (continuationString, val, previousFuelDataArr) => {
     // const response = await fetch(`https://www.eventbriteapi.com/v3/users/me/owned_events/?token=ZMYGPTW7S63LDOZCWVUM&order_by=start_desc&page=${val}&expand=ticket_classes${continuationString}`)
     const response = await fetch(`https://www.eventbriteapi.com/v3/users/me/owned_events/?${continuationString}token=ZMYGPTW7S63LDOZCWVUM&order_by=start_desc&expand=ticket_classes`)
@@ -1216,14 +1206,6 @@ class LayoutPage extends Component {
                     userDetails={useStore.getState().btsUser.userDetails}
                   />
                   :
-                  this.state.displayAboutus ?
-                    <Aboutus
-                      dismissBios={this.dismissBios}
-                      readBios={this.readBios}
-                      displayBios={this.state.displayBios}
-                      hideAboutus={this.hideAboutus}
-                    />
-                    :
                     this.state.userShows ?
                       <React.Fragment>
                         <div className='content-section pt-4'>
@@ -1295,14 +1277,9 @@ class LayoutPage extends Component {
                               </div>
                               :
                               <div>
-                                <SponsorBox
-                                  showAboutus={this.showAboutus}
-                                  displayAboutus={this.state.displayAboutus}
-                                />
+                                <SponsorBox />
                                 <NavButtons />
-
                               </div>
-
                             }
                           </div>
                           <MediaQuery maxWidth={799}>

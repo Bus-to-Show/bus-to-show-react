@@ -488,33 +488,9 @@ color: white;
 background-color: #ff420f;
 }
 
-.biophoto {
-width: 100px;
-border-radius: 30px;
-}
-
-.phil {
-background-color: #ff420f;
-}
-
-.teamMemberName {
-font-weight: bold;
-font-size: 20px;
-}
-
-.memberParagraph {
-font-size: 15px;
-}
-
 .conactText {
   font-size: 8px;
   color: #ff420f;
-}
-
-.aboutUsPage {
-border-color: #ff420f;
-border-width: 1px;
-
 }
 
 .container-border-orange {
@@ -523,22 +499,6 @@ border-width: 1px;
   border-width: 1px;
   border-radius: 4px;
 
-}
-
-.limit-height {
-height: 60vh;
-}
-
-.person {
-margin-top: 5px;
-margin-bottom: 5px;
-margin-left: 5px;
-margin-right: 5px;
-}
-
-.linkedInLogo {
-width: 30px;
-margin-right: 15px
 }
 
 .loading-btn:hover {
@@ -594,17 +554,4 @@ line-height: 16px;
 
 .add-top-margin {
 margin-top: 4.5vh;
-}
-
-@media only screen and (max-width:300px) {
-.biophoto {
-  display: none;
-}
-}
-
-@media only screen and (min-width: 900px) {
-.make-bigger {
-  align-self: flex-end;
-  margin-left: 9em;
-}
 }
