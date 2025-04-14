@@ -1,14 +1,5 @@
-html {
-  height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
 body {
-  width: 100%;
-  height: 100%;
   margin: 0px;
-  padding: 0px;
 }
 
 .headliner-img {
@@ -136,14 +127,6 @@ input:checked + .slider:before {
 }
 
 /* Shows Styling */
-
-.list-group {
-  max-height: 90vh;
-  overflow: scroll;
-  overflow-x: hidden;
-  overflow: -moz-scrollbars-none;
-  -ms-overflow-style: none;
-}
 
 li {
   list-style: none;
