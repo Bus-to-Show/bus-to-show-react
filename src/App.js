@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-
+import useSize from '@react-hook/size';
 import ReactGA from 'react-ga';
 import { sha256 } from 'js-sha256';
 
@@ -29,8 +29,6 @@ const App = (props) => {
   const {
      btsUser,
      setBtsUser,
-     displayLoadingScreen,
-     setDisplayLoadingScreen,
      headerHidden,
      setHideHeader,
      userReservations,
@@ -149,7 +147,6 @@ const App = (props) => {
   }
 
   const onLoad = () => {
-    setDisplayLoadingScreen(false);
     setHideHeader(false);
   }
 
@@ -344,10 +341,9 @@ const App = (props) => {
     const result = await response.json();
     const verified = result ? true : false;
     setIsVerified(verified);
-
   };
 
-  useEffect( () => {
+  useEffect(() => {
     const checkAuth = async () => {
       const jwtToken = localStorage.getItem('jwt')
       if(!jwtToken){
@@ -385,9 +381,32 @@ const App = (props) => {
     getPickupLocations();
   }, []);
 
+  const appRef = useRef(null);
+  const [width, height] = useSize(appRef);
+
+  useEffect(() => {
+    /*
+    The app is loaded into an iframe on the BTS homepage.
+
+    The homepage is hosted at bustoshow.squarespace.com, but the app is hosted at
+    bus-to-show.github.io.
+
+    Due to cross-origin security things, the homepage can't read the contents of the app,
+    so it doesn't know how to size the iframe.
+
+    Posting a message to `window.parent` is the solution.
+    */
+
+    window.parent.postMessage({
+      type: 'resize-iframe',
+      width,
+      height,
+    }, process.env.REACT_APP_HOME_URL);
+  }, [width, height]);
+
   return (
     <Router basename="/bus-to-show-react">
-      <div>
+      <div ref={appRef}>
         {!headerHidden ? (
           <Header
             getReservations={getReservations}
@@ -404,7 +423,6 @@ const App = (props) => {
           />} />
           <Route exact path="/login" element={
             <LoginView
-              displayLoadingScreen={displayLoadingScreen}
               displayReservations={displayReservations}
               toggleLoggedIn={toggleLoggedIn}
               logout={logout}
@@ -459,7 +477,6 @@ const App = (props) => {
           />
           <Route element={
             <LayoutPage
-              displayLoadingScreen={displayLoadingScreen}
               btsUser={btsUser}
            />} />
         </Routes>

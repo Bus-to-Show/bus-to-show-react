@@ -1,7 +1,6 @@
 // Packages
 import React, { Component } from 'react'
 import Validator from 'validator'
-import MediaQuery from 'react-responsive'
 import moment from 'moment'
 import { sha256 } from 'js-sha256';
 
@@ -10,13 +9,8 @@ import '../App.css';
 
 // Components
 import AdminView from '../Components/Admin/adminView'
-import Aboutus from '../Components/Aboutus/Aboutus'
 import ShowList from '../Components/Shows/ShowList'
-import Loading from '../Components/Loading'
-import SponsorBox from '../Components/SponsorBox'
 import DetailCartView from '../Components/DetailCartView'
-import BannerRotator from '../Components/BannerRotator'
-import NavButtons from '../Components/NavButtons'
 import { useStore } from '../Store'
 
 const fetchUrl = `${process.env.REACT_APP_API_URL}`
@@ -51,11 +45,9 @@ class LayoutPage extends Component {
     confirmRemove: false,
     dateIcon: true,
     discountApplied: false,
-    displayAboutus: false,
     displayAddBtn: false,
     displayBios: false,
     displayBorder: false,
-    displayBus: true,
     displayCart: false,
     displayConfirmRemove: false,
     displayDetailCartView: false,
@@ -153,16 +145,6 @@ class LayoutPage extends Component {
     const json = await response.json()
     //document.cookie = `token=; expires=Wed, 21 Oct 2015 07:28:00 GMT`
     document.cookie = `token=${json.token}; secure`
-  }
-
-  //status: in progress.  where: called in "loading.js".  why: adding interactive animation so that buses fly away on click.
-  handleBus = event => {
-
-    if (event.target.id === 'bus1') {
-      const newState = { ...this.state }
-      newState.displayBus = !newState.displayBus
-      this.setState({ displayBus: newState.displayBus })
-    }
   }
 
   getPickupParties = async (eventId) => {
@@ -1135,14 +1117,6 @@ class LayoutPage extends Component {
     this.setState({ displayBios: true })
   }
 
-  hideAboutus = () => {
-    this.setState({ displayAboutus: false })
-  }
-
-  showAboutus = () => {
-    this.setState({ displayAboutus: true })
-  }
-
   getEventbriteData = async (continuationString, val, previousFuelDataArr) => {
     // const response = await fetch(`https://www.eventbriteapi.com/v3/users/me/owned_events/?token=ZMYGPTW7S63LDOZCWVUM&order_by=start_desc&page=${val}&expand=ticket_classes${continuationString}`)
     const response = await fetch(`https://www.eventbriteapi.com/v3/users/me/owned_events/?${continuationString}token=ZMYGPTW7S63LDOZCWVUM&order_by=start_desc&expand=ticket_classes`)
@@ -1197,168 +1171,96 @@ class LayoutPage extends Component {
   }
 
   render() {
-    return (
-      <React.Fragment>
-        <div className="App">
-          <div>
-            {this.displayLoadingScreen && !useStore.getState().btsUser.isLoggedIn ?
-              <Loading
-                handleBus={this.handleBus} />
-              :
-              <div>
+    if (this.state.adminView) {
+      return <AdminView
+        pickupLocations={this.state.pickupLocations}
+        searchShows={this.searchShows}
+        shows={this.state.allShows}
+        showsExpandClick={this.showsExpandClick}
+        userDetails={useStore.getState().btsUser.userDetails} />;
+    }
 
-                {this.state.adminView ?
-                  <AdminView
-                    pickupLocations={this.state.pickupLocations}
-                    searchShows={this.searchShows}
-                    shows={this.state.allShows}
-                    showsExpandClick={this.showsExpandClick}
-                    userDetails={useStore.getState().btsUser.userDetails}
-                  />
-                  :
-                  this.state.displayAboutus ?
-                    <Aboutus
-                      dismissBios={this.dismissBios}
-                      readBios={this.readBios}
-                      displayBios={this.state.displayBios}
-                      hideAboutus={this.hideAboutus}
-                    />
-                    :
-                    this.state.userShows ?
-                      <React.Fragment>
-                        <div className='content-section pt-4'>
-                          <div className='col-md-6 float-right'>
-                            {this.state.displayShow ? '' :
-                              <BannerRotator displayShow={this.state.displayShow} />}
-                            {this.state.displayCart || this.state.displayShow || this.state.displayExternalShowDetails ?
-                              <div>
-                                <DetailCartView
-                                  addToCart={this.addToCart}
-                                  afterDiscountObj={this.state.afterDiscountObj}
-                                  assignedParties={this.state.assignedParties}
-                                  backToCalendar={this.backToCalendar}
-                                  cartToSend={this.state.cartToSend}
-                                  checked={this.state.checked}
-                                  closeAlert={this.closeAlert}
-                                  comp={this.comp}
-                                  confirmedRemove={this.confirmedRemove}
-                                  discountApplied={this.state.discountApplied}
-                                  displayAddBtn={this.state.displayAddBtn}
-                                  displayBorder={this.state.displayBorder}
-                                  displayCart={this.state.displayCart}
-                                  displayConfirmRemove={this.state.displayConfirmRemove}
-                                  displayExternalShowDetails={this.state.displayExternalShowDetails}
-                                  displayQuantity={this.state.displayQuantity}
-                                  displayShow={this.state.displayShow}
-                                  displaySuccess={this.state.displaySuccess}
-                                  displayViewCartBtn={this.state.displayViewCartBtn}
-                                  displayWarning={this.state.displayWarning}
-                                  filterString={this.state.filterString}
-                                  findDiscountCode={this.findDiscountCode}
-                                  firstBusLoad={this.state.firstBusLoad}
-                                  getPickupParty={this.getPickupParty}
-                                  handleCheck={this.handleCheck}
-                                  invalidFields={this.state.invalidFields}
-                                  invalidOnSubmit={this.invalidOnSubmit}
-                                  inCart={this.state.inCart}
-                                  isUseSeasonPassChecked={this.state.isUseSeasonPassChecked}
-                                  lastDepartureTime={this.state.lastDepartureTime}
-                                  makePurchase={this.makePurchase}
-                                  pickupLocations={this.state.pickupLocations}
-                                  pickupLocationId={this.state.pickupLocationId}
-                                  pickupPartyId={this.state.pickupPartyId}
-                                  pickupParties={this.state.pickupParties}
-                                  purchase={this.purchase}
-                                  purchaseClick={this.purchaseClick}
-                                  purchaseFailed={this.state.purchaseFailed}
-                                  purchasePending={this.state.purchasePending}
-                                  purchaseSuccessful={this.state.purchaseSuccessful}
-                                  removeFromCart={this.removeFromCart}
-                                  returnToShows={this.returnToShows}
-                                  selectPickupLocationId={this.selectPickupLocationId}
-                                  selectTicketQuantity={this.selectTicketQuantity}
-                                  shows={this.state.userShows}
-                                  showsExpandClick={this.showsExpandClick}
-                                  showsInCart={this.state.inCart}
-                                  startTimer={this.state.startTimer}
-                                  tabClicked={this.tabClicked}
-                                  ticketsAvailable={this.state.ticketsAvailable}
-                                  ticketTimer={this.ticketTimer}
-                                  ticketQuantity={this.state.ticketQuantity}
-                                  timeLeftInCart={this.state.timeLeftInCart}
-                                  totalCost={this.state.totalCost}
-                                  updateDiscountCode={this.updateDiscountCode}
-                                  updatePurchaseField={this.updatePurchaseField}
-                                  validated={this.state.validated}
-                                  validatedElements={this.state.validatedElements}
-                                />
-                              </div>
-                              :
-                              <div>
-                                <SponsorBox
-                                  showAboutus={this.showAboutus}
-                                  displayAboutus={this.state.displayAboutus}
-                                />
-                                <NavButtons />
+    if (!this.state.userShows) {
+      return <div className="p-4 text-center">Loading...</div>;
+    }
 
-                              </div>
+    if (this.state.displayCart || this.state.displayShow || this.state.displayExternalShowDetails) {
+      return <DetailCartView
+        addToCart={this.addToCart}
+        afterDiscountObj={this.state.afterDiscountObj}
+        assignedParties={this.state.assignedParties}
+        backToCalendar={this.backToCalendar}
+        cartToSend={this.state.cartToSend}
+        checked={this.state.checked}
+        closeAlert={this.closeAlert}
+        comp={this.comp}
+        confirmedRemove={this.confirmedRemove}
+        discountApplied={this.state.discountApplied}
+        displayAddBtn={this.state.displayAddBtn}
+        displayBorder={this.state.displayBorder}
+        displayCart={this.state.displayCart}
+        displayConfirmRemove={this.state.displayConfirmRemove}
+        displayExternalShowDetails={this.state.displayExternalShowDetails}
+        displayQuantity={this.state.displayQuantity}
+        displayShow={this.state.displayShow}
+        displaySuccess={this.state.displaySuccess}
+        displayViewCartBtn={this.state.displayViewCartBtn}
+        displayWarning={this.state.displayWarning}
+        filterString={this.state.filterString}
+        findDiscountCode={this.findDiscountCode}
+        firstBusLoad={this.state.firstBusLoad}
+        getPickupParty={this.getPickupParty}
+        handleCheck={this.handleCheck}
+        invalidFields={this.state.invalidFields}
+        invalidOnSubmit={this.invalidOnSubmit}
+        inCart={this.state.inCart}
+        isUseSeasonPassChecked={this.state.isUseSeasonPassChecked}
+        lastDepartureTime={this.state.lastDepartureTime}
+        makePurchase={this.makePurchase}
+        pickupLocations={this.state.pickupLocations}
+        pickupLocationId={this.state.pickupLocationId}
+        pickupPartyId={this.state.pickupPartyId}
+        pickupParties={this.state.pickupParties}
+        purchase={this.purchase}
+        purchaseClick={this.purchaseClick}
+        purchaseFailed={this.state.purchaseFailed}
+        purchasePending={this.state.purchasePending}
+        purchaseSuccessful={this.state.purchaseSuccessful}
+        removeFromCart={this.removeFromCart}
+        returnToShows={this.returnToShows}
+        selectPickupLocationId={this.selectPickupLocationId}
+        selectTicketQuantity={this.selectTicketQuantity}
+        shows={this.state.userShows}
+        showsExpandClick={this.showsExpandClick}
+        showsInCart={this.state.inCart}
+        startTimer={this.state.startTimer}
+        tabClicked={this.tabClicked}
+        ticketsAvailable={this.state.ticketsAvailable}
+        ticketTimer={this.ticketTimer}
+        ticketQuantity={this.state.ticketQuantity}
+        timeLeftInCart={this.state.timeLeftInCart}
+        totalCost={this.state.totalCost}
+        updateDiscountCode={this.updateDiscountCode}
+        updatePurchaseField={this.updatePurchaseField}
+        validated={this.state.validated}
+        validatedElements={this.state.validatedElements} />;
+    }
 
-                            }
-                          </div>
-                          <MediaQuery maxWidth={799}>
-                            <div className='col-md-6 float-left'>
-                              {this.state.displayExternalShowDetails || this.state.displayDetailCartView ?
-                                ""
-                                :
-                                <ShowList
-                                  confirmedRemove={this.confirmedRemove}
-                                  displayShow={this.state.displayShow}
-                                  filterString={this.state.filterString}
-                                  handleWarning={this.handleWarning}
-                                  inCart={this.state.inCart}
-                                  searchShows={this.searchShows}
-                                  shows={this.state.userShows}
-                                  showsExpandClick={this.showsExpandClick}
-                                  sortByArtist={this.sortByArtist}
-                                  sortByDate={this.sortByDate}
-                                  sortedByArtist={this.state.artistIcon}
-                                  sortedByDate={this.state.dateIcon}
-                                  tabClicked={this.tabClicked}
-                                  ticketsAvailable={this.state.ticketsAvailable} />
-                              }
-                            </div>
-                          </MediaQuery>
-                          <MediaQuery minWidth={800}>
-                            <ShowList
-                              confirmedRemove={this.confirmedRemove}
-                              displayShow={this.state.displayShow}
-                              filterString={this.state.filterString}
-                              handleWarning={this.handleWarning}
-                              inCart={this.state.inCart}
-                              searchShows={this.searchShows}
-                              shows={this.state.userShows}
-                              showsExpandClick={this.showsExpandClick}
-                              sortByArtist={this.sortByArtist}
-                              sortByDate={this.sortByDate}
-                              sortedByArtist={this.state.artistIcon}
-                              sortedByDate={this.state.dateIcon}
-                              tabClicked={this.tabClicked}
-                              ticketsAvailable={this.state.ticketsAvailable} />
-                          </MediaQuery>
-
-                        </div>
-                      </React.Fragment>
-                      :
-                      <Loading
-                        responseLogin={this.responseLogin}
-                      />
-                }
-              </div>
-            }
-          </div>
-        </div>
-      </React.Fragment>
-    )
+    return <ShowList
+      confirmedRemove={this.confirmedRemove}
+      displayShow={this.state.displayShow}
+      filterString={this.state.filterString}
+      handleWarning={this.handleWarning}
+      inCart={this.state.inCart}
+      searchShows={this.searchShows}
+      shows={this.state.userShows}
+      showsExpandClick={this.showsExpandClick}
+      sortByArtist={this.sortByArtist}
+      sortByDate={this.sortByDate}
+      sortedByArtist={this.state.artistIcon}
+      sortedByDate={this.state.dateIcon}
+      tabClicked={this.tabClicked}
+      ticketsAvailable={this.state.ticketsAvailable} />;
   }
 }
 

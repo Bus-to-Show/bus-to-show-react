@@ -25,30 +25,19 @@ const ShowReservation = (props) => {
   const [reservationToEditId, setReservationToEditId] = useState(null);
   const [displayCancelWarning, setDisplayCancelWarning] = useState(false);
 
-  const createArrayOfEventIds = userReservations.length > 0 ? userReservations.map(show => show.status !== '3' && show.eventsId ).sort() : []
-  let countObj = {}
-  for(let ii = 0; ii < createArrayOfEventIds.length; ii++){
-    let count = 1;
-    for(let jj = 0; jj < createArrayOfEventIds.length; jj++){
-      if(createArrayOfEventIds[ii] === createArrayOfEventIds[jj])
-          countObj[createArrayOfEventIds[ii]] = count++;
-      }
-    }
+  // Don't display refunded (status = 3) or cancelled (status = 4)
+  const activeEventIds = userReservations
+    .filter(r => r.status !== 3 && r.status !== 4)
+    .map(r => r.eventsId);
 
-  const reservationSummaryArr = []
-  for (let property1 in countObj){
-    for (let ii = 0; ii < props.userReservations.length; ii++){
-      if(props.userReservations[ii].eventsId === property1 && props.userReservations[ii].status !== '3'){
-        console.log('props.userReservations[ii].status ==>>==>> ', props.userReservations[ii].status);
-        props.userReservations[ii].ticketQuantity = countObj[props.userReservations[ii].eventsId]
-        reservationSummaryArr.push(props.userReservations[ii])
-          break
-      }
-    }
-  }
-  const reservationSummaryArrSorted = reservationSummaryArr.sort((a, b) => {
-    return new Date(a.date).getTime() - new Date(b.date).getTime()
-  })
+  const uniqueEventIds = new Set(activeEventIds);
+
+  const reservationSummaryArrSorted = [...uniqueEventIds].map(eventId => {
+    return {
+      ...userReservations.find(r => r.eventsId === eventId),
+      ticketQuantity: userReservations.filter(r => r.eventsId === eventId).length,
+    };
+  }).sort((a, b) => new Date(a) - new Date(b));
 
   const toggleEditReservation = (e) =>{
     console.log(' toggleEditReservation e.target.id ==', e.target.id);
@@ -118,7 +107,6 @@ const ShowReservation = (props) => {
   }
 
   useEffect(() => {
-    console.log('wht is use effect up to? ==>>==>> ', cancelTransferArray, displayCancelWarning);
     if (reservationDetail) {
       setDisplayUserReservationSummary(true);
       setDisplayReservationDetail(true);
