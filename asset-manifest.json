@@ -1,15 +1,14 @@
 {
   "files": {
-    "main.css": "/bus-to-show-react/static/css/main.195e71c1.css",
+    "main.css": "/bus-to-show-react/static/css/main.cd9b1997.css",
     "main.js": "/bus-to-show-react/static/js/main.879bc742.js",
-    "static/media/bts-future-selves-background-image.png": "/bus-to-show-react/static/media/bts-future-selves-background-image.8bcd0c0079df983d7817.png",
     "static/media/bts-logo-gray.png": "/bus-to-show-react/static/media/bts-logo-gray.3e6c741ff48874370564.png",
     "index.html": "/bus-to-show-react/index.html",
-    "main.195e71c1.css.map": "/bus-to-show-react/static/css/main.195e71c1.css.map",
+    "main.cd9b1997.css.map": "/bus-to-show-react/static/css/main.cd9b1997.css.map",
     "main.879bc742.js.map": "/bus-to-show-react/static/js/main.879bc742.js.map"
   },
   "entrypoints": [
-    "static/css/main.195e71c1.css",
+    "static/css/main.cd9b1997.css",
     "static/js/main.879bc742.js"
   ]
 }
