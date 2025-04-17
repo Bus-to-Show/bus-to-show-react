@@ -19,11 +19,7 @@ class LayoutPage extends Component {
   // Please keep sorted alphabetically so we don't duplicate keys :) Thanks!
   state = {
     adminView: false,
-    afterDiscountObj: {
-      totalSavings: 0,
-      discountCodeId: 0,
-      totalPriceAfterDiscount: 0
-    },
+    afterDiscountObj: null,
     artistDescription: null,
     artistIcon: false,
     assignedParties: [],
@@ -356,21 +352,37 @@ class LayoutPage extends Component {
         'Content-Type': 'application/json'
       }
     })
+
     const json = await response.json()
-    if (json.length) {
-      //we have a valid afterDiscountObj, let's apply it!
-      const newState = { ...this.state }
-      newState.totalCost = Number(json[0].totalPriceAfterDiscount).toFixed(2)
-      newState.afterDiscountObj = json[0]
-      newState.afterDiscountObj.totalPriceAfterDiscount = Number(json[0].totalPriceAfterDiscount.toFixed(2))
-      newState.discountApplied = true
-      this.setState({
-        totalCost: newState.totalCost,
-        afterDiscountObj: newState.afterDiscountObj,
-        discountApplied: newState.discountApplied
-      })
+
+    if (!json) {
+      return;
     }
 
+    const {
+      message,
+      discountCodeId,
+      totalPriceAfterDiscount,
+      totalSavings,
+    } = json;
+
+    if (message) {
+      // TODO: make this better
+      alert(message);
+      return;
+    }
+
+    if (discountCodeId && totalPriceAfterDiscount && totalSavings) {
+      this.setState({
+        afterDiscountObj: {
+          discountCodeId,
+          totalPriceAfterDiscount,
+          totalSavings,
+        },
+        discountApplied: true,
+        totalCost: totalPriceAfterDiscount,
+      })
+    }
   }
 
   // Header Functions
@@ -836,7 +848,7 @@ class LayoutPage extends Component {
       return this.setState({ purchaseFailed: true })
     }
     const cartObj = this.state.cartToSend
-    cartObj.discountCode = this.state.afterDiscountObj.id
+    cartObj.discountCode = this.state.afterDiscountObj?.discountCodeId
     cartObj.userId = useStore.getState().btsUser.userDetails.id
     const response = await fetch(`${fetchUrl}/orders`, {
       method: 'POST',
@@ -847,7 +859,16 @@ class LayoutPage extends Component {
     })
     const json = await response.json()
     await this.clearTicketsInCart(json.pickupPartiesId, cartObj.ticketQuantity)
-    this.setState({ purchaseSuccessful: true, purchasePending: false, inCart: [], ticketQuantity: null, discountApplied: false, afterDiscountObj: { discountCodeId: null, totalSavings: 0 } })
+
+    this.setState({
+      purchaseSuccessful: true,
+      purchasePending: false,
+      inCart: [],
+      ticketQuantity: null,
+      discountApplied: false,
+      afterDiscountObj: null,
+    })
+
     window.removeEventListener("beforeunload", this.clearCartOnClose)
   }
 
@@ -855,7 +876,7 @@ class LayoutPage extends Component {
     this.ticketTimer(false)
     const cartObj = this.state.cartToSend
     cartObj.userId = useStore.getState().btsUser.userDetails.id
-    cartObj.discountCode = this.state.afterDiscountObj.id
+    cartObj.discountCode = this.state.afterDiscountObj?.discountCodeId
     const response = await fetch(`${fetchUrl}/orders`, {
       method: 'POST',
       body: JSON.stringify(cartObj),
@@ -865,7 +886,18 @@ class LayoutPage extends Component {
     })
     const json = await response.json()
     await this.clearTicketsInCart(json.pickupPartiesId, cartObj.ticketQuantity)
-    this.setState({ purchaseSuccessful: true, purchaseFailed: false, purchasePending: false, displayQuantity: false, inCart: [], ticketQuantity: null, discountApplied: false, afterDiscountObj: { discountCodeId: null, totalSavings: 0 } })
+
+    this.setState({
+      purchaseSuccessful: true,
+      purchaseFailed: false,
+      purchasePending: false,
+      displayQuantity: false,
+      inCart: [],
+      ticketQuantity: null,
+      discountApplied: false,
+      afterDiscountObj: null,
+    })
+
     window.removeEventListener("beforeunload", this.clearCartOnClose)
   }
 
@@ -1014,6 +1046,7 @@ class LayoutPage extends Component {
       displayWarning: newState.displayWarning,
       purchaseSuccessful: newState.purchaseSuccessful,
     })
+
     window.removeEventListener("beforeunload", this.clearCartOnClose)
   }
 
@@ -1039,6 +1072,8 @@ class LayoutPage extends Component {
     newState.pickupLocationId = null
     newState.validated = false
     newState.purchasePending = false
+    newState.discountApplied = false
+    newState.afterDiscountObj = null
 
     this.setState({
       validated: newState.validated,
@@ -1050,11 +1085,12 @@ class LayoutPage extends Component {
       displayAddBtn: newState.displayAddBtn,
       startTimer: newState.startTimer,
       ticketQuantity: newState.ticketQuantity,
-      purchasePending: newState.purchasePending
-
+      purchasePending: newState.purchasePending,
+      discountApplied: newState.discountApplied,
+      afterDiscountObj: newState.afterDiscountObj,
     })
-    window.removeEventListener("beforeunload", this.clearCartOnClose)
 
+    window.removeEventListener("beforeunload", this.clearCartOnClose)
   }
 
   closeAlert = () => {
@@ -1097,7 +1133,7 @@ class LayoutPage extends Component {
     newState.purchasePending = true
     newState.purchaseFailed = false
     newState.discountApplied = false
-    newState.afterDiscountObj = { discountCodeId: null, totalSavings: 0 }
+    newState.afterDiscountObj = null
 
     this.setState({
       purchaseFailed: newState.purchaseFailed,

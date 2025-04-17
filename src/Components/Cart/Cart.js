@@ -14,8 +14,6 @@ const Cart = (props) => {
 
   const showInfo = props.shows.find(show => parseInt(show.id) === parseInt(cTSendId))
 
-  let savings = Number(props.afterDiscountObj.totalSavings)
-
   useEffect(() => {
     //check API to see if user season pass has been used for this show.
     //if not, set discountCode to match user's season pass code.
@@ -265,18 +263,18 @@ const Cart = (props) => {
                           </div>
                           <div className="col-md-4 mb-3">
                             {!props.discountApplied ?
-                              <button type="button" onClick={props.findDiscountCode} className="btn btn-outline-secondary" >Apply</button>
+                              <button type="button" onClick={props.findDiscountCode} className="btn btn-outline-secondary">Apply</button>
                               :
-                              <button type="button" onClick={props.findDiscountCode} className="btn btn-outline-secondary" disabled>Your Savings: {props.afterDiscountObj.savings.toFixed(2)}</button>
+                              <button type="button" onClick={props.findDiscountCode} className="btn btn-outline-secondary" disabled>Applied!</button>
                             }
                           </div>
                         </div>
 
                         <div className='row display-flex'>
-                          {savings ?
+                          {props.afterDiscountObj?.totalSavings ?
                             <div className="col-4">
                               <h5>Total savings:
-                          <span className="badge badge-secondary ml-1">{`$${savings}`}</span>
+                                <span className="badge badge-secondary ml-1">${props.afterDiscountObj.totalSavings}</span>
                               </h5>
                             </div>
                             : ""
