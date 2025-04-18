@@ -14,8 +14,6 @@ const Cart = (props) => {
 
   const showInfo = props.shows.find(show => parseInt(show.id) === parseInt(cTSendId))
 
-  let savings = Number(props.afterDiscountObj.totalSavings)
-
   useEffect(() => {
     //check API to see if user season pass has been used for this show.
     //if not, set discountCode to match user's season pass code.
@@ -138,7 +136,7 @@ const Cart = (props) => {
                         onSubmit={e=>e.preventDefault()}
                         noValidate>
                         <div className="form-row">
-                          <div className="col-md-4 mb-3">
+                          <div className="col-md-6 mb-3">
                             <label htmlFor="firstName">First Name</label>
                             <input
                               onChange={props.updatePurchaseField}
@@ -149,7 +147,7 @@ const Cart = (props) => {
                               style={{border: invalidFirstName ? '2px solid red' : ''}}
                               required />
                           </div>
-                          <div className="col-md-4 mb-3">
+                          <div className="col-md-6 mb-3">
                             <label htmlFor="lastName">Last Name</label>
                             <input
                               onChange={props.updatePurchaseField}
@@ -162,7 +160,7 @@ const Cart = (props) => {
                           </div>
                         </div>
                         <div className="form-row">
-                          <div className="col-md-8 mb-3">
+                          <div className="col-md-6 mb-3">
                             <label htmlFor="email">Email</label>
                             <input
                               onChange={props.updatePurchaseField}
@@ -173,9 +171,7 @@ const Cart = (props) => {
                               style={{border: invalidEmail ? '2px solid red' : ''}}
                               required />
                           </div>
-                        </div>
-                        <div className="form-row">
-                          <div className="col-md-8 mb-3">
+                          <div className="col-md-6 mb-3">
                             <label htmlFor="orderedByPhone">Phone</label>
                             <input
                               onChange={phoneInput}
@@ -188,7 +184,7 @@ const Cart = (props) => {
                           </div>
                         </div>
                         <div className="form-row">
-                          <div className="col-md-8 mb-3">
+                          <div className="col-md-12 mb-3">
                             {//checkbox for Use Season Pass to purchase tickets
                             }
                             { passStatus && passStatus.message === 'Season pass discount code is available.' ?
@@ -213,7 +209,7 @@ const Cart = (props) => {
                         //close button with onClick to remove will call name fields and set props.checked to false
                           <div>
                             <div className="form-row">
-                              <div className="col-md-4 mb-3">
+                              <div className="col-md-12 mb-3">
                                 <button
                                   onClick={props.handleCheck}
                                   type="button"
@@ -221,7 +217,7 @@ const Cart = (props) => {
                               </div>
                             </div>
                             <div className="form-row">
-                              <div className="col-md-4 mb-3">
+                              <div className="col-md-6 mb-3">
                                 <label htmlFor="willCallFirstName">Will Call First Name</label>
                                 <input
                                   onChange={props.updatePurchaseField}
@@ -230,7 +226,7 @@ const Cart = (props) => {
                                   id="willCallFirstName"
                                   placeholder="First Name" />
                               </div>
-                              <div className="col-md-4 mb-3">
+                              <div className="col-md-6 mb-3">
                                 <label htmlFor="willCallLastName">Will Call Last Name</label>
                                 <input
                                   onChange={props.updatePurchaseField}
@@ -243,7 +239,7 @@ const Cart = (props) => {
                           </div>
                           :
                           <div className="form-row">
-                            <div className="col-md-4 mb-3">
+                            <div className="col-md-12 mb-3">
                               <button
                                 onClick={props.handleCheck}
                                 type="button"
@@ -255,7 +251,7 @@ const Cart = (props) => {
                             </div>
                           </div>}
                         <div className="form-row">
-                          <div className="col-md-4 mb-3">
+                          <div className="col-md-6 mb-3">
                             <input
                               onChange={props.updateDiscountCode}
                               type="text"
@@ -263,33 +259,34 @@ const Cart = (props) => {
                               id="discountCode"
                               placeholder="Discount Code" />
                           </div>
-                          <div className="col-md-4 mb-3">
+                          <div className="col-md-6 mb-3">
                             {!props.discountApplied ?
-                              <button type="button" onClick={props.findDiscountCode} className="btn btn-outline-secondary" >Apply</button>
+                              <button type="button" onClick={props.findDiscountCode} className="btn btn-outline-secondary">Apply</button>
                               :
-                              <button type="button" onClick={props.findDiscountCode} className="btn btn-outline-secondary" disabled>Your Savings: {props.afterDiscountObj.savings.toFixed(2)}</button>
+                              <button type="button" onClick={props.findDiscountCode} className="btn btn-outline-secondary" disabled>Applied!</button>
                             }
                           </div>
                         </div>
 
-                        <div className='row display-flex'>
-                          {savings ?
-                            <div className="col-4">
-                              <h5>Total savings:
-                          <span className="badge badge-secondary ml-1">{`$${savings}`}</span>
-                              </h5>
-                            </div>
-                            : ""
-                          }
+                        {props.afterDiscountObj?.totalSavings ?
+                          <div className="mb-3 text-right">
+                            <h5>
+                              Total Savings:
+                              <span className="badge badge-secondary ml-1">${props.afterDiscountObj.totalSavings}</span>
+                            </h5>
+                          </div>
+                          : ""}
+
+                        <div className="mb-3 text-right">
+                          <h3>
+                            Cart Total:
+                            <span className="badge badge-success ml-1">${props.totalCost}</span>
+                          </h3>
                         </div>
-                        <div className='form-row cart-flex'>
+
+                        <div className='mb-3 text-right'>
                           <div>
-                          <MediaQuery maxWidth={799}>
-                            <button onClick={props.confirmedRemove} type="button" className="btn btn-outline-danger mr-1">Cancel</button>
-                          </MediaQuery>
-                          <MediaQuery minWidth={800}>
-                            <button onClick={props.removeFromCart} type="button" className="btn btn-outline-danger mr-1">Cancel</button>
-                          </MediaQuery>
+                          <button onClick={props.removeFromCart} type="button" className="btn btn-outline-danger mr-1">Cancel</button>
                           {!props.purchasePending ?
                             <Checkout
                               cartToSend={props.cartToSend}
@@ -306,11 +303,6 @@ const Cart = (props) => {
                             </Checkout>
                             : ''
                           }
-                          </div>
-                          <div className="cartTotal">
-                            <h3>Cart Total:
-                                <span className="badge badge-success">{`$${props.totalCost}`}</span>
-                            </h3>
                           </div>
                         </div>
                       </form>
