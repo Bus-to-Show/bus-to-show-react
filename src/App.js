@@ -388,8 +388,7 @@ const App = (props) => {
     /*
     The app is loaded into an iframe on the BTS homepage.
 
-    The homepage is hosted at bustoshow.squarespace.com, but the app is hosted at
-    bus-to-show.github.io.
+    The homepage is hosted at bustoshow.org, but the app is hosted at bus-to-show.github.io.
 
     Due to cross-origin security things, the homepage can't read the contents of the app,
     so it doesn't know how to size the iframe.
