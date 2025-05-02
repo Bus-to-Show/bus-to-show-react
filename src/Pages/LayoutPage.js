@@ -610,6 +610,7 @@ class LayoutPage extends Component {
       displayCart: newState.displayCart
     })
   }
+
   // Show Functions
   showsExpandClick = async (event) => {
     const newState = { ...this.state }
@@ -909,19 +910,19 @@ class LayoutPage extends Component {
     const newValidElems = newState.validatedElements
     const invalidFields = newState.invalidFields
     let discountCode = ''
-    if (updateField === 'useSeasonPass') {
-      newState.isUseSeasonPassChecked = !newState.isUseSeasonPassChecked
-      this.setState({ isUseSeasonPassChecked: newState.isUseSeasonPassChecked })
-      if (newState.isUseSeasonPassChecked) {
-        discountCode = useStore.getState().passStatus.discountCode
-        this.setState({ discountCode: discountCode })
-        this.findDiscountCode('apply')
-      } else if (!newState.isUseSeasonPassChecked) {
-        this.setState({ discountCode: '' })
-        this.findDiscountCode('release')
-      }
-      return
-    }
+    // if (updateField === 'useSeasonPass') {
+    //   newState.isUseSeasonPassChecked = !newState.isUseSeasonPassChecked
+    //   this.setState({ isUseSeasonPassChecked: newState.isUseSeasonPassChecked })
+    //   if (newState.isUseSeasonPassChecked) {
+    //     discountCode = useStore.getState().passStatus.discountCode
+    //     this.setState({ discountCode: discountCode })
+    //     this.findDiscountCode('apply')
+    //   } else if (!newState.isUseSeasonPassChecked) {
+    //     this.setState({ discountCode: '' })
+    //     this.findDiscountCode('release')
+    //   }
+    //   return
+    // }
 
     const phoneNumber = (inputtxt) => {
       var phoneno = /^\(?[(]([0-9]{3})\)?[) ]([0-9]{3})[-]([0-9]{4})$/
@@ -1051,9 +1052,7 @@ class LayoutPage extends Component {
   }
 
   confirmedRemove = () => {
-    if (this.state.isUseSeasonPassChecked){
-      this.findDiscountCode('release')
-    }
+    this.findDiscountCode('release')
     const newState = { ...this.state }
 
     const pickupPartyId = parseInt(newState.pickupPartyId)
@@ -1133,7 +1132,6 @@ class LayoutPage extends Component {
     newState.purchasePending = true
     newState.purchaseFailed = false
     newState.discountApplied = false
-    newState.afterDiscountObj = null
 
     this.setState({
       purchaseFailed: newState.purchaseFailed,
@@ -1141,7 +1139,6 @@ class LayoutPage extends Component {
       displayQuantity: newState.displayQuantity,
       displayAddBtn: newState.displayAddBtn,
       discountApplied: newState.discountApplied,
-      afterDiscountObj: newState.afterDiscountObj
     })
   }
 
