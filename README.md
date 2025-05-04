@@ -28,7 +28,7 @@ Run the unit tests with `npm test`.
 
 Create a production build with `npm run build`.
 
-The resulting build directory can be served on localhost with `npx run serve -s build -l 4200`.
+The resulting build directory can be served on localhost with `npx serve -p 4200`.
 
 The build directory can also be deployed to production, but this step is unnecessary as any
 push/merge to the main branch will do so automatically via GitHub Actions.

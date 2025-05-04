@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Redirecting...</title>
+  </head>
+  <body>
+    <noscript>Please enable JavaScript to run this app.</noscript>
+    <script>
+      (function () {
+        // This script is necessary for GitHub Pages to play nice with React Router
+        // See https://create-react-app.dev/docs/deployment/#notes-on-client-side-routing
+        const baseUrl = `${location.origin}/bus-to-show-react/`;
+        let redirect;
+
+        if (location.href.startsWith(baseUrl)) {
+          // Example:
+          // location.href = http://localhost:4200/bus-to-show-react/foo/bar?q=baz#bang
+          // route = foo/bar?q=baz#bang
+          // encoded = foo%2Fbar%3Fq%3Dbaz%23bang
+          // redirect = http://localhost:4200/bus-to-show-react/?route=foo%2Fbar%3Fq%3Dbaz%23bang
+          const route = location.href.replace(baseUrl, '');
+          const encoded = encodeURIComponent(route);
+          redirect = `${baseUrl}?route=${encoded}`;
+        } else {
+          // This should never happen
+          redirect = 'https://bustoshow.org/';
+        }
+
+        // The user won't see this, but it helps when testing
+        document.body.innerHTML += `<div>You are being redirected to ${redirect}.</div>
+          <div><a href="${redirect}">Click here</a> to go there now.</div>`;
+
+        location.replace(redirect);
+      }());
+    </script>
+  </body>
+</html>
