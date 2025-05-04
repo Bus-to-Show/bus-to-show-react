@@ -867,6 +867,7 @@ class LayoutPage extends Component {
       inCart: [],
       ticketQuantity: null,
       discountApplied: false,
+      discountCode: null,
       afterDiscountObj: {},
     })
 
@@ -896,6 +897,7 @@ class LayoutPage extends Component {
       inCart: [],
       ticketQuantity: null,
       discountApplied: false,
+      discountCode: null,
       afterDiscountObj: {},
     })
 
@@ -909,20 +911,6 @@ class LayoutPage extends Component {
     const value = event.target.value
     const newValidElems = newState.validatedElements
     const invalidFields = newState.invalidFields
-    let discountCode = ''
-    // if (updateField === 'useSeasonPass') {
-    //   newState.isUseSeasonPassChecked = !newState.isUseSeasonPassChecked
-    //   this.setState({ isUseSeasonPassChecked: newState.isUseSeasonPassChecked })
-    //   if (newState.isUseSeasonPassChecked) {
-    //     discountCode = useStore.getState().passStatus.discountCode
-    //     this.setState({ discountCode: discountCode })
-    //     this.findDiscountCode('apply')
-    //   } else if (!newState.isUseSeasonPassChecked) {
-    //     this.setState({ discountCode: '' })
-    //     this.findDiscountCode('release')
-    //   }
-    //   return
-    // }
 
     const phoneNumber = (inputtxt) => {
       var phoneno = /^\(?[(]([0-9]{3})\)?[) ]([0-9]{3})[-]([0-9]{4})$/
@@ -977,9 +965,6 @@ class LayoutPage extends Component {
           newValidElems.orderedByPhone = null
         }
         break;
-      case 'discountCode':
-        discountCode = value
-        break;
       default:
         return 'Please input valid items';
     }
@@ -999,7 +984,6 @@ class LayoutPage extends Component {
         ticketQuantity: parseInt(this.state.ticketQuantity),
         pickupLocationId: parseInt(this.state.pickupLocationId),
         totalCost: Number(this.state.totalCost),
-        discountCode,
         userId: useStore.getState().btsUser.userDetails.userId,
         willCallFirstName: (newValidElems.wcFirstName || newValidElems.firstName),
         willCallLastName: (newValidElems.wcLastName || newValidElems.lastName)
@@ -1052,7 +1036,10 @@ class LayoutPage extends Component {
   }
 
   confirmedRemove = () => {
-    this.findDiscountCode('release')
+    if (this.state.discountApplied) {
+      this.findDiscountCode('release')
+    }
+
     const newState = { ...this.state }
 
     const pickupPartyId = parseInt(newState.pickupPartyId)
@@ -1072,6 +1059,7 @@ class LayoutPage extends Component {
     newState.validated = false
     newState.purchasePending = false
     newState.discountApplied = false
+    newState.discountCode = null
     newState.afterDiscountObj = {}
 
     this.setState({
@@ -1086,6 +1074,7 @@ class LayoutPage extends Component {
       ticketQuantity: newState.ticketQuantity,
       purchasePending: newState.purchasePending,
       discountApplied: newState.discountApplied,
+      discountCode: newState.discountCode,
       afterDiscountObj: newState.afterDiscountObj,
     })
 
@@ -1131,14 +1120,12 @@ class LayoutPage extends Component {
     newState.displayAddBtn = false
     newState.purchasePending = true
     newState.purchaseFailed = false
-    newState.discountApplied = false
 
     this.setState({
       purchaseFailed: newState.purchaseFailed,
       purchasePending: newState.purchasePending,
       displayQuantity: newState.displayQuantity,
       displayAddBtn: newState.displayAddBtn,
-      discountApplied: newState.discountApplied,
     })
   }
 
