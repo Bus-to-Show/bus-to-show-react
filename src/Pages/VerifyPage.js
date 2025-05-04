@@ -52,65 +52,53 @@ const VerifyPage = (props) => {
 
   if (resentResponse) {
     return (
-      <div>
-        <div className="container-border-orange m-4 p-4">
-          <div className='col-12 text-center'>
-            {resentResponse.code === '200' ? (
-              <div>
-                <h3 className="bts-white-bg">Message: {JSON.stringify(resentResponse.message)}</h3>
-                <button className="btn btn-block-admin detail-btn my-2 col-12" onClick={() => props.history.push('/')}>Go to Dashboard</button>
-              </div>
-            ) : (
-              <div>
-                Something bad happened. Please keep trying, or give up.
-                <h3 className="bts-white-bg">Message: {JSON.stringify(resentResponse.message)}</h3>
-                <button className="btn btn-block-admin detail-btn my-2 col-12" onClick={() => props.history.push('/')}>Go to Dashboard</button>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    );
-  } else if (verifiedResponse) {
-    return (
-      <div>
-        <div className="container-border-orange m-4 p-4">
-          <div className='col-12 text-center'>
-            {verifiedResponse.code === '200' ? (
-              <div>
-                <h3 className="bts-white-bg">Your account has been verified. You may now log in!</h3>
-                <div className="btn btn-block-admin detail-btn my-2 col-12" onClick={() => props.history.push('/')}>Go to Dashboard</div>
-              </div>
-            ) : (
-              verifiedResponse.code ==='203' ? (
-                <div>
-                  <h3 className="bts-white-bg">Verification failed. Please try again or click here to send another</h3>
-                  <p>Message: {JSON.stringify(verifiedResponse.message)}</p>
-                  <div className="btn btn-block-admin detail-btn my-2 col-12" onClick={() => resendVerificationEmail()}>Send another one!</div>
-                </div>
-              ) : (
-                <div>
-                  <h3 className="bts-white-bg">Error Requesting Verification. Please try again or click here to send another </h3>
-                  <p>Message: {JSON.stringify(verifiedResponse.message)}</p>
-                  <div className="btn btn-block-admin detail-btn my-2 col-12" onClick={() => resendVerificationEmail()}>Send another one!</div>
-                </div>
-              )
-            )}
-          </div>
-        </div>
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        <div className="container-border-orange m-4 p-4">
-          <div className='col-12 text-center'>
-            <h3 className="bts-white-bg">Loading</h3>
-          </div>
+      <div className="container container-border-orange p-4">
+        <div className='col-12 text-center'>
+          {resentResponse.code === '200' ? (
+            <div>
+              <h3 className="bts-white-bg">Verification email sent. Please check your email and follow the link.</h3>
+              <button className="btn detail-btn" onClick={() => props.history.push('/')}>Go to Dashboard</button>
+            </div>
+          ) : (
+            <div>
+              <h3 className="bts-white-bg">Sorry, an error occurred. Please try again.</h3>
+              <p>Message: {JSON.stringify(resentResponse.message)}</p>
+              <button className="btn detail-btn" onClick={resendVerificationEmail}>Send another one!</button>
+            </div>
+          )}
         </div>
       </div>
     );
   }
+
+  if (verifiedResponse) {
+    return (
+      <div className="container container-border-orange p-4">
+        <div className='col-12 text-center'>
+          {verifiedResponse.code === '200' ? (
+            <div>
+              <h3 className="bts-white-bg">Your account has been verified. You may now log in!</h3>
+              <button className="btn detail-btn" onClick={() => props.history.push('/')}>Go to Dashboard</button>
+            </div>
+          ) : (
+            <div>
+              <h3 className="bts-white-bg">Sorry, an error occurred. Please try again.</h3>
+              <p>Message: {JSON.stringify(verifiedResponse.message)}</p>
+              <button className="btn detail-btn" onClick={resendVerificationEmail}>Send another one!</button>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="container container-border-orange p-4">
+      <div className='col-12 text-center'>
+        <h3 className="bts-white-bg">Loading</h3>
+      </div>
+    </div>
+  );
 }
 
 export default VerifyPage

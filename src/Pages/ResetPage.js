@@ -127,110 +127,89 @@ const ResetPage = (props) => {
 
   if (loading) {
     return (
-      <div>
-        <div className="container-border-orange m-4 p-4">
-          <div className='col-12 text-center'>
-            <h3 className="bts-white-bg">Loading</h3>
-          </div>
+      <div className="container container-border-orange p-4">
+        <div className='col-12 text-center'>
+          <h3 className="bts-white-bg">Loading</h3>
         </div>
       </div>
     );
   }
 
   if (resendResponse) {
-    if (resendResponse.code === '200') {
-      return (
-        <div>
-          <div className="container-border-orange m-4 p-4">
-            <div className='col-12 text-center'>
-              <div>
-                <h3 className="bts-white-bg">Reset Email Sent. Please check your email and follow the link.</h3>
-                <p>Message: {JSON.stringify(resendResponse.message)}</p>
-                <button className="btn bts-orange-bg mt-4" onClick={() => props.history.push('/')}>Great!</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    } else if (resendResponse.code === '202') {
-      return (
-        <div>
-          <div className="container-border-orange m-4 p-4">
-            <div className='col-12 text-center'>
-              <h3 className="bts-white-bg">Hmmmmmmm....Maybe try again, or something?</h3>
-              <p>Message: {JSON.stringify(resendResponse.message)}</p>
-              <button className="btn bts-orange-bg mt-4" onClick={() => props.history.push('/')}>Great!</button>
-            </div>
-          </div>
-        </div>
-      );
-    }
-  } else if (resetResponse) {
     return (
-      <div>
-        <div className="container-border-orange m-4 p-4">
-          <div className='col-12 text-center'>
-            {resetResponse.code === '200' ? (
-              <div>
-                <h3 className="bts-white-bg">Your password has been reset. You may now log in!</h3>
-                <div className="btn btn-block-admin detail-btn my-2 col-12" onClick={() => props.history.push('/')}>Go to Dashboard</div>
-              </div>
-            ) : (
-              resetResponse.code ==='203' ? (
-                <div>
-                  <h3 className="bts-white-bg">Verification failed. Please try again or click here to send another</h3>
-                  <p>Message: {JSON.stringify(resetResponse.message)}</p>
-                  <div className="btn btn-block-admin detail-btn my-2 col-12" onClick={() => resendEmail(resetResponse.email)}>Send another one!</div>
-                </div>
-              ) : (
-                <div>
-                  <h3 className="bts-white-bg">Error Requesting Verification. Please try again or click here to send another </h3>
-                  <p>Message: {JSON.stringify(resetResponse.message)}</p>
-                  <div className="btn btn-block-admin detail-btn my-2 col-12" onClick={() => resendEmail(resetResponse.email)}>Send another one!</div>
-                </div>
-              )
-            )}
-          </div>
-        </div>
-      </div>
-    );
-  } else {
-    return (
-      <div>
+      <div className="container container-border-orange p-4">
         <div className='col-12 text-center'>
-          <div className="btn bts-orange-bg my-2 col-12" onClick={() => props.history.push('/')}>Back to Dashboard</div>
-          <div className="container-border-orange m-4 p-4">
-            <h2 className="bts-white-bg">Change Password</h2>
-            <form className="form-group" onSubmit={handleSubmit}>
-              <div className='py-2'>
-                <input
-                  type="password"
-                  className="form-control"
-                  name="password"
-                  placeholder="Password"
-                  value={values.password}
-                  onChange={handleChange}
-                />
-                <small style={{ color: 'red' }}>{values.passwordError}</small>
-              </div>
-              <div className='py-2'>
-                <input
-                  type="password"
-                  className="form-control"
-                  name="confirmPassword"
-                  placeholder="Confirm Password"
-                  value={values.confirmPassword}
-                  onChange={handleChange}
-                />
-                <small style={{ color: 'red' }}>{values.confirmPasswordError}</small>
-              </div>
-              <button className="btn bts-orange-bg mt-4" type="submit">Submit</button>
-            </form>
-          </div>
+          {resendResponse.code === '200' ? (
+            <div>
+              <h3 className="bts-white-bg">Reset email sent. Please check your email and follow the link.</h3>
+              <button className="btn detail-btn" onClick={() => props.history.push('/')}>Go to Dashboard</button>
+            </div>
+          ) : (
+            <div>
+              <h3 className="bts-white-bg">Sorry, an error occurred. Please try again.</h3>
+              <p>Message: {JSON.stringify(resendResponse.message)}</p>
+              <button className="btn detail-btn" onClick={() => resendEmail(resendResponse.email)}>Send another one!</button>
+            </div>
+          )}
         </div>
       </div>
     );
   }
+
+  if (resetResponse) {
+    return (
+      <div className="container container-border-orange p-4">
+        <div className='col-12 text-center'>
+          {resetResponse.code === '200' ? (
+            <div>
+              <h3 className="bts-white-bg">Your password has been reset. You may now log in!</h3>
+              <button className="btn detail-btn" onClick={() => props.history.push('/')}>Go to Dashboard</button>
+            </div>
+          ) : (
+            <div>
+              <h3 className="bts-white-bg">Sorry, an error occurred. Please try again.</h3>
+              <p>Message: {JSON.stringify(resetResponse.message)}</p>
+              <button className="btn detail-btn" onClick={() => resendEmail(resetResponse.email)}>Send another one!</button>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="container container-border-orange p-4">
+      <div className='col-12 text-center'>
+        <h2 className="bts-white-bg">Change Password</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <input
+              type="password"
+              className="form-control"
+              name="password"
+              placeholder="Password"
+              value={values.password}
+              onChange={handleChange}
+            />
+            <small style={{ color: 'red' }}>{values.passwordError}</small>
+          </div>
+          <div className="form-group">
+            <input
+              type="password"
+              className="form-control"
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              value={values.confirmPassword}
+              onChange={handleChange}
+            />
+            <small style={{ color: 'red' }}>{values.confirmPasswordError}</small>
+          </div>
+          <button className="btn detail-btn" type="submit">Submit</button>
+          <button className="btn detail-btn ml-2" type="button" onClick={() => props.history.push('/')}>Back to Dashboard</button>
+        </form>
+      </div>
+    </div>
+  );
 };
 
 export default ResetPage;
