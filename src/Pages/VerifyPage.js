@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { sha256 } from 'js-sha256';
 
 const fetchUrl = `${process.env.REACT_APP_API_URL}`;
 
-const VerifyPage = (props) => {
+const VerifyPage = () => {
   const verifyEmailUrl = `${fetchUrl}/users/confirm-email`;
+  const navigate = useNavigate();
   const { token } = useParams();
   const [verifiedResponse, setVerifiedResponse] = useState(null);
   const [email, setEmail] = useState('');
@@ -50,6 +51,15 @@ const VerifyPage = (props) => {
     fetchData();
   }, [token]);
 
+  const goBack = () => {
+    if (window === window.parent) {
+      // This would mean we aren't in an iframe
+      window.location.replace(process.env.REACT_APP_HOME_URL);
+    } else {
+      navigate('/');
+    }
+  };
+
   if (resentResponse) {
     return (
       <div className="container container-border-orange p-4">
@@ -57,7 +67,7 @@ const VerifyPage = (props) => {
           {resentResponse.code === '200' ? (
             <div>
               <h3 className="bts-white-bg">Verification email sent. Please check your email and follow the link.</h3>
-              <button className="btn detail-btn" onClick={() => props.history.push('/')}>Go to Dashboard</button>
+              <button className="btn detail-btn" onClick={goBack}>Back to Events</button>
             </div>
           ) : (
             <div>
@@ -78,7 +88,7 @@ const VerifyPage = (props) => {
           {verifiedResponse.code === '200' ? (
             <div>
               <h3 className="bts-white-bg">Your account has been verified. You may now log in!</h3>
-              <button className="btn detail-btn" onClick={() => props.history.push('/')}>Go to Dashboard</button>
+              <button className="btn detail-btn" onClick={goBack}>Back to Events</button>
             </div>
           ) : (
             <div>

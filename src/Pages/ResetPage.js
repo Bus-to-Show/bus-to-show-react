@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { sha256 } from 'js-sha256';
 
-const ResetPage = (props) => {
+const ResetPage = () => {
   const fetchUrl = `${process.env.REACT_APP_API_URL}`;
+  const navigate = useNavigate();
   const { token } = useParams();
   const [resetResponse, setResetResponse] = useState(null);
   const [resendResponse, setResendResponse] = useState(null);
@@ -125,6 +126,15 @@ const ResetPage = (props) => {
     setResendResponse(userObj);
   };
 
+  const goBack = () => {
+    if (window === window.parent) {
+      // This would mean we aren't in an iframe
+      window.location.replace(process.env.REACT_APP_HOME_URL);
+    } else {
+      navigate('/');
+    }
+  };
+
   if (loading) {
     return (
       <div className="container container-border-orange p-4">
@@ -142,7 +152,7 @@ const ResetPage = (props) => {
           {resendResponse.code === '200' ? (
             <div>
               <h3 className="bts-white-bg">Reset email sent. Please check your email and follow the link.</h3>
-              <button className="btn detail-btn" onClick={() => props.history.push('/')}>Go to Dashboard</button>
+              <button className="btn detail-btn" onClick={goBack}>Back to Events</button>
             </div>
           ) : (
             <div>
@@ -163,7 +173,7 @@ const ResetPage = (props) => {
           {resetResponse.code === '200' ? (
             <div>
               <h3 className="bts-white-bg">Your password has been reset. You may now log in!</h3>
-              <button className="btn detail-btn" onClick={() => props.history.push('/')}>Go to Dashboard</button>
+              <button className="btn detail-btn" onClick={goBack}>Back to Events</button>
             </div>
           ) : (
             <div>
@@ -205,7 +215,7 @@ const ResetPage = (props) => {
             <small style={{ color: 'red' }}>{values.confirmPasswordError}</small>
           </div>
           <button className="btn detail-btn" type="submit">Submit</button>
-          <button className="btn detail-btn ml-2" type="button" onClick={() => props.history.push('/')}>Back to Dashboard</button>
+          <button className="btn detail-btn ml-2" type="button" onClick={goBack}>Back to Events</button>
         </form>
       </div>
     </div>
