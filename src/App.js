@@ -385,17 +385,12 @@ const App = (props) => {
   const [width, height] = useSize(appRef);
 
   useEffect(() => {
-    /*
-    The app is loaded into an iframe on the BTS homepage.
+    if (window === window.parent) {
+      // This would meean we aren't in an iframe
+      return;
+    }
 
-    The homepage is hosted at bustoshow.org, but the app is hosted at bus-to-show.github.io.
-
-    Due to cross-origin security things, the homepage can't read the contents of the app,
-    so it doesn't know how to size the iframe.
-
-    Posting a message to `window.parent` is the solution.
-    */
-
+    // Tell the host window how to size the iframe
     window.parent.postMessage({
       type: 'resize-iframe',
       width,
