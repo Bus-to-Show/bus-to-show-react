@@ -333,57 +333,63 @@ class LayoutPage extends Component {
     })
   }
 
-  findDiscountCode = async (applyOrRelease = 'apply') => {
-    const discountCode = this.state.discountCode || useStore.getState().passStatus.discountCode
-    const ticketQuantity = applyOrRelease !== 'release' ? this.state.ticketQuantity : (this.state.ticketQuantity * -1)
-    const eventId = this.state.displayShow.id
-    const totalPrice = applyOrRelease !== 'release' ? this.state.totalCost : ''
-
+  applyDiscountCode = async () => {
     const response = await fetch(`${fetchUrl}/discount_codes`, {
       method: 'PATCH',
       body: JSON.stringify({
-        discountCode: discountCode,
-        ticketQuantity: ticketQuantity,
-        totalPrice: totalPrice,
-        eventId: eventId,
-        applyOrRelease: applyOrRelease === 'release' ? 'release' : 'apply'
+        discountCode: this.state.discountCode,
+        ticketQuantity: this.state.ticketQuantity,
+        totalPrice: this.state.totalCost,
+        eventId: this.state.displayShow.id,
+        applyOrRelease: 'apply',
       }),
       headers: {
         'Content-Type': 'application/json'
       }
-    })
-
-    const json = await response.json()
-
-    if (!json) {
-      return;
-    }
+    });
 
     const {
-      message,
       discountCodeId,
       totalPriceAfterDiscount,
       totalSavings,
-    } = json;
+    } = await response.json();
 
-    if (message) {
-      // TODO: make this better
-      alert(message);
+    if (!discountCodeId || !totalPriceAfterDiscount || !totalSavings) {
+      // TODO: make this prettier
+      alert('Sorry, that discount code is invalid.');
       return;
     }
 
-    if (discountCodeId && totalPriceAfterDiscount && totalSavings) {
-      this.setState({
-        afterDiscountObj: {
-          discountCodeId,
-          totalPriceAfterDiscount,
-          totalSavings,
-        },
-        discountApplied: true,
-        totalCost: totalPriceAfterDiscount,
-      })
+    this.setState({
+      afterDiscountObj: {
+        discountCodeId,
+        totalPriceAfterDiscount,
+        totalSavings,
+      },
+      discountApplied: true,
+      totalCost: totalPriceAfterDiscount,
+    });
+  };
+
+  releaseDiscountCode = async () => {
+    const response = await fetch(`${fetchUrl}/discount_codes`, {
+      method: 'PATCH',
+      body: JSON.stringify({
+        discountCode: this.state.discountCode,
+        eventId: this.state.displayShow.id,
+        applyOrRelease: 'release',
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!response.ok) {
+      // No need to show this
+      const error = await response.text();
+      console.error('Unable to release discount code', error);
     }
-  }
+  };
 
   // Header Functions
 
@@ -1037,7 +1043,7 @@ class LayoutPage extends Component {
 
   confirmedRemove = () => {
     if (this.state.discountApplied) {
-      this.findDiscountCode('release')
+      this.releaseDiscountCode()
     }
 
     const newState = { ...this.state }
@@ -1227,7 +1233,7 @@ class LayoutPage extends Component {
         displayViewCartBtn={this.state.displayViewCartBtn}
         displayWarning={this.state.displayWarning}
         filterString={this.state.filterString}
-        findDiscountCode={this.findDiscountCode}
+        applyDiscountCode={this.applyDiscountCode}
         firstBusLoad={this.state.firstBusLoad}
         getPickupParty={this.getPickupParty}
         handleCheck={this.handleCheck}

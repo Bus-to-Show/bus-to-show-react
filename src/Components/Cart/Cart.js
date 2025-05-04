@@ -260,9 +260,9 @@ const Cart = (props) => {
                           </div>
                           <div className="col-md-6 mb-3">
                             {!props.discountApplied ?
-                              <button type="button" onClick={props.findDiscountCode} className="btn btn-outline-secondary">Apply</button>
+                              <button type="button" onClick={props.applyDiscountCode} className="btn btn-outline-secondary">Apply</button>
                               :
-                              <button type="button" onClick={props.findDiscountCode} className="btn btn-outline-secondary" disabled>Applied!</button>
+                              <button type="button" className="btn btn-outline-secondary" disabled>Applied!</button>
                             }
                           </div>
                         </div>

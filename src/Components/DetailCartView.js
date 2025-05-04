@@ -57,7 +57,7 @@ const DetailCartView = (props) => {
                   displayConfirmRemove={props.displayConfirmRemove}
                   displayShow={props.displayShow}
                   displayWarning={props.displayWarning}
-                  findDiscountCode={props.findDiscountCode}
+                  applyDiscountCode={props.applyDiscountCode}
                   firstBusLoad={props.firstBusLoad}
                   getPickupParty={props.getPickupParty}
                   handleCheck={props.handleCheck}
@@ -98,7 +98,6 @@ const DetailCartView = (props) => {
                   displaySuccess={props.displaySuccess}
                   displayViewCartBtn={props.displayViewCartBtn}
                   displayWarning={props.displayWarning}
-                  findDiscountCode={props.findDiscountCode}
                   inCart={props.inCart}
                   pickupLocations={props.pickupLocations}
                   pickupLocationId={props.pickupLocationId}
