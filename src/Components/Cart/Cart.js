@@ -107,7 +107,6 @@ const Cart = (props) => {
               <div className="row">
                 <div className="col-md-12">
                   <CartItem
-                    afterDiscountObj={props.afterDiscountObj}
                     closeAlert={props.closeAlert}
                     confirmedRemove={props.confirmedRemove}
                     confirmRemove={props.confirmRemove}
@@ -268,7 +267,7 @@ const Cart = (props) => {
                           </div>
                         </div>
 
-                        {props.afterDiscountObj?.totalSavings ?
+                        {props.afterDiscountObj.totalSavings ?
                           <div className="mb-3 text-right">
                             <h5>
                               Total Savings:
@@ -295,7 +294,6 @@ const Cart = (props) => {
                               purchasePending={props.purchasePending}
                               validated={props.validated}
                               purchase={props.purchase}
-                              afterDiscountObj={props.afterDiscountObj}
                               ticketTimer={props.ticketTimer}
                               totalCost={props.totalCost}
                               showsInCart={props.showsInCart}

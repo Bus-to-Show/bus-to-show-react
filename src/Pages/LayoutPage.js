@@ -19,7 +19,7 @@ class LayoutPage extends Component {
   // Please keep sorted alphabetically so we don't duplicate keys :) Thanks!
   state = {
     adminView: false,
-    afterDiscountObj: null,
+    afterDiscountObj: {},
     artistDescription: null,
     artistIcon: false,
     assignedParties: [],
@@ -849,7 +849,7 @@ class LayoutPage extends Component {
       return this.setState({ purchaseFailed: true })
     }
     const cartObj = this.state.cartToSend
-    cartObj.discountCode = this.state.afterDiscountObj?.discountCodeId
+    cartObj.discountCode = this.state.afterDiscountObj.discountCodeId
     cartObj.userId = useStore.getState().btsUser.userDetails.id
     const response = await fetch(`${fetchUrl}/orders`, {
       method: 'POST',
@@ -867,7 +867,7 @@ class LayoutPage extends Component {
       inCart: [],
       ticketQuantity: null,
       discountApplied: false,
-      afterDiscountObj: null,
+      afterDiscountObj: {},
     })
 
     window.removeEventListener("beforeunload", this.clearCartOnClose)
@@ -877,7 +877,7 @@ class LayoutPage extends Component {
     this.ticketTimer(false)
     const cartObj = this.state.cartToSend
     cartObj.userId = useStore.getState().btsUser.userDetails.id
-    cartObj.discountCode = this.state.afterDiscountObj?.discountCodeId
+    cartObj.discountCode = this.state.afterDiscountObj.discountCodeId
     const response = await fetch(`${fetchUrl}/orders`, {
       method: 'POST',
       body: JSON.stringify(cartObj),
@@ -896,7 +896,7 @@ class LayoutPage extends Component {
       inCart: [],
       ticketQuantity: null,
       discountApplied: false,
-      afterDiscountObj: null,
+      afterDiscountObj: {},
     })
 
     window.removeEventListener("beforeunload", this.clearCartOnClose)
@@ -1072,7 +1072,7 @@ class LayoutPage extends Component {
     newState.validated = false
     newState.purchasePending = false
     newState.discountApplied = false
-    newState.afterDiscountObj = null
+    newState.afterDiscountObj = {}
 
     this.setState({
       validated: newState.validated,
