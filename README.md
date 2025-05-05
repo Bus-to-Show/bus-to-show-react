@@ -2,8 +2,6 @@
 
 Production URL: https://bus-to-show.github.io/bus-to-show-react/
 
-Netlify dashboard: https://app.netlify.com/sites/cosmic-kataifi-559176/
-
 ## Development
 
 ### Prerequisites
@@ -28,14 +26,14 @@ Run the unit tests with `npm test`.
 
 Create a production build with `npm run build`.
 
-The resulting build directory can be served on localhost with `npx serve -p 4200`.
+The resulting build directory can be served on localhost with `npx serve -p 4200 build`.
 
 The build directory can also be deployed to production, but this step is unnecessary as any
 push/merge to the main branch will do so automatically via GitHub Actions.
 
 The production build is hosted on GitHub Pages and loaded into an iframe on the BTS homepage.
 
-### Useful links
+### References
 
 * [Environment Variables](https://create-react-app.dev/docs/adding-custom-environment-variables/)
   * Also see [Advanced Configuration](https://create-react-app.dev/docs/advanced-configuration/)

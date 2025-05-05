@@ -38,7 +38,7 @@
 
   II. TIMING
 
-  1. It is your responsibility to be on the bus when it leaves.  If you miss it, you miss it,  If that happens, you can always find your way to the venue meet up with us the bus to check-in at any time before it departs for the return trip.  If you are running a couple minutes late, ask a friend who is already there to have the driver to hold the bus.  Or, call us at 844.BUS.2.SHO and we will try to contact the driver for you.
+  1. It is your responsibility to be on the bus when it leaves.  If you miss it, you miss it,  If that happens, you can always find your way to the venue meet up with us the bus to check-in at any time before it departs for the return trip.  If you are running a couple minutes late, ask a friend who is already there to have the driver to hold the bus.  Or, call us at (844) BUS-SHOW [844.287.7469] and we will try to contact the driver for you.
 
   2. Times are posted on the bustoshow.org/calendar listing for each event and pick-up location (you can check this at any time).  More detailed information is also viewable by clicking  "Show Details" under each ticket description.
 
