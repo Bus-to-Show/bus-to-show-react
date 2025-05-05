@@ -19,11 +19,7 @@ class LayoutPage extends Component {
   // Please keep sorted alphabetically so we don't duplicate keys :) Thanks!
   state = {
     adminView: false,
-    afterDiscountObj: {
-      totalSavings: 0,
-      discountCodeId: 0,
-      totalPriceAfterDiscount: 0
-    },
+    afterDiscountObj: {},
     artistDescription: null,
     artistIcon: false,
     assignedParties: [],
@@ -337,41 +333,63 @@ class LayoutPage extends Component {
     })
   }
 
-  findDiscountCode = async (applyOrRelease = 'apply') => {
-    const discountCode = this.state.discountCode || useStore.getState().passStatus.discountCode
-    const ticketQuantity = applyOrRelease !== 'release' ? this.state.ticketQuantity : (this.state.ticketQuantity * -1)
-    const eventId = this.state.displayShow.id
-    const totalPrice = applyOrRelease !== 'release' ? this.state.totalCost : ''
-
+  applyDiscountCode = async () => {
     const response = await fetch(`${fetchUrl}/discount_codes`, {
       method: 'PATCH',
       body: JSON.stringify({
-        discountCode: discountCode,
-        ticketQuantity: ticketQuantity,
-        totalPrice: totalPrice,
-        eventId: eventId,
-        applyOrRelease: applyOrRelease === 'release' ? 'release' : 'apply'
+        discountCode: this.state.discountCode,
+        ticketQuantity: this.state.ticketQuantity,
+        totalPrice: this.state.totalCost,
+        eventId: this.state.displayShow.id,
+        applyOrRelease: 'apply',
       }),
       headers: {
         'Content-Type': 'application/json'
       }
-    })
-    const json = await response.json()
-    if (json.length) {
-      //we have a valid afterDiscountObj, let's apply it!
-      const newState = { ...this.state }
-      newState.totalCost = Number(json[0].totalPriceAfterDiscount).toFixed(2)
-      newState.afterDiscountObj = json[0]
-      newState.afterDiscountObj.totalPriceAfterDiscount = Number(json[0].totalPriceAfterDiscount.toFixed(2))
-      newState.discountApplied = true
-      this.setState({
-        totalCost: newState.totalCost,
-        afterDiscountObj: newState.afterDiscountObj,
-        discountApplied: newState.discountApplied
-      })
+    });
+
+    const {
+      discountCodeId,
+      totalPriceAfterDiscount,
+      totalSavings,
+    } = await response.json();
+
+    if (!discountCodeId || !totalPriceAfterDiscount || !totalSavings) {
+      // TODO: make this prettier
+      alert('Sorry, that discount code is invalid.');
+      return;
     }
 
-  }
+    this.setState({
+      afterDiscountObj: {
+        discountCodeId,
+        totalPriceAfterDiscount,
+        totalSavings,
+      },
+      discountApplied: true,
+      totalCost: totalPriceAfterDiscount,
+    });
+  };
+
+  releaseDiscountCode = async () => {
+    const response = await fetch(`${fetchUrl}/discount_codes`, {
+      method: 'PATCH',
+      body: JSON.stringify({
+        discountCode: this.state.discountCode,
+        eventId: this.state.displayShow.id,
+        applyOrRelease: 'release',
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!response.ok) {
+      // No need to show this
+      const error = await response.text();
+      console.error('Unable to release discount code', error);
+    }
+  };
 
   // Header Functions
 
@@ -598,6 +616,7 @@ class LayoutPage extends Component {
       displayCart: newState.displayCart
     })
   }
+
   // Show Functions
   showsExpandClick = async (event) => {
     const newState = { ...this.state }
@@ -836,7 +855,7 @@ class LayoutPage extends Component {
       return this.setState({ purchaseFailed: true })
     }
     const cartObj = this.state.cartToSend
-    cartObj.discountCode = this.state.afterDiscountObj.id
+    cartObj.discountCode = this.state.afterDiscountObj.discountCodeId
     cartObj.userId = useStore.getState().btsUser.userDetails.id
     const response = await fetch(`${fetchUrl}/orders`, {
       method: 'POST',
@@ -847,7 +866,17 @@ class LayoutPage extends Component {
     })
     const json = await response.json()
     await this.clearTicketsInCart(json.pickupPartiesId, cartObj.ticketQuantity)
-    this.setState({ purchaseSuccessful: true, purchasePending: false, inCart: [], ticketQuantity: null, discountApplied: false, afterDiscountObj: { discountCodeId: null, totalSavings: 0 } })
+
+    this.setState({
+      purchaseSuccessful: true,
+      purchasePending: false,
+      inCart: [],
+      ticketQuantity: null,
+      discountApplied: false,
+      discountCode: null,
+      afterDiscountObj: {},
+    })
+
     window.removeEventListener("beforeunload", this.clearCartOnClose)
   }
 
@@ -855,7 +884,7 @@ class LayoutPage extends Component {
     this.ticketTimer(false)
     const cartObj = this.state.cartToSend
     cartObj.userId = useStore.getState().btsUser.userDetails.id
-    cartObj.discountCode = this.state.afterDiscountObj.id
+    cartObj.discountCode = this.state.afterDiscountObj.discountCodeId
     const response = await fetch(`${fetchUrl}/orders`, {
       method: 'POST',
       body: JSON.stringify(cartObj),
@@ -865,7 +894,19 @@ class LayoutPage extends Component {
     })
     const json = await response.json()
     await this.clearTicketsInCart(json.pickupPartiesId, cartObj.ticketQuantity)
-    this.setState({ purchaseSuccessful: true, purchaseFailed: false, purchasePending: false, displayQuantity: false, inCart: [], ticketQuantity: null, discountApplied: false, afterDiscountObj: { discountCodeId: null, totalSavings: 0 } })
+
+    this.setState({
+      purchaseSuccessful: true,
+      purchaseFailed: false,
+      purchasePending: false,
+      displayQuantity: false,
+      inCart: [],
+      ticketQuantity: null,
+      discountApplied: false,
+      discountCode: null,
+      afterDiscountObj: {},
+    })
+
     window.removeEventListener("beforeunload", this.clearCartOnClose)
   }
 
@@ -876,20 +917,6 @@ class LayoutPage extends Component {
     const value = event.target.value
     const newValidElems = newState.validatedElements
     const invalidFields = newState.invalidFields
-    let discountCode = ''
-    if (updateField === 'useSeasonPass') {
-      newState.isUseSeasonPassChecked = !newState.isUseSeasonPassChecked
-      this.setState({ isUseSeasonPassChecked: newState.isUseSeasonPassChecked })
-      if (newState.isUseSeasonPassChecked) {
-        discountCode = useStore.getState().passStatus.discountCode
-        this.setState({ discountCode: discountCode })
-        this.findDiscountCode('apply')
-      } else if (!newState.isUseSeasonPassChecked) {
-        this.setState({ discountCode: '' })
-        this.findDiscountCode('release')
-      }
-      return
-    }
 
     const phoneNumber = (inputtxt) => {
       var phoneno = /^\(?[(]([0-9]{3})\)?[) ]([0-9]{3})[-]([0-9]{4})$/
@@ -944,9 +971,6 @@ class LayoutPage extends Component {
           newValidElems.orderedByPhone = null
         }
         break;
-      case 'discountCode':
-        discountCode = value
-        break;
       default:
         return 'Please input valid items';
     }
@@ -966,7 +990,6 @@ class LayoutPage extends Component {
         ticketQuantity: parseInt(this.state.ticketQuantity),
         pickupLocationId: parseInt(this.state.pickupLocationId),
         totalCost: Number(this.state.totalCost),
-        discountCode,
         userId: useStore.getState().btsUser.userDetails.userId,
         willCallFirstName: (newValidElems.wcFirstName || newValidElems.firstName),
         willCallLastName: (newValidElems.wcLastName || newValidElems.lastName)
@@ -1014,13 +1037,15 @@ class LayoutPage extends Component {
       displayWarning: newState.displayWarning,
       purchaseSuccessful: newState.purchaseSuccessful,
     })
+
     window.removeEventListener("beforeunload", this.clearCartOnClose)
   }
 
   confirmedRemove = () => {
-    if (this.state.isUseSeasonPassChecked){
-      this.findDiscountCode('release')
+    if (this.state.discountApplied) {
+      this.releaseDiscountCode()
     }
+
     const newState = { ...this.state }
 
     const pickupPartyId = parseInt(newState.pickupPartyId)
@@ -1039,6 +1064,9 @@ class LayoutPage extends Component {
     newState.pickupLocationId = null
     newState.validated = false
     newState.purchasePending = false
+    newState.discountApplied = false
+    newState.discountCode = null
+    newState.afterDiscountObj = {}
 
     this.setState({
       validated: newState.validated,
@@ -1050,11 +1078,13 @@ class LayoutPage extends Component {
       displayAddBtn: newState.displayAddBtn,
       startTimer: newState.startTimer,
       ticketQuantity: newState.ticketQuantity,
-      purchasePending: newState.purchasePending
-
+      purchasePending: newState.purchasePending,
+      discountApplied: newState.discountApplied,
+      discountCode: newState.discountCode,
+      afterDiscountObj: newState.afterDiscountObj,
     })
-    window.removeEventListener("beforeunload", this.clearCartOnClose)
 
+    window.removeEventListener("beforeunload", this.clearCartOnClose)
   }
 
   closeAlert = () => {
@@ -1096,16 +1126,12 @@ class LayoutPage extends Component {
     newState.displayAddBtn = false
     newState.purchasePending = true
     newState.purchaseFailed = false
-    newState.discountApplied = false
-    newState.afterDiscountObj = { discountCodeId: null, totalSavings: 0 }
 
     this.setState({
       purchaseFailed: newState.purchaseFailed,
       purchasePending: newState.purchasePending,
       displayQuantity: newState.displayQuantity,
       displayAddBtn: newState.displayAddBtn,
-      discountApplied: newState.discountApplied,
-      afterDiscountObj: newState.afterDiscountObj
     })
   }
 
@@ -1207,7 +1233,7 @@ class LayoutPage extends Component {
         displayViewCartBtn={this.state.displayViewCartBtn}
         displayWarning={this.state.displayWarning}
         filterString={this.state.filterString}
-        findDiscountCode={this.findDiscountCode}
+        applyDiscountCode={this.applyDiscountCode}
         firstBusLoad={this.state.firstBusLoad}
         getPickupParty={this.getPickupParty}
         handleCheck={this.handleCheck}
