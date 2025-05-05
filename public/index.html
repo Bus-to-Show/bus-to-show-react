@@ -40,17 +40,28 @@
       integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
       crossorigin="anonymous"
     />
+    <script>
+      (function () {
+        // This script is necessary for GitHub Pages to play nice with React Router
+        // It must be loaded before the app bundle(s)
+        // See https://create-react-app.dev/docs/deployment/#notes-on-client-side-routing
+        const params = new URLSearchParams(location.search);
+        const route = params.get('route');
 
+        if (route) {
+          const url = `${location.origin}/bus-to-show-react/${route}`;
+          window.history.replaceState(null, '', url);
+        }
+      }());
+    </script>
     <title>
-      BUSTOSHOW.ORG - Red Rocks Concert Bus Service from Denver, Boulder, Fort
-      Collins
+      BUSTOSHOW.ORG - Red Rocks Concert Bus Service from Denver, Boulder, Fort Collins
     </title>
+    <!-- App bundle(s) are inserted here during the build -->
   </head>
-
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <noscript>Please enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
       integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

@@ -23,9 +23,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const fetchUrl = `${process.env.REACT_APP_API_URL}`;
-const verifyEmailUrl = `${fetchUrl}/users/confirm-email`;
 
-const App = (props) => {
+const App = () => {
   const {
      btsUser,
      setBtsUser,
@@ -61,8 +60,6 @@ const App = (props) => {
 
   const [showRegisterForm, setShowRegisterForm] = useState(false);
 
-  const [isVerified, setIsVerified] = useState(false);
-  const [isCalled, setIsCalled] = useState(false);
   const [registerResponse, setRegisterResponse] = useState({});
   const [reservationEditsToSend, setReservationEditsToSend] = useState([]);
   const [, setPickupPartyId] = useState(null);
@@ -328,21 +325,6 @@ const App = (props) => {
     }
   }
 
-  const verifyEmail = async (token) => {
-    if (isCalled === true) return;
-    setIsCalled(true);
-
-    const response = await fetch(`${verifyEmailUrl}/${token}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    const result = await response.json();
-    const verified = result ? true : false;
-    setIsVerified(verified);
-  };
-
   useEffect(() => {
     const checkAuth = async () => {
       const jwtToken = localStorage.getItem('jwt')
@@ -385,17 +367,12 @@ const App = (props) => {
   const [width, height] = useSize(appRef);
 
   useEffect(() => {
-    /*
-    The app is loaded into an iframe on the BTS homepage.
+    if (window === window.parent) {
+      // This would meean we aren't in an iframe
+      return;
+    }
 
-    The homepage is hosted at bustoshow.org, but the app is hosted at bus-to-show.github.io.
-
-    Due to cross-origin security things, the homepage can't read the contents of the app,
-    so it doesn't know how to size the iframe.
-
-    Posting a message to `window.parent` is the solution.
-    */
-
+    // Tell the host window how to size the iframe
     window.parent.postMessage({
       type: 'resize-iframe',
       width,
@@ -416,10 +393,7 @@ const App = (props) => {
           ''
         )}
         <Routes>
-          <Route exact path="/" element={
-          <LayoutPage
-            btsUser={btsUser}
-          />} />
+          <Route exact path="/" element={<LayoutPage />} />
           <Route exact path="/login" element={
             <LoginView
               displayReservations={displayReservations}
@@ -446,38 +420,13 @@ const App = (props) => {
               submitReservationForm={submitReservationForm}
               displayEditSuccess={displayEditSuccess}
               toggleEditSuccess={toggleEditSuccess}
-          />
+            />
           } />
           <Route exact path="/shop" element={<ShopPage />} />
           <Route exact path="/faqs" element={<FAQsPage />} />
-
           <Route path="/products/:id" element={<ProductDetail />} />
-          <Route
-            path="/verify/:token"
-            element={React.createElement((props) => (
-              <VerifyPage
-                verifyEmail={verifyEmail}
-                isVerified={isVerified}
-                isCalled={isCalled}
-                {...props}
-              />
-            ))}
-          />
-          <Route
-            path="/reset/:token"
-            element={React.createElement((props) => (
-              <ResetPage
-                verifyEmail={verifyEmail}
-                isVerified={isVerified}
-                isCalled={isCalled}
-                {...props}
-              />
-            ))}
-          />
-          <Route element={
-            <LayoutPage
-              btsUser={btsUser}
-           />} />
+          <Route path="/verify/:token" element={<VerifyPage />} />
+          <Route path="/reset/:token" element={<ResetPage />} />
         </Routes>
       </div>
     </Router>
