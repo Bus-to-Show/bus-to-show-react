@@ -73,6 +73,7 @@ const DetailCartView = (props) => {
                   pickupPartyId={props.pickupPartyId}
                   purchase={props.purchase}
                   purchaseClick={props.purchaseClick}
+                  purchaseFailed={props.purchaseFailed}
                   purchasePending={props.purchasePending}
                   purchaseSuccessful={props.purchaseSuccessful}
                   removeFromCart={props.removeFromCart}
