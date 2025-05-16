@@ -849,10 +849,10 @@ class LayoutPage extends Component {
     this.ticketTimer(false)
     if (err) {
       console.log('purchase error', err)
-      await this.ticketTimer(false)
-      await this.ticketTimer(true, 360000, true) // production
+      this.ticketTimer(false)
+      this.ticketTimer(true, 360000, true) // production
       //await this.ticketTimer(true, 30000, true) //testing
-      return this.setState({ purchaseFailed: true })
+      return this.setState({ purchaseFailed: true, purchasePending: false })
     }
     const cartObj = this.state.cartToSend
     cartObj.discountCode = this.state.afterDiscountObj.discountCodeId
@@ -869,6 +869,7 @@ class LayoutPage extends Component {
 
     this.setState({
       purchaseSuccessful: true,
+      purchaseFailed: false,
       purchasePending: false,
       inCart: [],
       ticketQuantity: null,
@@ -1028,14 +1029,12 @@ class LayoutPage extends Component {
 
   removeFromCart = () => {
     const newState = { ...this.state }
-    newState.purchaseSuccessful = false
     newState.displayWarning = false
     newState.displayConfirmRemove = true
 
     this.setState({
       displayConfirmRemove: newState.displayConfirmRemove,
       displayWarning: newState.displayWarning,
-      purchaseSuccessful: newState.purchaseSuccessful,
     })
 
     window.removeEventListener("beforeunload", this.clearCartOnClose)
@@ -1064,6 +1063,7 @@ class LayoutPage extends Component {
     newState.pickupLocationId = null
     newState.validated = false
     newState.purchasePending = false
+    newState.purchaseFailed = false
     newState.discountApplied = false
     newState.discountCode = null
     newState.afterDiscountObj = {}
@@ -1079,6 +1079,7 @@ class LayoutPage extends Component {
       startTimer: newState.startTimer,
       ticketQuantity: newState.ticketQuantity,
       purchasePending: newState.purchasePending,
+      purchaseFailed: newState.purchaseFailed,
       discountApplied: newState.discountApplied,
       discountCode: newState.discountCode,
       afterDiscountObj: newState.afterDiscountObj,
