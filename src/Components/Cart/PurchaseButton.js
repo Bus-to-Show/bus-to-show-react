@@ -33,7 +33,7 @@ const PurchaseButton = (props) => {
     });
   }
 
-  const disabled = !props.validated || !props.waiverChecked;
+  const disabled = !props.validated || !props.waiverChecked || props.purchasePending;
   const email = props.cartToSend.email;
 
   const selectResponse = e => {

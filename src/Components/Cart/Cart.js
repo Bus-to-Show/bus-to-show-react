@@ -308,7 +308,6 @@ const Cart = (props) => {
                         <div className='mb-3 text-right'>
                           <div>
                           <button onClick={props.removeFromCart} type="button" className="btn btn-outline-danger mr-1">Cancel</button>
-                          {!props.purchasePending ?
                             <PurchaseButton
                               cartToSend={props.cartToSend}
                               comp={props.comp}
@@ -322,8 +321,6 @@ const Cart = (props) => {
                               invalidOnSubmit={props.invalidOnSubmit}
                               waiverChecked={waiverChecked}
                             />
-                            : ''
-                          }
                           </div>
                         </div>
                       </form>
