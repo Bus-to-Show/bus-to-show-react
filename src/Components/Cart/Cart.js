@@ -320,7 +320,7 @@ const Cart = (props) => {
                               totalCost={props.totalCost}
                               showsInCart={props.showsInCart}
                               invalidOnSubmit={props.invalidOnSubmit}
-                              waiverChecked={!waiverChecked} // Disable if waiver is not checked
+                              waiverChecked={waiverChecked}
                             />
                             : ''
                           }
