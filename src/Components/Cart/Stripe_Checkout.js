@@ -36,7 +36,7 @@ export default class Checkout extends React.Component {
   render() {
     const email = this.props.cartToSend.email
     const selectResponse = e => {
-        this.props.validated ?
+      this.props.validated ?
         this.props.makePurchase(e) :
         this.props.invalidOnSubmit(e)
     }
@@ -49,30 +49,30 @@ export default class Checkout extends React.Component {
             onClick={this.props.comp}
             className={`btn mr-1 ${this.props.validated ? 'btn-outline-success' : 'btn-secondary'}`}
           >
-          Happy Birthday
+            Happy Birthday
           </button>
           :
-        <StripeCheckout
-          token={this.onToken}
-          stripeKey={stripePublic}
-          name='Bus To Show'
-          description='Receipt will be emailed after purchase'
-          email={email}
-          amount={Number(this.props.totalCost) * 100}
-          currency='USD'
-          metadata={this.props.cartToSend}
-          disabled={this.props.validated ? false : true}
-        >
-
-          <button
-            onClick={e=>selectResponse(e)}
-            className={`btn mr-1 ${this.props.validated ? 'btn-outline-success' : 'btn-secondary'}`}
+          <StripeCheckout
+            token={this.onToken}
+            stripeKey={stripePublic}
+            name='Bus To Show'
+            description='Receipt will be emailed after purchase'
+            email={email}
+            amount={Number(this.props.totalCost) * 100}
+            currency='USD'
+            metadata={this.props.cartToSend}
+            disabled={this.props.validated && !this.props.waiverChecked ? false : true}
           >
-          Purchase
-          </button>
+            waiverChecked = {this.props.waiverChecked}
+            <button
+              onClick={e => selectResponse(e)}
+              className={`btn mr-1 ${this.props.validated ? 'btn-outline-success' : 'btn-secondary'}`}
+            >
+              Purchase
+            </button>
 
-        </StripeCheckout>
-      }
+          </StripeCheckout>
+        }
       </React.Fragment>
     )
   }
