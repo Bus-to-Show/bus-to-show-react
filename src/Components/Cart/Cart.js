@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState}  from 'react'
 import '../../App.css'
 import CartItem from './CartItem'
-import Checkout from './Stripe_Checkout'
+import PurchaseButton from './PurchaseButton'
 import MediaQuery from 'react-responsive'
 import logo from '../../Images/Logos/bts-logo-gray.png'
 import {useStore} from '../../Store'
@@ -309,7 +309,7 @@ const Cart = (props) => {
                           <div>
                           <button onClick={props.removeFromCart} type="button" className="btn btn-outline-danger mr-1">Cancel</button>
                           {!props.purchasePending ?
-                            <Checkout
+                            <PurchaseButton
                               cartToSend={props.cartToSend}
                               comp={props.comp}
                               makePurchase={props.makePurchase}

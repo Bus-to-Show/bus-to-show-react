@@ -4,7 +4,7 @@ import StripeCheckout from 'react-stripe-checkout'
 const stripePublic = `${process.env.REACT_APP_STRIPE_PUBLIC}`;
 const fetchUrl = `${process.env.REACT_APP_API_URL}`
 
-const Checkout = (props) => {
+const PurchaseButton = (props) => {
   const onToken = (token) => {
     props.ticketTimer(false);
     const orderInfo = props.cartToSend;
@@ -77,4 +77,4 @@ const Checkout = (props) => {
   );
 };
 
-export default Checkout;
+export default PurchaseButton;
