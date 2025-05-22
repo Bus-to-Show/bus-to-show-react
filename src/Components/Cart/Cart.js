@@ -1,7 +1,7 @@
-import React, {useEffect, useRef}  from 'react'
+import React, {useEffect, useRef, useState}  from 'react'
 import '../../App.css'
 import CartItem from './CartItem'
-import Checkout from './Stripe_Checkout'
+import PurchaseButton from './PurchaseButton'
 import MediaQuery from 'react-responsive'
 import logo from '../../Images/Logos/bts-logo-gray.png'
 import {useStore} from '../../Store'
@@ -9,6 +9,7 @@ import {useStore} from '../../Store'
 const Cart = (props) => {
   const {btsUser, passStatus, setPassStatus} = useStore();
   const myRef = useRef(null);
+  const [waiverChecked, setWaiverChecked] = useState(false);
 
   let cTSendId = props.cartToSend && props.cartToSend.eventId
 
@@ -208,6 +209,22 @@ const Cart = (props) => {
                           </div>
                         </div>
 
+                        <div className="form-check mb-3">
+                          <input
+                            type="checkbox"
+                            className="form-check-input"
+                            id="waiverCheckbox"
+                            checked={waiverChecked}
+                            onChange={(e) => {
+                              setWaiverChecked(e.target.checked);
+                            }}
+                            required
+                          />
+                          <label className="form-check-label" htmlFor="waiverCheckbox">
+                            By completing this purchase and riding with Bus to Show, I (and my guests) agree to the <a href="/waiver" target="_blank" rel="noopener noreferrer">waiver terms and refund policy</a>.
+                          </label>
+                        </div>
+
                         {/* Ternary to display will call name fields or button to show fields */}
                         {props.checked ?
                         //close button with onClick to remove will call name fields and set props.checked to false
@@ -291,8 +308,7 @@ const Cart = (props) => {
                         <div className='mb-3 text-right'>
                           <div>
                           <button onClick={props.removeFromCart} type="button" className="btn btn-outline-danger mr-1">Cancel</button>
-                          {!props.purchasePending ?
-                            <Checkout
+                            <PurchaseButton
                               cartToSend={props.cartToSend}
                               comp={props.comp}
                               makePurchase={props.makePurchase}
@@ -302,10 +318,9 @@ const Cart = (props) => {
                               ticketTimer={props.ticketTimer}
                               totalCost={props.totalCost}
                               showsInCart={props.showsInCart}
-                              invalidOnSubmit={props.invalidOnSubmit}>
-                            </Checkout>
-                            : ''
-                          }
+                              invalidOnSubmit={props.invalidOnSubmit}
+                              waiverChecked={waiverChecked}
+                            />
                           </div>
                         </div>
                       </form>
