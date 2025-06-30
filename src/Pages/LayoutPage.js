@@ -912,64 +912,66 @@ class LayoutPage extends Component {
   }
 
   updatePurchaseField = event => {
-
     const newState = { ...this.state }
     const updateField = event.target.id
     const value = event.target.value
     const newValidElems = newState.validatedElements
     const invalidFields = newState.invalidFields
 
-    const phoneNumber = (inputtxt) => {
-      var phoneno = /^\(?[(]([0-9]{3})\)?[) ]([0-9]{3})[-]([0-9]{4})$/
-      if (inputtxt.match(phoneno)) return true
-      else if (inputtxt.length > 12 || inputtxt.length < 12) return false
-      else return false
-    }
+    const validatePhone = value => {
+      var regex = /^\(?[(]([0-9]{3})\)?[) ]([0-9]{3})[-]([0-9]{4})$/;
+      return regex.test(value);
+    };
+
+    const validateText = value => {
+      // Allow space, apostrophe, hyphen, and period so e.g. "Dr. Hans-Peter O'Donnell" is valid
+      return Validator.isAlpha(value, 'en-US', {ignore: " '-."});
+    };
 
     switch (updateField) {
       case 'email':
-        if (Validator.isEmail(value) && !Validator.isEmpty(value)) {
-          newValidElems.email = value
-          invalidFields.invalidEmail = false
+        if (Validator.isEmail(value)) {
+          newValidElems.email = value.trim();
+          invalidFields.invalidEmail = false;
         } else {
-          newValidElems.email = null
+          newValidElems.email = null;
         }
         break;
       case 'firstName':
-        if (Validator.isAlpha(value) && !Validator.isEmpty(value)) {
-          newValidElems.firstName = value
-          invalidFields.invalidFirstName = false
+        if (validateText(value)) {
+          newValidElems.firstName = value.trim();
+          invalidFields.invalidFirstName = false;
         } else {
-          newValidElems.firstName = null
+          newValidElems.firstName = null;
         } break;
       case 'lastName':
-        if (Validator.isAlpha(value) && !Validator.isEmpty(value)) {
-          newValidElems.lastName = value
-          invalidFields.invalidLastName = false
+        if (validateText(value)) {
+          newValidElems.lastName = value.trim();
+          invalidFields.invalidLastName = false;
         } else {
-          newValidElems.lastName = null
+          newValidElems.lastName = null;
         }
         break;
       case 'willCallFirstName':
-        if (Validator.isAlpha(value)) {
-          newValidElems.wcFirstName = value
+        if (validateText(value)) {
+          newValidElems.wcFirstName = value.trim();
         } else {
-          newValidElems.wcFirstName = null
+          newValidElems.wcFirstName = null;
         }
         break;
       case 'willCallLastName':
-        if (Validator.isAlpha(value)) {
-          newValidElems.wcLastName = value
+        if (validateText(value)) {
+          newValidElems.wcLastName = value.trim();
         } else {
-          newValidElems.wcLastName = null
+          newValidElems.wcLastName = null;
         }
         break;
       case 'orderedByPhone':
-        if (phoneNumber(value) && !Validator.isEmpty(value)) {
-          newValidElems.orderedByPhone = value
-          invalidFields.invalidPhone = false
+        if (validatePhone(value)) {
+          newValidElems.orderedByPhone = value.trim();
+          invalidFields.invalidPhone = false;
         } else {
-          newValidElems.orderedByPhone = null
+          newValidElems.orderedByPhone = null;
         }
         break;
       default:
