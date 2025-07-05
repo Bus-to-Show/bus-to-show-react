@@ -104,36 +104,18 @@ class LayoutPage extends Component {
   async componentDidMount() {
     await this.getVerify()
 
-    const response = await fetch(`${fetchUrl}/events`)
-    let allShows = await response.json()
+    const upcomingShowsResponse = await fetch(`${fetchUrl}/events/upcoming`)
+    const upcomingShows = await upcomingShowsResponse.json()
 
-    //filters out expired shows and shows that don't meet criteria, and shows that are denied.
-    const dateCheck = (show) => {
-      const showDate = Date.parse(show.date)
-      const today = new Date()
-      const startDate = today.setDate(today.getDate() - 1)
-      if (showDate < startDate) {
-        return false
-      } else {
-        return true
-      }
-    }
-    const currentShows = allShows.filter(dateCheck)
-    const userShows = currentShows.filter(show => show.meetsCriteria === true && show.isDenied === false).sort((show1, show2) => {
+    upcomingShows.sort((show1, show2) => {
       const a = new Date(show1.date)
       const b = new Date(show2.date)
       return a - b
     })
 
-    allShows = allShows.sort((show1, show2) => {
-      const a = new Date(show1.date)
-      const b = new Date(show2.date)
-      return a - b
-    })
-
-    const pickups = await fetch(`${fetchUrl}/pickup_locations`)
-    const pickupLocations = await pickups.json()
-    this.setState({ pickupLocations, allShows, userShows })
+    const pickupLocationsResponse = await fetch(`${fetchUrl}/pickup_locations`)
+    const pickupLocations = await pickupLocationsResponse.json()
+    this.setState({ pickupLocations, upcomingShows })
   }
 
   getVerify = async () => {
@@ -625,7 +607,7 @@ class LayoutPage extends Component {
     this.setState({
       pickupPartyId: newState.pickupPartyId
     })
-    const clickedShow = newState.userShows.find(show => (parseInt(show.id) === parseInt(event.target.id)))
+    const clickedShow = newState.upcomingShows.find(show => (parseInt(show.id) === parseInt(event.target.id)))
     if (clickedShow.external) {
       newState.displayShowDetails = false
       newState.displayExternalShowDetails = true
@@ -1098,7 +1080,7 @@ class LayoutPage extends Component {
   }
 
   sortByArtist = () => {
-    let newState = this.state.userShows.sort((show1, show2) => {
+    let newState = this.state.upcomingShows.sort((show1, show2) => {
       let a = show1.headliner.toLowerCase().split(" ").join("")
       let b = show2.headliner.toLowerCase().split(" ").join("")
       if (a < b) {
@@ -1113,7 +1095,7 @@ class LayoutPage extends Component {
   }
 
   sortByDate = () => {
-    let newState = this.state.userShows.sort((show1, show2) => {
+    let newState = this.state.upcomingShows.sort((show1, show2) => {
       let a = new Date(show1.date)
       let b = new Date(show2.date)
       return a - b
@@ -1204,12 +1186,11 @@ class LayoutPage extends Component {
       return <AdminView
         pickupLocations={this.state.pickupLocations}
         searchShows={this.searchShows}
-        shows={this.state.allShows}
         showsExpandClick={this.showsExpandClick}
         userDetails={useStore.getState().btsUser.userDetails} />;
     }
 
-    if (!this.state.userShows) {
+    if (!this.state.upcomingShows) {
       return <div className="p-4 text-center">Loading...</div>;
     }
 
@@ -1259,7 +1240,7 @@ class LayoutPage extends Component {
         returnToShows={this.returnToShows}
         selectPickupLocationId={this.selectPickupLocationId}
         selectTicketQuantity={this.selectTicketQuantity}
-        shows={this.state.userShows}
+        shows={this.state.upcomingShows}
         showsExpandClick={this.showsExpandClick}
         showsInCart={this.state.inCart}
         startTimer={this.state.startTimer}
@@ -1282,7 +1263,7 @@ class LayoutPage extends Component {
       handleWarning={this.handleWarning}
       inCart={this.state.inCart}
       searchShows={this.searchShows}
-      shows={this.state.userShows}
+      shows={this.state.upcomingShows}
       showsExpandClick={this.showsExpandClick}
       sortByArtist={this.sortByArtist}
       sortByDate={this.sortByDate}
