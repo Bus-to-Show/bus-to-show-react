@@ -64,7 +64,7 @@ const App = () => {
   const [reservationEditsToSend, setReservationEditsToSend] = useState([]);
   const [, setPickupPartyId] = useState(null);
   const [pickupLocations, setPickupLocations] = useState([]);
-  const [userShows] = useState([]);
+  const [upcomingShows] = useState([]);
   const [willCallEdits, setWillCallEdits] = useState({})
 
   const continueAsGuest = () => {
@@ -221,7 +221,7 @@ const App = () => {
     //immediately clear previously selected pickupPartyId from State.
     setPickupPartyId(null);
 
-    const clickedShow = userShows.find(show => (parseInt(show.id) === parseInt(event.target.id)))
+    const clickedShow = upcomingShows.find(show => (parseInt(show.id) === parseInt(event.target.id)))
     if(clickedShow.external){
       setDisplayShowDetails(false);
       setDisplayExternalShowDetails(true);
