@@ -104,8 +104,15 @@ class LayoutPage extends Component {
   async componentDidMount() {
     await this.getVerify()
 
-    const upcomingShowsResponse = await fetch(`${fetchUrl}/events?upcoming=true&sort=date`)
-    const upcomingShows = await upcomingShowsResponse.json()
+    const today = new Date().toLocaleDateString('en-US');
+
+    const eventsParams = new URLSearchParams([
+      ['startDate', today],
+      ['sort', 'date'],
+    ]);
+
+    const eventsResponse = await fetch(`${fetchUrl}/events?${eventsParams}`)
+    const upcomingShows = await eventsResponse.json()
 
     const pickupLocationsResponse = await fetch(`${fetchUrl}/pickup_locations`)
     const pickupLocations = await pickupLocationsResponse.json()
