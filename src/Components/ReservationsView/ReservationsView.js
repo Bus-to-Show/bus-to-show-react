@@ -15,11 +15,8 @@ const ReservationsView = (props) => {
                 <ShowReservation
                   userReservations={props.userReservations}
                   displayFuture={props.displayFuture}
-                  displayPast={props.displayPast}
-                  getEventDetails={props.getEventDetails}
                   reservationEditField={props.reservationEditField}
                   submitReservationForm={props.submitReservationForm}
-                  displayEditSuccess={props.displayEditSuccess}
                   toggleEditSuccess={props.toggleEditSuccess}
                   />
               </div>

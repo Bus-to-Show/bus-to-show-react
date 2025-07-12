@@ -46,27 +46,6 @@ const ShowReservation = (props) => {
     setCancelTransferArray([]);
   }
 
-  /*
-  const selectForTransferOrCancel = (e) => {
-    const cancelTransferArrayCopy = [...cancelTransferArray];
-    console.log('selectForTransferOrCancelb ==', e.target.id);
-    console.log('e.target.checked ', e.target.checked);
-    if (e.target.checked) {
-      cancelTransferArrayCopy.push(e.target.id);
-      setCancelTransferArray(cancelTransferArrayCopy);
-    } else {
-      const index = cancelTransferArrayCopy.indexOf(e.target.id);
-      if (index > -1) {
-        cancelTransferArrayCopy.splice(index, 1);
-        setCancelTransferArray(cancelTransferArrayCopy);
-      } else {
-        console.log('attempting to uncheck an id that is not in the array');
-      }
-    }
-    console.log('cancelTransferArrayCopy ==>>==>> ', cancelTransferArrayCopy);
-  }
-  */
-
   const cancelSelectedReservations = () => {
     console.log('cancelSelectedReservations clicked ==>>==>> ', cancelTransferArray);
     setDisplayCancelWarning(true);
@@ -119,7 +98,6 @@ const ShowReservation = (props) => {
       (show) => parseInt(show.eventsId) === parseInt(e.target.id)
     );
     setReservationDetail(resDeet);
-    //console.log('yep expand was clicked inside the component ==>>==>> ', reservationDetail);
   };
 
   return (
@@ -158,8 +136,6 @@ const ShowReservation = (props) => {
             }
             {!displayEditReservation &&
             <div>
-              {// <div> selected {cancelTransferArray.length} / {reservationSummaryArrSorted.filter((show, i) => show.eventsId === parseInt(reservationDetail.eventsId)).length} reservations </div>
-              }
               {
                 displayCancelWarning ?
                  <div className="alert alert-danger m-4" role="alert">
@@ -227,22 +203,10 @@ const ShowReservation = (props) => {
                     </div>
                   </div>
                 </li>
-                {/* {<div className="form-check">
-                  <input
-                    type={'checkbox'}
-                    className="form-check-input"
-                    id={show.reservationsId}
-                    onChange={selectForTransferOrCancel}
-                    checked={cancelTransferArray.includes(show.reservationsId.toString())}
-
-                      />
-                  <label className="form-check-label" htmlFor="editReservation">cancel or transfer to another event</label>
-                </div>} */}
               </div>
-            ) //end of userReservations.map function
+            )
             :
               <EditReservation
-                reservationDetail={reservationDetail}
                 userReservations={props.userReservations}
                 reservationEditField={props.reservationEditField}
                 submitReservationForm={props.submitReservationForm}

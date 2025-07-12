@@ -27,7 +27,7 @@ const ShowDetailView = (props) => {
       {/* Desktop View */}
       <MediaQuery minWidth={8}>
         {props.displayShow && !props.displayCart ?
-          <div className={`content-section-details ${props.displayBorder ? 'add-border' : 'remove-border'}`}>
+          <div className="show-details">
             <h3>Bus Rides to {show.headliner}</h3>
             <h4>{moment(show.date, "MM-DD-YYYY").format("dddd")} - {show.date} at {show.venue.split(' Amphitheatre')[0]} (and back)</h4>
             <div className="list-group">
@@ -162,7 +162,6 @@ const ShowDetailView = (props) => {
                       <div>
                         <h3><span className="badge badge-success">
                           Total: ${props.totalCost}
-                          {props.pickupLocation}
                         </span></h3>
                       </div> : ''}
                   </div>
@@ -173,8 +172,6 @@ const ShowDetailView = (props) => {
                   <button type="button" onClick={props.backToCalendar} className="btn btn-outline-danger return-btn float-right">Cancel</button>
                   {props.displayAddBtn ?
                     <button role="tabpanel" aria-labelledby="cart-tab" type="button" onClick={props.addToCart} className="btn btn-outline-primary return-btn ml-2 float-right">Add to Cart</button> : ''}
-                  {props.displayViewCartBtn ?
-                    <button aria-labelledby="cart-tab" type="button" onClick={props.viewCart} className="btn btn-outline-success return-btn ml-2 float-right">View Cart</button> : ''}
                 </div>
               </div>
             </div>

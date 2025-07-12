@@ -42,7 +42,6 @@ const ShowList = (props) => {
                   <div>
                     <Show
                       confirmedRemove={props.confirmedRemove}
-                      displayShow={props.displayShow}
                       filterString={props.filterString}
                       handleWarning={props.handleWarning}
                       inCart={props.inCart}

@@ -113,22 +113,14 @@ const Cart = (props) => {
               <div className="row">
                 <div className="col-md-12">
                   <CartItem
-                    closeAlert={props.closeAlert}
-                    confirmedRemove={props.confirmedRemove}
-                    confirmRemove={props.confirmRemove}
                     displayConfirmRemove={props.displayConfirmRemove}
                     firstBusLoad={props.firstBusLoad}
-                    getPickupParty={props.getPickupParty}
                     lastDepartureTime={props.lastDepartureTime}
                     pickupLocationId={props.pickupLocationId}
                     pickupLocations={props.pickupLocations}
-                    pickupParties={props.pickupParties}
                     removeFromCart={props.removeFromCart}
-                    shows={props.shows}
                     showsInCart={props.showsInCart}
-                    ticketPrice={props.ticketPrice}
-                    ticketQuantity={props.ticketQuantity}
-                    totalCost={props.totalCost} />
+                    ticketQuantity={props.ticketQuantity} />
                 </div>
               </div>
               <div className="alert alert-warning">Cart will reset after 6 minutes</div>
@@ -264,10 +256,7 @@ const Cart = (props) => {
                               <button
                                 onClick={props.handleCheck}
                                 type="button"
-                                disabled={props.isUseSeasonPassChecked}
-                                ref={myRef} data-toggle="tooltip" data-placement="bottom" title={!props.isUseSeasonPassChecked ?
-                                  "If you want to enter the name of another person who is authorized be to to claim these tickets." : ""
-                                }
+                                ref={myRef} data-toggle="tooltip" data-placement="bottom"
                                 className="btn btn-outline-primary">Reserving for someone else?</button>
                             </div>
                           </div>}

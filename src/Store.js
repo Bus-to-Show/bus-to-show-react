@@ -11,15 +11,6 @@ export const useStore = create((set) => ({
   },
   setBtsUser: (user) => set((state) => ({ btsUser: user })),
 
-  headerHidden: false,
-  setHideHeader: (bool) => set((state) => ({ headerHidden: bool })),
-
-  isCheckedUseSeasonPass: false,
-  toggleIsCheckedUseSeasonPass: (bool) => set((state) => ({ headerHidden: bool })),
-
-  selectedDevent: {},
-  setSelectedDevent: (devent) => set((state) => ({ selectedDevent: devent })),
-
   showForgotForm: false,
   toggleShowForgotForm: (bool) => set((state) => ({ showForgotForm: bool })),
 
@@ -33,7 +24,6 @@ export const useStore = create((set) => ({
   setDisplayUserReservationSummary: (bool) => set((state) => ({ displayUserReservationSummary: bool })),
 
   reservationDetail: null,
-  //userReservations.find(show => (parseInt(show.eventsId) === parseInt(e.target.id)))  <<-- pass this in as the reservationDetail
   setReservationDetail: (reservation) => set((state) => ({ reservationDetail: reservation })),
 
   displayReservationDetail: false,

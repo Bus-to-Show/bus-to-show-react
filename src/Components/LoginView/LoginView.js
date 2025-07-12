@@ -24,15 +24,19 @@ const LoginView = (props) => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    // console.log(' reservationDetail ==>>==>> ', reservationDetail)
-    // console.log('displayReservationDetail  ==>>==>> ', displayReservationDetail );
-    // console.log('displayReservationDetail (from store) ==>>==>> ', displayReservationDetail );
     window.$(myRef.current).tooltip();
   }, [reservationDetail, displayReservationDetail]);
 
-  const { toggleLoggedIn, toggleRegister, showRegisterForm, requestRegistration, registerResponse, profileClick, responseLogin, displayReservations, toggleReservationView, displayShow, filterString, showsExpandClick, continueAsGuest, toggleAdminView } = props
-
-  const { isStaff, isAdmin, isDriver } = btsUser.userDetails
+  const {
+    toggleRegister,
+    showRegisterForm,
+    requestRegistration,
+    registerResponse,
+    profileClick,
+    responseLogin,
+    displayReservations,
+    toggleReservationView,
+  } = props
 
 let futureClass = 'border'
   let pastClass = 'border'
@@ -44,10 +48,7 @@ let futureClass = 'border'
     futureClass = 'border bg-light'
   }
   if(showForgotForm){
-    return (
-      <ForgotForm
-      />
-    )
+    return <ForgotForm />
   } else {
 
     return (
@@ -66,11 +67,7 @@ let futureClass = 'border'
             <div className='row'>
               <div className='col-12 text-center'>
                 <LoginForm
-                  toggleLoggedIn={toggleLoggedIn}
-                  profileClick={profileClick}
                   responseLogin={responseLogin}
-                  continueAsGuest={continueAsGuest}
-                  btsUser={btsUser}
                 />
               <div className='row'>
               <div className='col-12 text-center'>
@@ -170,15 +167,9 @@ let futureClass = 'border'
                 }
                   <ReservationsView
                     displayFuture={props.displayFuture}
-                    displayPast={props.displayPast}
                     userReservations={userReservations}
-                    displayShow={displayShow}
-                    filterString={filterString}
-                    showsExpandClick={showsExpandClick}
-                    getEventDetails={props.getEventDetails}
                     reservationEditField={props.reservationEditField}
                     submitReservationForm={props.submitReservationForm}
-                    displayEditSuccess={props.displayEditSuccess}
                     toggleEditSuccess={props.toggleEditSuccess}
                   />
                 </div>
@@ -186,10 +177,6 @@ let futureClass = 'border'
                 {displayReservations ? ''
                 :
                 <div>
-                {(isStaff || isAdmin || isDriver) ?
-                <div className="btn btn-block-admin detail-btn my-2 col-12" onClick={toggleAdminView}>
-                  <strong>Employees</strong>
-                </div> : ''}
                 <div className="btn btn-block-admin detail-btn my-2 col-12" onClick={toggleReservationView}>
                   <strong>My Reservations</strong>
                 </div>
@@ -212,11 +199,7 @@ let futureClass = 'border'
             <div className='row'>
               <div className='col-12 text-center'>
                 <LoginForm
-                  toggleLoggedIn={toggleLoggedIn}
-                  profileClick={profileClick}
                   responseLogin={responseLogin}
-                  continueAsGuest={continueAsGuest}
-                  btsUser={btsUser}
                 />
               <div className='row'>
               <div className='col-12 text-center'>
@@ -316,15 +299,9 @@ let futureClass = 'border'
                 }
                   <ReservationsView
                     displayFuture={props.displayFuture}
-                    displayPast={props.displayPast}
                     userReservations={userReservations}
-                    displayShow={displayShow}
-                    filterString={filterString}
-                    showsExpandClick={showsExpandClick}
-                    getEventDetails={props.getEventDetails}
                     reservationEditField={props.reservationEditField}
                     submitReservationForm={props.submitReservationForm}
-                    displayEditSuccess={props.displayEditSuccess}
                     toggleEditSuccess={props.toggleEditSuccess}
                   />
                 </div>
@@ -332,10 +309,6 @@ let futureClass = 'border'
                 {displayReservations ? ''
                 :
                 <div>
-                {(isStaff || isAdmin || isDriver) ?
-                <div className="btn btn-block-admin detail-btn my-2 col-12" onClick={toggleAdminView}>
-                  <strong>Employees</strong>
-                </div> : ''}
                 <div className="btn btn-block-admin detail-btn my-2 col-12" onClick={toggleReservationView}>
                   <strong>My Reservations</strong>
                 </div>

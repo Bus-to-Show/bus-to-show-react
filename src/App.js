@@ -5,12 +5,9 @@ import ReactGA from 'react-ga';
 import { sha256 } from 'js-sha256';
 
 // Pages
-import ShopPage from './Pages/ShopPage';
-import FAQsPage from './Pages/FAQsPage';
 import LayoutPage from './Pages/LayoutPage';
 import VerifyPage from './Pages/VerifyPage';
 import ResetPage from './Pages/ResetPage';
-import {ProductDetail} from './Components/Products/Product'
 
 // Components
 import Header from './Components/Header';
@@ -28,9 +25,6 @@ const App = () => {
   const {
      btsUser,
      setBtsUser,
-     headerHidden,
-     setHideHeader,
-     userReservations,
      setUserReservations,
      displayEditSuccess,
      setDisplayEditSuccess,
@@ -42,65 +36,17 @@ const App = () => {
      setDisplayEditReservation,
   } = useStore();
 
-  const [adminView, setAdminView] = useState(false);
-
-  const [, setAssignedParties] = useState([]);
-  const [, setDisplayDetailCartView] = useState(false);
-  const [, setDisplayExternalShowDetails] = useState(false);
   const [displayFuture, setDisplayFuture] = useState(false);
   const [, setDisplayLoginView] = useState(false);
   const [displayPast, setDisplayPast] = useState(false);
-  const [, setDisplayQuantity] = useState(false);
   const [displayReservations, setDisplayReservations] = useState(false);
-  const [displayShow, setDisplayShow] = useState(null);
-  const [, setDisplayShowDetails] = useState(null);
-  const [, setDisplayShowList] = useState(null);
-  const [, setDisplaySuccess] = useState(false);
-  const [filterString] = useState('')
 
   const [showRegisterForm, setShowRegisterForm] = useState(false);
 
   const [registerResponse, setRegisterResponse] = useState({});
   const [reservationEditsToSend, setReservationEditsToSend] = useState([]);
-  const [, setPickupPartyId] = useState(null);
-  const [pickupLocations, setPickupLocations] = useState([]);
-  const [upcomingShows] = useState([]);
+  const [, setPickupLocations] = useState([]);
   const [willCallEdits, setWillCallEdits] = useState({})
-
-  const continueAsGuest = () => {
-    setBtsUser(
-        {
-          isLoggedIn: false,
-          userID: '',
-          name: '',
-          email:'',
-          picture:'',
-          userDetails: {},
-        }
-    )
-  }
-
-  // const expandReservationDetailsClick = (e) =>{
-  //   setDisplayUserReservationSummary(true);
-  //   setReservationDetail(userReservations.find(show => (parseInt(show.eventsId) === parseInt(e.target.id))))
-  //   setDisplayReservationDetail(true)
-  // }
-
-  const getPickupParties = async (eventId) => {
-    const response = await fetch(`${fetchUrl}/pickup_parties/findParties`, {
-      method: 'PATCH',
-      body: JSON.stringify({ eventId }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-
-    let result = await response.json()
-    result = result.sort( (a, b) => {
-      return a.id - b.id
-    })
-    return result
-  }
 
   const getReservations = async () => {
     const userId = btsUser.userDetails.id
@@ -143,16 +89,8 @@ const App = () => {
     profileClick()
   }
 
-  const onLoad = () => {
-    setHideHeader(false);
-  }
-
   const profileClick = () => {
     setDisplayLoginView((prevState) => !prevState);
-
-    if (adminView) {
-      setAdminView(false);
-    }
   };
 
   const requestRegistration = async (request) => {
@@ -195,76 +133,29 @@ const App = () => {
         'Content-Type': 'application/json'
       }
     })
+
     const userObj = await usersInfo.json()
+    // {email: "dustin@undefinedindustries.com", id:105, isAdmin:true, token:"eyJhbGciOiJIUzI}
 
     if (userObj && userObj.token) {
       localStorage.setItem('jwt', userObj.token);
       setBtsUser({
-        /*
-          email: "dustin@undefinedindustries.com",
-          id:105,
-          isAdmin:true,
-          token:"eyJhbGciOiJIUzI,
-        */
           isLoggedIn: true,
           userID: userObj.id,
           email:userObj.email,
           userDetails:userObj
       });
-
-      onLoad();
     }
 
-  }
-
-  const showsExpandClick = async (event) => {
-    //immediately clear previously selected pickupPartyId from State.
-    setPickupPartyId(null);
-
-    const clickedShow = upcomingShows.find(show => (parseInt(show.id) === parseInt(event.target.id)))
-    if(clickedShow.external){
-      setDisplayShowDetails(false);
-      setDisplayExternalShowDetails(true);
-      setDisplayShowList(false);
-      setDisplayShow(clickedShow);
-    } else {
-      const assignedPickupParties = await getPickupParties(clickedShow.id)
-      const currentPickups = assignedPickupParties.map(party => party.pickupLocationId)
-      const pickupLocations1 = pickupLocations.filter(loc => currentPickups.includes(loc.id))
-
-      assignedPickupParties.forEach(party => pickupLocations1.forEach(location => {
-        if (location.id === party.pickupLocationId) {
-          party.LocationName = location.locationName
-        }
-      }))
-
-      //set initial state of show details view
-      setDisplayQuantity(false);
-      setDisplayDetailCartView(true);
-      setDisplaySuccess(false);
-      setDisplayShowDetails(true)
-      setDisplayExternalShowDetails(false);
-      setDisplayShow(clickedShow);
-      setAssignedParties(assignedPickupParties);
-      setDisplayShowList(false);
-      if (document.querySelector('#departureOption')) {
-        document.querySelector('#departureOption').value = "Select a Departure Option..."
-      }
-    }
   }
 
   const submitReservationForm = (e) => {
     console.log('submitReservationForm ==>>==>> ', e );
     e.preventDefault()
     let newRETS = [ ...reservationEditsToSend ]
-    //setDisplayEditSuccess(!displayEditSuccess)
     newRETS.push(willCallEdits)
     setReservationEditsToSend(newRETS)
     handleEditSend(newRETS)
-  }
-
-  const toggleAdminView = () => {
-    setAdminView(!adminView);
   }
 
   const toggleEditSuccess=()=>{
@@ -348,10 +239,8 @@ const App = () => {
               email:userObj.email,
               userDetails:userObj
         })
-        onLoad()
       } else {
         toggleLoggedIn(false)
-        onLoad()
       }
 
     }
@@ -383,15 +272,7 @@ const App = () => {
   return (
     <Router basename="/bus-to-show-react">
       <div ref={appRef}>
-        {!headerHidden ? (
-          <Header
-            getReservations={getReservations}
-            profileClick={profileClick}
-            adminView={adminView}
-          />
-        ) : (
-          ''
-        )}
+        <Header />
         <Routes>
           <Route exact path="/" element={<LayoutPage />} />
           <Route exact path="/login" element={
@@ -405,26 +286,16 @@ const App = () => {
               registerResponse={registerResponse}
               profileClick={profileClick}
               toggleReservationView={toggleReservationView}
-              userReservations={userReservations}
-              displayShow={displayShow}
-              filterString={filterString}
-              showsExpandClick={showsExpandClick}
               responseLogin={responseLogin}
-              continueAsGuest={continueAsGuest}
-              toggleAdminView={toggleAdminView}
               toggleFuturePast={toggleFuturePast}
               displayFuture={displayFuture}
               displayPast={displayPast}
               displayUserReservationSummary={displayUserReservationSummary}
               reservationEditField={reservationEditField}
               submitReservationForm={submitReservationForm}
-              displayEditSuccess={displayEditSuccess}
               toggleEditSuccess={toggleEditSuccess}
             />
           } />
-          <Route exact path="/shop" element={<ShopPage />} />
-          <Route exact path="/faqs" element={<FAQsPage />} />
-          <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/verify/:token" element={<VerifyPage />} />
           <Route path="/reset/:token" element={<ResetPage />} />
         </Routes>
