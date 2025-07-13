@@ -94,6 +94,7 @@ const ResetPage = () => {
 
     if (isValid) {
       resetPassword(values.password);
+
       // clear form
       setValues({
         password: '',

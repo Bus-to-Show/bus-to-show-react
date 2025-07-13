@@ -4,7 +4,6 @@ import moment from 'moment'
 import '../../App.css';
 
 const CartItem = (props) => {
-
   const pickupTime = props.lastDepartureTime
   const firstBusLoad = props.firstBusLoad
   const pickupLocation = props.pickupLocations.find(location => parseInt(location.id) === parseInt(props.pickupLocationId))
@@ -12,12 +11,14 @@ const CartItem = (props) => {
   let time1 = pickupTime.split(':')
   let time2 = time1[1].split(' PM')[0] - 15
   let time3 = time1[0].concat(time2)
+
   if (time2 < 0) {
     time2 = 45
     time3 = [(time3.split('-')[0] - 1)].concat(time2).join('')
   }
 
   const defaultFirstBus = moment(time3, 'hmm').format('h:mm')
+
   return (
     <div className='CartItem'>
       <MediaQuery minWidth={8}>
@@ -46,7 +47,6 @@ const CartItem = (props) => {
                   Last bus departs at: {pickupTime}
                 </div>
               </div>
-
             </li>)
         }
       </MediaQuery>

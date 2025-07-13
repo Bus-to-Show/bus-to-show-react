@@ -23,26 +23,24 @@ const fetchUrl = `${process.env.REACT_APP_API_URL}`;
 
 const App = () => {
   const {
-     btsUser,
-     setBtsUser,
-     setUserReservations,
-     displayEditSuccess,
-     setDisplayEditSuccess,
-     displayUserReservationSummary,
-     setDisplayUserReservationSummary,
-     reservationDetail,
-     setReservationDetail,
-     setDisplayReservationDetail,
-     setDisplayEditReservation,
+    btsUser,
+    setBtsUser,
+    setUserReservations,
+    displayEditSuccess,
+    setDisplayEditSuccess,
+    displayUserReservationSummary,
+    setDisplayUserReservationSummary,
+    reservationDetail,
+    setReservationDetail,
+    setDisplayReservationDetail,
+    setDisplayEditReservation,
   } = useStore();
 
   const [displayFuture, setDisplayFuture] = useState(false);
   const [, setDisplayLoginView] = useState(false);
   const [displayPast, setDisplayPast] = useState(false);
   const [displayReservations, setDisplayReservations] = useState(false);
-
   const [showRegisterForm, setShowRegisterForm] = useState(false);
-
   const [registerResponse, setRegisterResponse] = useState({});
   const [reservationEditsToSend, setReservationEditsToSend] = useState([]);
   const [, setPickupLocations] = useState([]);
@@ -50,6 +48,7 @@ const App = () => {
 
   const getReservations = async () => {
     const userId = btsUser.userDetails.id
+
     if (userId) {
       const reservations = await fetch(`${fetchUrl}/orders/${userId}`)
       const userReservations = await reservations.json()
@@ -60,6 +59,7 @@ const App = () => {
   const handleEditSend= async(newRETS)=>{
     newRETS.map(async(reservation)=>{
       console.log('reservation inside handleEditSend ==>>==>> ', reservation );
+
       const editReservationResponse = await fetch(`${fetchUrl}/reservations`, {
         method: 'PATCH',
         body: JSON.stringify({
@@ -72,11 +72,13 @@ const App = () => {
         }
       })
       .catch()
+
       const json = await editReservationResponse.json()
       const e = {target: {id: "edit"}}
       toggleReservationView(e)
       console.log('editReservationResponse ==>>==>> ', json );
-      if(json.status === 200){
+
+      if (json.status === 200) {
         setDisplayEditSuccess(true)
       } else {
         setDisplayEditSuccess(false)
@@ -95,6 +97,7 @@ const App = () => {
 
   const requestRegistration = async (request) => {
     const password = sha256(request.password)
+
     const usersInfo = await fetch(`${fetchUrl}/users`, {
       method: 'POST',
       body: JSON.stringify({
@@ -107,6 +110,7 @@ const App = () => {
         'Content-Type': 'application/json'
       }
     })
+
     const userObj = await usersInfo.json()
     setRegisterResponse(userObj)
   }
@@ -139,14 +143,14 @@ const App = () => {
 
     if (userObj && userObj.token) {
       localStorage.setItem('jwt', userObj.token);
+
       setBtsUser({
-          isLoggedIn: true,
-          userID: userObj.id,
-          email:userObj.email,
-          userDetails:userObj
+        isLoggedIn: true,
+        userID: userObj.id,
+        email:userObj.email,
+        userDetails:userObj
       });
     }
-
   }
 
   const submitReservationForm = (e) => {
@@ -163,32 +167,33 @@ const App = () => {
   }
 
   const toggleFuturePast = (e) => {
-    if(e.target.id==='future'){
+    if (e.target.id === 'future') {
       setDisplayPast(false);
       setDisplayFuture(true);
-    } else if(e.target.id==='past'){
+    } else if (e.target.id === 'past') {
       setDisplayPast(true);
       setDisplayFuture(false);
     }
   }
 
   const toggleLoggedIn = (boolean) => {
-    if (boolean === false){
+    if (boolean === false) {
       setBtsUser({
-          isLoggedIn: false,
-          userID: '',
-          name: '',
-          email:'',
-          picture:'',
-          userDetails: {
-            isAdmin: false,
-            isStaff: false,
-            isDriver: false,
-          },
-        })
-        localStorage.setItem('jwt', '')
-      }
+        isLoggedIn: false,
+        userID: '',
+        name: '',
+        email:'',
+        picture:'',
+        userDetails: {
+          isAdmin: false,
+          isStaff: false,
+          isDriver: false,
+        },
+      })
+
+      localStorage.setItem('jwt', '')
     }
+  }
 
   const toggleRegister = () => {
     setShowRegisterForm(!showRegisterForm);
@@ -199,16 +204,18 @@ const App = () => {
     setDisplayFuture(true);
     setDisplayPast(false);
     setDisplayUserReservationSummary(true);
-    if(!reservationDetail){
+
+    if (!reservationDetail) {
       setDisplayReservations(!displayReservations);
     }
 
-    if(e.target.id==='dashboard' || e.target.id==='summary'){
+    if (e.target.id === 'dashboard' || e.target.id === 'summary') {
       setDisplayReservationDetail(false);
       setReservationDetail(null);
       setDisplayUserReservationSummary(false);
     }
-    if(e.target.id === 'detail' || e.target.id === 'edit'){
+
+    if (e.target.id === 'detail' || e.target.id === 'edit') {
       setDisplayReservations(true);
       setDisplayEditReservation(false);
       setDisplayReservationDetail(true);
@@ -219,36 +226,41 @@ const App = () => {
   useEffect(() => {
     const checkAuth = async () => {
       const jwtToken = localStorage.getItem('jwt')
-      if(!jwtToken){
+
+      if (!jwtToken) {
         return
       }
+
       const response = await fetch(`${fetchUrl}/api/secure`, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('jwt')}`
-          },
-          withCredentials: true
-        }
-      )
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+        },
+        withCredentials: true
+      })
+
       const userObj =  await response.json()
-      if (userObj && userObj.id){
+
+      if (userObj && userObj.id) {
         setBtsUser({
           ...btsUser,
           isLoggedIn: true,
-              userID: userObj.id,
-              email:userObj.email,
-              userDetails:userObj
+          userID: userObj.id,
+          email:userObj.email,
+          userDetails:userObj
         })
       } else {
         toggleLoggedIn(false)
       }
-
     }
+
     checkAuth()
+
     const getPickupLocations = async () => {
       const pickups =  await fetch(`${fetchUrl}/pickup_locations`)
       setPickupLocations(pickups.json())
     }
+
     getPickupLocations();
   }, []);
 

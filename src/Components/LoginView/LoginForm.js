@@ -38,6 +38,7 @@ const LoginForm = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const isValid = validate();
+
     if (isValid) {
       // clear form
       setValues({
@@ -46,15 +47,14 @@ const LoginForm = (props) => {
         emailError: '',
         passwordError: '',
       });
+
       props.responseLogin(values)
-      
     }
   };
 
   return (
     <div className="container-border-orange m-4 p-4">
         <h2 className="bts-white-bg">Sign-In</h2>
-
         <form className="form-group" onSubmit={handleSubmit}>
             <div className='py-2'>
                 <label htmlFor="email">Email</label>

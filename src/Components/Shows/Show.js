@@ -4,7 +4,6 @@ import moment from 'moment'
 import MediaQuery from 'react-responsive';
 
 const Show = (props) => {
-
   const filterString = props.filterString.toLowerCase()
   let filterShows = props.shows.filter(show => show.headliner.toLowerCase().includes(filterString))
 
@@ -41,7 +40,6 @@ const Show = (props) => {
                   type="button"
                   className='btn detail-btn my-4 col-md-2'>Details</button>
             </div>
-
           </li>) :
           <li className="list-group-item highlightOnHover">
             <div className="row add-a-show">
@@ -54,12 +52,9 @@ const Show = (props) => {
                 <button type="button" disabled='disabled' className="btn btn-outline-primary mt-2">Add that show feature coming soon!</button>
               </div>
             </div>
-
           </li>}
       </MediaQuery>
       {/* End Desktop */}
-
-
     </div>
   )
 }

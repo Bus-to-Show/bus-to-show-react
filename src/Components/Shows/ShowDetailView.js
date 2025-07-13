@@ -5,11 +5,12 @@ import MediaQuery from 'react-responsive';
 import moment from 'moment'
 
 const ShowDetailView = (props) => {
-
   let show;
   let headlinerBio
+
   if (props.displayShow) {
     show = props.displayShow
+
     if(show.headlinerBio){
     headlinerBio = show.headlinerBio.split('<a')[0]
     }
@@ -18,6 +19,7 @@ const ShowDetailView = (props) => {
   console.log('show ==>>==>> ', show);
 
   let basePrice;
+
   if (props.pickupPartyId) {
     basePrice = props.assignedParties.find(party => parseInt(party.id) === parseInt(props.pickupPartyId)).partyPrice.toFixed(2)
   }
@@ -67,7 +69,6 @@ const ShowDetailView = (props) => {
                     </div>
                   </div>
                 </div>
-
                 <div className="row">
                   <div className="col-md-7">
                     <div className='mt-2'>Departure Options</div>
@@ -115,7 +116,6 @@ const ShowDetailView = (props) => {
                       </div>
                     </form>
                   </div>
-
                   <div className="col-md-5 float-right add-top-margin">
                     {props.displayQuantity && props.ticketsAvailable ?
                       <React.Fragment>
@@ -125,7 +125,6 @@ const ShowDetailView = (props) => {
                             <div>+ ${show.id === 40300786 ? 0.00 : (basePrice * .1).toFixed(2)} processing fee</div>
                           </span>
                         </h5>
-
                       </React.Fragment>
                       : ''}
                   </div>
@@ -175,13 +174,10 @@ const ShowDetailView = (props) => {
                 </div>
               </div>
             </div>
-
           </div> : ''}
       </MediaQuery>
       {/* End Desktop View */}
-
     </div>
-
   )
 }
 

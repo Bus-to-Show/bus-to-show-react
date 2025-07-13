@@ -2,7 +2,6 @@ import React from 'react'
 import '../../App.css';
 
 const EditReservation = (props) => {
-
   return (
     <div>
     {props.userReservations.map((reservation, i)=> reservation.reservationsId === props.reservationToEditId &&
@@ -32,10 +31,8 @@ const EditReservation = (props) => {
           <button name="detail" id={`${reservation.reservationsId}`} className="btn bg-primary text-white" onClick={props.submitReservationForm}>Submit</button>
         </form>
       </div>
-
       </div>
     )}
-
     </div>
   )
 }

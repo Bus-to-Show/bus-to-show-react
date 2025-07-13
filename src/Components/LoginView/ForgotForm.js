@@ -27,6 +27,7 @@ const ForgotForm = (props) => {
                     'Content-Type': 'application/json'
                 }
             })
+
         const userObj = await usersInfo.json()
         setForgotResponse(userObj)
     };
@@ -52,22 +53,23 @@ const ForgotForm = (props) => {
 
     return true;
   };
+
   const handleGreat = () =>{
     window.location.reload(false);
-
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const isValid = validate();
+
     if (isValid) {
       requestPasswordReset(values.email)
+
       // clear form
       setValues({
         email: '',
         emailError: '',
       });
-
     }
   };
 
@@ -125,7 +127,6 @@ const ForgotForm = (props) => {
                 </div>
                 </MediaQuery>
             </div>
-
         )
   } else {
       return (
@@ -179,7 +180,6 @@ const ForgotForm = (props) => {
             <div className="btn btn-block-admin detail-btn my-2 col-12" onClick={() => {toggleShowForgotForm(false)}}>Back to Login</div>
             </MediaQuery>
         </div>
-
       );
   }
 };

@@ -5,7 +5,6 @@ import Cart from './Cart/Cart'
 import MediaQuery from 'react-responsive';
 
 const DetailCartView = (props) => {
-
   return (
     <div className="DetailCartView">
       {/* // Desktop View */}
@@ -36,7 +35,6 @@ const DetailCartView = (props) => {
                   aria-selected="false">My Cart</a>
               </li>
             </ul>
-
             <div className="tab-content" id="desktop-tab-content">
               {props.displayCart ?
                 <Cart
@@ -94,8 +92,6 @@ const DetailCartView = (props) => {
         </React.Fragment>
       </MediaQuery>
       {/* // End DesktopView */}
-
-
     </div>
   )
 }

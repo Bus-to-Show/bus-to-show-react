@@ -28,7 +28,6 @@ const Cart = (props) => {
     }
 
     if(btsUser.isLoggedIn) checkSeasonPassEventStatus()
-
   }, []);
 
   const maskPhoneInput = (e) => {
@@ -109,7 +108,6 @@ const Cart = (props) => {
                   </div>
                 </div>
               ) : ''}
-
               <div className="row">
                 <div className="col-md-12">
                   <CartItem
@@ -200,7 +198,6 @@ const Cart = (props) => {
                           }
                           </div>
                         </div>
-
                         <div className="form-check mb-3">
                           <input
                             type="checkbox"
@@ -216,7 +213,6 @@ const Cart = (props) => {
                             By completing this purchase and riding with Bus to Show, I (and my guests) agree to the <a href="/waiver" target="_blank" rel="noopener noreferrer">waiver terms and refund policy</a>.
                           </label>
                         </div>
-
                         {/* Ternary to display will call name fields or button to show fields */}
                         {props.checked ?
                         //close button with onClick to remove will call name fields and set props.checked to false
@@ -277,7 +273,6 @@ const Cart = (props) => {
                             }
                           </div>
                         </div>
-
                         {props.afterDiscountObj.totalSavings ?
                           <div className="mb-3 text-right">
                             <h5>
@@ -286,14 +281,12 @@ const Cart = (props) => {
                             </h5>
                           </div>
                           : ""}
-
                         <div className="mb-3 text-right">
                           <h3>
                             Cart Total:
                             <span className="badge badge-success ml-1">${props.totalCost}</span>
                           </h3>
                         </div>
-
                         <div className='mb-3 text-right'>
                           <div>
                           <button onClick={props.removeFromCart} type="button" className="btn btn-outline-danger mr-1">Cancel</button>
@@ -320,9 +313,7 @@ const Cart = (props) => {
         </React.Fragment>
       </MediaQuery>
       {/* End Desktop View */}
-
     </div >
-
   )
 }
 

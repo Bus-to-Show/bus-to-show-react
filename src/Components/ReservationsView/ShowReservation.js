@@ -18,7 +18,6 @@ const ShowReservation = (props) => {
     displayEditSuccess,
     displayEditReservation,
     setDisplayEditReservation
-
   } = useStore();
 
   const [cancelTransferArray, setCancelTransferArray] = useState([]);
@@ -59,9 +58,11 @@ const ShowReservation = (props) => {
   const refundMinusProcessing = async () => {
     console.log('refundMinusProcessing fetchUrl ==>>==>> ', fetchUrl);
      const jwtToken = localStorage.getItem('jwt')
+
      if(!jwtToken){
        return
      }
+
      const response = await fetch(`${fetchUrl}/reservations/refund_minus_processing`, { method: 'PATCH',
          headers: {
            'Content-Type': 'application/json',
@@ -73,7 +74,6 @@ const ShowReservation = (props) => {
 
       const json = await response.json()
       console.log('refundMinusProcessing json ==>>==>> ', json);
-
   }
 
   const cancelAndGiveCredit = () => {
@@ -90,13 +90,13 @@ const ShowReservation = (props) => {
       setDisplayUserReservationSummary(true);
       setDisplayReservationDetail(true);
     }
-
   }, [reservationDetail, displayCancelWarning, displayUserReservationSummary, displayReservationDetail, displayEditReservation, displayEditSuccess, cancelTransferArray]);
 
   const expandReservationDetailsClick = (e) => {
     const resDeet = userReservations.find(
       (show) => parseInt(show.eventsId) === parseInt(e.target.id)
     );
+
     setReservationDetail(resDeet);
   };
 
@@ -144,7 +144,6 @@ const ShowReservation = (props) => {
                       <button onClick={cancelAndGiveCredit} type="button" className="btn btn-outline-secondary m-2">Cancel and send me a code for {cancelTransferArray.length} future spots </button>
                       <button onClick={transferSelectedReservations} type="button" className="btn btn-outline-secondary m-2">Transfer these spots to another event or pick-up if available </button>
                       <button onClick={neverMindKeepReservations} type="button" className="btn btn-outline-secondary m-2">Never mind. Keep my reservations.</button>
-
                     </div> :
                     <div></div>
               }
@@ -159,13 +158,11 @@ const ShowReservation = (props) => {
               }
             </div>
             }
-
             {!displayEditReservation ? reservationSummaryArrSorted.map((show, i) => show.eventsId === parseInt(reservationDetail.eventsId) &&
               <div className="row bg-light p-4 m-4" key={i}>
                 <li className="px-3 pt-2 list-item mx-auto" key={show.reservationsId} id={show.reservationsId}>
                   <div className="row border-top border-left border-right border-secondary bg-light p-2" id={show.id}>
                     <div className="col-lg-12 mx-auto cart-item-font" id={show.id}>
-
                       <div className="row">
                         Will Call Name: {show.willCallFirstName} {show.willCallLastName} <br/>
                         {show.orderedByFirstName !== show.willCallFirstName || show.orderedByLastName !== show.willCallLastName // if ordered by name is different than will call name, display ordered by name also (if they are the same, do nothing)
@@ -177,7 +174,6 @@ const ShowReservation = (props) => {
                         : ''
                         }
                       </div>
-
                       <div className="row mx-auto" id={show.id}>
                         Departing From: {show.locationName} <br />
                         {show.streetAddress}
@@ -186,7 +182,6 @@ const ShowReservation = (props) => {
                   </div>
                   <div className="row border-left border-right border-bottom border-secondary bg-light mb-2">
                     <div className="col-lg-12 text-center cart-item-font ">
-
                       {show.firstBusLoadTime //if there is a firstBusLoad time in the database, then display it below (if there is not, do nothing)
                       ?
                         <div>
@@ -217,7 +212,6 @@ const ShowReservation = (props) => {
         </div>
       : ''
       }
-
       {!reservationSummaryArrSorted.length > 0 || reservationDetail ? '' : //if user has no reservations, or user has selected a reservation summary to view details for, then do nothing here.  otherwise, print reservations.
         props.displayFuture
         ? reservationSummaryArrSorted.map((show, i) =>  new Date(show.date).getTime() >= Date.now() - 86400000 && //if future button has been clicked map through all reservations and display upcoming reservations (upcoming = display for 24hours after showdate)

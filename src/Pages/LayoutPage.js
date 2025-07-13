@@ -100,9 +100,11 @@ class LayoutPage extends Component {
     })
 
     let result = await response.json()
+
     result = result.sort((a, b) => {
       return a.id - b.id
     })
+
     return result
   }
 
@@ -113,6 +115,7 @@ class LayoutPage extends Component {
         'Content-Type': 'application/json'
       }
     })
+
     const result = await response.json()
     return result
   }
@@ -121,6 +124,7 @@ class LayoutPage extends Component {
   selectPickupLocationId = async (event, timer) => {
     const newState = { ...this.state }
     const oldPickup = parseInt(newState.pickupPartyId)
+
     if (!timer) {
       this.clearTicketsInCart(oldPickup, newState.ticketQuantity)
       newState.ticketQuantity = 0
@@ -129,6 +133,7 @@ class LayoutPage extends Component {
     }
 
     newState.pickupPartyId = parseInt(event.target.value)
+
     if (event.target.value === "Select a Departure Option...") {
       newState.displayQuantity = false
       newState.ticketsAvailable = null
@@ -141,6 +146,7 @@ class LayoutPage extends Component {
         ticketQuantity: newState.ticketQuantity,
         displayAddBtn: newState.displayAddBtn,
       })
+
       return
     }
 
@@ -149,17 +155,17 @@ class LayoutPage extends Component {
       newState.ticketQuantity = 0
       newState.displayQuantity = false
       newState.displayAddBtn = false
+
       this.setState({
         ticketQuantity: newState.ticketQuantity,
         displayQuantity: newState.displayQuantity,
         displayAddBtn: newState.displayAddBtn
       })
-    }
-
-    else if (parseInt(event.target.value) !== oldPickup) {
+    } else if (parseInt(event.target.value) !== oldPickup) {
       newState.ticketQuantity = 0
       newState.displayQuantity = false
       newState.displayAddBtn = false
+
       this.setState({
         ticketQuantity: newState.ticketQuantity,
         displayQuantity: newState.displayQuantity,
@@ -174,25 +180,30 @@ class LayoutPage extends Component {
     const parties = newState.assignedParties
     let matchedParty = await parties.find(party => (parseInt(party.id) === statePickupPartyId) && (parseInt(party.eventId) === stateEventId))
     newState.pickupLocationId = matchedParty.pickupLocationId
+
     if (matchedParty.firstBusLoadTime) {
       newState.firstBusLoad = moment(matchedParty.firstBusLoadTime, 'LT').format('h:mm A')
     }
+
     newState.lastDepartureTime = moment(matchedParty.lastBusDepartureTime, 'LT').format('h:mm A')
 
     let numArray = []
 
     let matchedPartyPrice = matchedParty.partyPrice
+
     if (matchedParty) {
       const availableTickets = await this.refreshAvailableTickets(matchedParty.id)
-      if (availableTickets < 1) newState.ticketsAvailable = []
-      else if (availableTickets >= 1) {
+
+      if (availableTickets < 1) {
+        newState.ticketsAvailable = []
+      } else if (availableTickets >= 1) {
         numArray = [...Array(availableTickets).keys()].map(i => i + 1)
         newState.ticketsAvailable = numArray
       }
-    }
-    else {
+    } else {
       console.error('Error!! No MatchedParty in selectPickupLocationId')
     }
+
     this.setState({
       ticketsAvailable: newState.ticketsAvailable,
       partyPrice: matchedPartyPrice,
@@ -207,6 +218,7 @@ class LayoutPage extends Component {
 
   refreshAvailableTickets = async (pickupPartyId) => {
     const matchedParty = await this.refreshPickupParty(pickupPartyId)
+
     const currentReservations = await fetch(`${fetchUrl}/reservations/findOrders`, {
       method: 'PATCH',
       body: JSON.stringify({
@@ -216,6 +228,7 @@ class LayoutPage extends Component {
         'Content-Type': 'application/json'
       }
     })
+
     const reservations = await currentReservations.json()
     const activeReservations = reservations.filter(rezzie => rezzie.status < 3)
     const availableTickets = parseInt(matchedParty.capacity) - parseInt(activeReservations.length) - parseInt(matchedParty.inCart)
@@ -226,9 +239,11 @@ class LayoutPage extends Component {
     this.ticketTimer(false)
     const newState = { ...this.state }
     let oldQty = 0
+
     if (parseInt(newState.ticketQuantity) > 0) {
       oldQty = parseInt(newState.ticketQuantity)
-    } else {  }
+    }
+
     const pickupPartyId = parseInt(newState.pickupPartyId)
 
     oldQty > 0 && this.clearTicketsInCart(pickupPartyId, oldQty)
@@ -239,11 +254,13 @@ class LayoutPage extends Component {
     newState.ticketQuantity = ~~event.target.value
 
     newState.totalCost = newState.displayShow.id === 40300786 ? Number(subTotal).toFixed(2) : total
+
     this.setState({
       displayAddBtn: newState.displayAddBtn,
       ticketQuantity: newState.ticketQuantity,
       totalCost: newState.totalCost
     })
+
     this.addTicketsInCart(pickupPartyId, newState.ticketQuantity)
     this.ticketTimer(true, 120000, false)
     window.addEventListener("beforeunload", this.clearCartOnClose)
@@ -314,7 +331,6 @@ class LayoutPage extends Component {
   };
 
   // Header Functions
-
   searchShows = event => {
     const newState = { ...this.state }
     newState.filterString = event.target.value
@@ -324,15 +340,19 @@ class LayoutPage extends Component {
   // Tab Functions
   tabClicked = event => {
     const newState = { ...this.state }
+
     if (event.target.id === 'cart-tab' && newState.inCart.length > 0) {
       newState.displayCart = true
     }
+
     if (event.target.innerHTML === 'Details' && newState.inCart.length === 0) {
       newState.displayCart = false
     }
+
     if (!newState.inCart.length > 0 && event.target.id === 'showDetails-tab') {
       newState.displayCart = false
     }
+
     if (newState.inCart.length > 0 && event.target.id === 'showDetails-tab') {
       newState.displayWarning = true
     }
@@ -345,6 +365,7 @@ class LayoutPage extends Component {
 
   backToCalendar = event => {
     const newState = { ...this.state }
+
     if (parseInt(newState.ticketQuantity)) {
       let oldPickup = parseInt(newState.pickupPartyId)
       this.clearTicketsInCart(oldPickup, newState.ticketQuantity)
@@ -352,14 +373,17 @@ class LayoutPage extends Component {
       newState.displayQuantity = false
       newState.displayAddBtn = false
       this.ticketTimer(false)
+
       this.setState({
         ticketQuantity: newState.ticketQuantity,
         displayQuantity: newState.displayQuantity,
         displayAddBtn: newState.displayAddBtn
       })
     }
+
     newState.displayShow = null
     newState.displayCart = false
+
     this.setState({
       displayShow: newState.displayShow,
       displayCart: newState.displayCart
@@ -371,9 +395,11 @@ class LayoutPage extends Component {
     const newState = { ...this.state }
     //immediately clear previously selected pickupPartyId from State.
     newState.pickupPartyId = null
+
     this.setState({
       pickupPartyId: newState.pickupPartyId
     })
+
     const clickedShow = newState.upcomingShows.find(show => (parseInt(show.id) === parseInt(event.target.id)))
     const assignedPickupParties = await this.getPickupParties(clickedShow.id)
     const currentPickups = assignedPickupParties.map(party => party.pickupLocationId)
@@ -384,15 +410,18 @@ class LayoutPage extends Component {
         party.LocationName = location.locationName
       }
     }))
+
     //set initial state of show details view
     newState.displayQuantity = false
     newState.displayShow = clickedShow
     newState.assignedParties = assignedPickupParties
+
     this.setState({
       displayQuantity: newState.displayQuantity,
       displayShow: newState.displayShow,
       assignedParties: newState.assignedParties,
     })
+
     if (document.querySelector('#departureOption')) {
       document.querySelector('#departureOption').value = "Select a Departure Option..."
     }
@@ -425,6 +454,7 @@ class LayoutPage extends Component {
     newState.cartToSend.totalCost = 0
     newState.cartToSend.discountCode = null
     newState.cartToSend.userId = useStore.getState().btsUser.userDetails.id
+
     newState.validatedElements = {
       firstName: null,
       lastName: null,
@@ -445,10 +475,10 @@ class LayoutPage extends Component {
     if (newState.inCart.length === 0) {
       newState.inCart.push(newState.displayShow)
       newState.displayCart = true
-    }
-    else {
+    } else {
       newState.displayWarning = true
     }
+
     this.setState(newState)
     this.ticketTimer(true, 360000, true)
   }
@@ -458,8 +488,10 @@ class LayoutPage extends Component {
     let newState = { ...this.state }
     const pickupPartyId = parseInt(newState.pickupPartyId)
     let event = { target: { value: pickupPartyId } }
+
     if (timerOn) {
       console.log('ticketTimer a', timerOn, time, addedToCart)
+
       const newTicketTimer = addedToCart ?
         setTimeout(() => {
           console.log('ticketTimer b', timerOn, time, addedToCart)
@@ -473,8 +505,7 @@ class LayoutPage extends Component {
 
       newState.ticketTimer = newTicketTimer
       this.setState({ ticketTimer: newState.ticketTimer })
-    }
-    else {
+    } else {
       console.log('ticketTimer d', timerOn, time, addedToCart)
       clearTimeout(this.state.ticketTimer)
       newState.ticketTimer = null
@@ -485,6 +516,7 @@ class LayoutPage extends Component {
   addTicketsInCart = async (pickupPartyId, ticketQty) => {
     if (pickupPartyId && ticketQty) {
       let timeStamp = new Date()
+
       await fetch(`${fetchUrl}/pickup_parties/${pickupPartyId}/cartQty`, {
         method: 'PATCH',
         body: JSON.stringify({
@@ -502,6 +534,7 @@ class LayoutPage extends Component {
     if (pickupPartyId && ticketQty) {
       console.log('clearing ticketQty', ticketQty)
       let timeStamp = new Date()
+
       await fetch(`${fetchUrl}/pickup_parties/${pickupPartyId}/cartQty`, {
         method: 'PATCH',
         body: JSON.stringify({
@@ -513,7 +546,6 @@ class LayoutPage extends Component {
         }
       })
     }
-    return
   }
 
   clearCartOnClose = (ev) => {
@@ -533,29 +565,33 @@ class LayoutPage extends Component {
   // Cart Functions
   handleCheck = () => {
     const newState = { ...this.state }
+
     if (newState.checked === true) {
       this.updatePurchaseField({ target: { id: 'willCallFirstName', value: '' } })
       this.updatePurchaseField({ target: { id: 'willCallLastName', value: '' } })
-
     }
+
     newState.checked = !newState.checked
+
     this.setState({
       checked: newState.checked,
-
     })
   }
 
   purchase = async (err) => {
     this.ticketTimer(false)
+
     if (err) {
       console.log('purchase error', err)
       this.ticketTimer(false)
       this.ticketTimer(true, 360000, true)
       return this.setState({ purchaseFailed: true, purchasePending: false })
     }
+
     const cartObj = this.state.cartToSend
     cartObj.discountCode = this.state.afterDiscountObj.discountCodeId
     cartObj.userId = useStore.getState().btsUser.userDetails.id
+
     const response = await fetch(`${fetchUrl}/orders`, {
       method: 'POST',
       body: JSON.stringify(cartObj),
@@ -563,6 +599,7 @@ class LayoutPage extends Component {
         'Content-Type': 'application/json'
       }
     })
+
     const json = await response.json()
     await this.clearTicketsInCart(json.pickupPartiesId, cartObj.ticketQuantity)
 
@@ -585,6 +622,7 @@ class LayoutPage extends Component {
     const cartObj = this.state.cartToSend
     cartObj.userId = useStore.getState().btsUser.userDetails.id
     cartObj.discountCode = this.state.afterDiscountObj.discountCodeId
+
     const response = await fetch(`${fetchUrl}/orders`, {
       method: 'POST',
       body: JSON.stringify(cartObj),
@@ -592,6 +630,7 @@ class LayoutPage extends Component {
         'Content-Type': 'application/json'
       }
     })
+
     const json = await response.json()
     await this.clearTicketsInCart(json.pickupPartiesId, cartObj.ticketQuantity)
 
@@ -635,6 +674,7 @@ class LayoutPage extends Component {
         } else {
           newValidElems.email = null;
         }
+
         break;
       case 'firstName':
         if (validateText(value)) {
@@ -642,7 +682,9 @@ class LayoutPage extends Component {
           invalidFields.invalidFirstName = false;
         } else {
           newValidElems.firstName = null;
-        } break;
+        }
+
+        break;
       case 'lastName':
         if (validateText(value)) {
           newValidElems.lastName = value.trim();
@@ -650,6 +692,7 @@ class LayoutPage extends Component {
         } else {
           newValidElems.lastName = null;
         }
+
         break;
       case 'willCallFirstName':
         if (validateText(value)) {
@@ -657,6 +700,7 @@ class LayoutPage extends Component {
         } else {
           newValidElems.wcFirstName = null;
         }
+
         break;
       case 'willCallLastName':
         if (validateText(value)) {
@@ -664,6 +708,7 @@ class LayoutPage extends Component {
         } else {
           newValidElems.wcLastName = null;
         }
+
         break;
       case 'orderedByPhone':
         if (validatePhone(value)) {
@@ -672,6 +717,7 @@ class LayoutPage extends Component {
         } else {
           newValidElems.orderedByPhone = null;
         }
+
         break;
       default:
         return 'Please input valid items';
@@ -683,6 +729,7 @@ class LayoutPage extends Component {
       && newValidElems.email
       && newValidElems.orderedByPhone) {
       newState.validated = true
+
       newState.cartToSend = {
         firstName: newValidElems.firstName,
         lastName: newValidElems.lastName,
@@ -696,18 +743,16 @@ class LayoutPage extends Component {
         willCallFirstName: (newValidElems.wcFirstName || newValidElems.firstName),
         willCallLastName: (newValidElems.wcLastName || newValidElems.lastName)
       }
+
       this.setState({
         invalidFields,
         validatedElements: newValidElems,
         cartToSend: newState.cartToSend,
         validated: newState.validated
       })
-    }
-    else if (!newValidElems.firstName ||
-      !newValidElems.lastName ||
-      !newValidElems.email ||
-      !newValidElems.orderedByPhone) {
+    } else {
       newState.validated = false
+
       this.setState({
         validated: newState.validated,
         validatedElements: newValidElems
@@ -795,6 +840,7 @@ class LayoutPage extends Component {
     let newState = this.state.upcomingShows.sort((show1, show2) => {
       let a = show1.headliner.toLowerCase().split(" ").join("")
       let b = show2.headliner.toLowerCase().split(" ").join("")
+
       if (a < b) {
         return -1;
       } else if (a > b) {
@@ -803,6 +849,7 @@ class LayoutPage extends Component {
         return 0;
       }
     })
+
     this.setState({ shows: newState, artistIcon: true, dateIcon: false })
   }
 
@@ -812,6 +859,7 @@ class LayoutPage extends Component {
       let b = new Date(show2.date)
       return a - b
     })
+
     this.setState({ shows: newState, artistIcon: false, dateIcon: true })
   }
 

@@ -60,7 +60,7 @@ const RegistrationForm = (props) => {
     } else if (values.password.length < 8) {
       passwordError = "Password must be at least 8 characters";
     } else if (!passwordValidator(values.password)){
-      passwordError = "Password must contain at least 1 of each of the following: Uppercase, Lowercase, Number, Special Character"  
+      passwordError = "Password must contain at least 1 of each of the following: Uppercase, Lowercase, Number, Special Character"
     }
 
     if (!values.confirmPassword) {
@@ -80,8 +80,10 @@ const RegistrationForm = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const isValid = validate();
+
     if (isValid) {
       props.requestRegistration(values)
+
       // clear form
       setValues({
         firstName: '',
@@ -100,7 +102,6 @@ const RegistrationForm = (props) => {
   return (
     <div className='col-12 text-center'>
             <div className="btn btn-block-admin detail-btn my-2 col-12" onClick={() => {props.toggleRegister()}}>Back to Login</div>
-
             <div className="container-border-orange m-4 p-4">
             <h2 className="bts-white-bg">Create New Account</h2>
             <form className="form-group" onSubmit={handleSubmit}>

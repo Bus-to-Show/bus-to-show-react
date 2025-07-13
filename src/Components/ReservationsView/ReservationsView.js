@@ -3,7 +3,6 @@ import '../../App.css';
 import ShowReservation from './ShowReservation'
 
 const ReservationsView = (props) => {
-
   return (
     <div className='row mt-3 mr-2'>
       <div className='col-12'>

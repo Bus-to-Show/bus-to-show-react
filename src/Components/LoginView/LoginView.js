@@ -40,6 +40,7 @@ const LoginView = (props) => {
 
 let futureClass = 'border'
   let pastClass = 'border'
+
   if (props.displayFuture){
     futureClass = 'border border-success'
     pastClass = 'border bg-light'
@@ -47,10 +48,10 @@ let futureClass = 'border'
     pastClass = 'border border-success'
     futureClass = 'border bg-light'
   }
+
   if(showForgotForm){
     return <ForgotForm />
   } else {
-
     return (
       <div className='container-fluid'>
       {!displayReservationDetail && props.displayUserReservationSummary
@@ -74,7 +75,6 @@ let futureClass = 'border'
                 <h4 className="bts-white-bg mb-2">
                   - OR -
                 </h4>
-
               </div>
               </div>
                 <div className="row p-2">
@@ -107,7 +107,6 @@ let futureClass = 'border'
                   />
                 {registerResponse.code && <RegisterUserToast response={registerResponse} />}
               </div>
-
               :
             <button
                 onClick={props.logout}
@@ -141,7 +140,6 @@ let futureClass = 'border'
                   }
                   </div>
                 }
-
                 {!displayReservationDetail && props.displayUserReservationSummary ?
                 <div className="row">
                   <div className="col-12">
@@ -184,7 +182,6 @@ let futureClass = 'border'
                   <strong>Back to Events</strong>
                 </div>
               </div>
-
             }
             </div>
             : ''
@@ -206,7 +203,6 @@ let futureClass = 'border'
                 <h4 className="bts-white-bg mb-2">
                   - OR -
                 </h4>
-
               </div>
               </div>
                 <div className="row p-2">
@@ -239,7 +235,6 @@ let futureClass = 'border'
                   />
                 {registerResponse.code && <RegisterUserToast response={registerResponse} />}
               </div>
-
               :
             <button
                 onClick={props.logout}
@@ -273,7 +268,6 @@ let futureClass = 'border'
                   }
                   </div>
                 }
-
                 {!displayReservationDetail && props.displayUserReservationSummary ?
                 <div className="row">
                   <div className="col-12">
@@ -316,7 +310,6 @@ let futureClass = 'border'
                   <strong>Back to Events</strong>
                 </div>
               </div>
-
             }
             </div>
             : ''
@@ -326,7 +319,6 @@ let futureClass = 'border'
       </div>
     )
   }
-
 }
 
 export default LoginView

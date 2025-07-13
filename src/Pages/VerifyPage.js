@@ -38,7 +38,7 @@ const VerifyPage = () => {
       const response = await fetch(`${verifyEmailUrl}/${token}`, {
         method: 'GET',
         headers: {
-            'Content-Type': 'application/json'
+          'Content-Type': 'application/json'
         }
       });
 
