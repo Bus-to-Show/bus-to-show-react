@@ -3,9 +3,6 @@ import React, { Component } from 'react'
 import Validator from 'validator'
 import moment from 'moment'
 
-// Styling
-import '../App.css';
-
 // Components
 import ShowList from '../Components/Shows/ShowList'
 import DetailCartView from '../Components/DetailCartView'

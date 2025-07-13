@@ -1,5 +1,4 @@
 import React, { useRef , useEffect} from 'react'
-import '../../App.css'
 import MediaQuery from 'react-responsive'
 import ReservationsView from '../ReservationsView/ReservationsView'
 import LoginForm from './LoginForm';

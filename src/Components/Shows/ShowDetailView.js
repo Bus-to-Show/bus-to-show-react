@@ -1,5 +1,4 @@
 import React from 'react'
-import '../../App.css';
 import logo from '../../Images/Logos/bts-logo-gray.png'
 import MediaQuery from 'react-responsive';
 import moment from 'moment'

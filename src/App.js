@@ -4,6 +4,9 @@ import useSize from '@react-hook/size';
 import ReactGA from 'react-ga';
 import { sha256 } from 'js-sha256';
 
+// Styling
+import './App.css';
+
 // Pages
 import LayoutPage from './Pages/LayoutPage';
 import VerifyPage from './Pages/VerifyPage';

@@ -1,5 +1,4 @@
 import React from 'react'
-import '../../App.css';
 import Show from './Show'
 import MediaQuery from 'react-responsive';
 

@@ -1,5 +1,4 @@
 import React, {useEffect, useRef, useState}  from 'react'
-import '../../App.css'
 import CartItem from './CartItem'
 import PurchaseButton from './PurchaseButton'
 import MediaQuery from 'react-responsive'

@@ -1,5 +1,4 @@
 import React from 'react'
-import '../App.css';
 import ShowDetailView from './Shows/ShowDetailView'
 import Cart from './Cart/Cart'
 import MediaQuery from 'react-responsive';

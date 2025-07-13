@@ -1,7 +1,6 @@
 import React from 'react'
 import MediaQuery from 'react-responsive'
 import moment from 'moment'
-import '../../App.css';
 
 const CartItem = (props) => {
   const pickupTime = props.lastDepartureTime
