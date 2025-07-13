@@ -1,13 +1,10 @@
 import React from 'react'
 import ShowDetailView from './Shows/ShowDetailView'
 import Cart from './Cart/Cart'
-import MediaQuery from 'react-responsive';
 
 const DetailCartView = (props) => {
   return (
     <div className="DetailCartView">
-      {/* // Desktop View */}
-      <MediaQuery minWidth={8}>
         <React.Fragment>
           <div className='container'>
             <ul className="nav nav-tabs" id="myTab" role="tablist">
@@ -89,8 +86,6 @@ const DetailCartView = (props) => {
             </div>
           </div>
         </React.Fragment>
-      </MediaQuery>
-      {/* // End DesktopView */}
     </div>
   )
 }

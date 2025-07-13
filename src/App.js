@@ -293,7 +293,6 @@ const App = () => {
           <Route exact path="/login" element={
             <LoginView
               displayReservations={displayReservations}
-              toggleLoggedIn={toggleLoggedIn}
               logout={logout}
               showRegisterForm={showRegisterForm}
               toggleRegister={toggleRegister}

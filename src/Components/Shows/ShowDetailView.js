@@ -1,6 +1,5 @@
 import React from 'react'
 import logo from '../../Images/Logos/bts-logo-gray.png'
-import MediaQuery from 'react-responsive';
 import moment from 'moment'
 
 const ShowDetailView = (props) => {
@@ -25,8 +24,6 @@ const ShowDetailView = (props) => {
 
   return (
     <div className='ShowDetailView'>
-      {/* Desktop View */}
-      <MediaQuery minWidth={8}>
         {props.displayShow && !props.displayCart ?
           <div className="show-details">
             <h3>Bus Rides to {show.headliner}</h3>
@@ -34,7 +31,6 @@ const ShowDetailView = (props) => {
             <div className="list-group">
               <div className="list-group-item">
                 <div className='row container justify-content-center'>
-                  <MediaQuery minWidth={800}>
                   <div className="col-7 artist-info bio-font">
                     {show.headlinerBio ? headlinerBio :
                       <div>
@@ -57,7 +53,6 @@ const ShowDetailView = (props) => {
                         </div>
                       </div>}
                   </div>
-                </MediaQuery>
                   <div className="col-5 artist-image">
                     <div className="row bts-logo-flex">
                       {show.headlinerImgLink ?
@@ -73,24 +68,6 @@ const ShowDetailView = (props) => {
                     <div className='mt-2'>Departure Options</div>
                     <form className="needs-validation">
                       <div className="form-group">
-                      <MediaQuery minWidth={700}>
-                        <select id="departureOption" className={`custom-select dropdown-select dropdown-option mt-2 ${props.displayQuantity ? 'is-valid' : ''} `} onChange={props.selectPickupLocationId}  required>
-                          <option id="select" value="Select a Departure Option..." >Select a Departure Option...</option>
-                          {props.assignedParties ?
-                            props.assignedParties.map(location => {
-                              return (
-                                <option
-                                  className="dropdown-option"
-                                  key={location.id}
-                                  id={location.id}
-                                  value={location.id}>{`${location.firstBusLoadTime ? `${moment(location.firstBusLoadTime, 'LT').format('h:mm A')} -` : ``}`} {moment(location.lastBusDepartureTime, 'LT').format('h:mm A')} || {location.LocationName} - ${location.partyPrice.toFixed(2)} each
-                            </option>
-                              )
-                            })
-                            : ''}
-                        </select>
-                        </MediaQuery>
-                        <MediaQuery maxWidth={699}>
                         <div>
                           <div id="departureOption" className={`mt-2 ${props.displayQuantity ? 'is-valid' : ''} `} onChange={props.selectPickupLocationId}  required>
                             {props.assignedParties ? props.assignedParties.map(location => {
@@ -111,7 +88,6 @@ const ShowDetailView = (props) => {
                               : ''}
                           </div>
                         </div>
-                        </MediaQuery>
                       </div>
                     </form>
                   </div>
@@ -174,8 +150,6 @@ const ShowDetailView = (props) => {
               </div>
             </div>
           </div> : ''}
-      </MediaQuery>
-      {/* End Desktop View */}
     </div>
   )
 }

@@ -1,5 +1,4 @@
 import React from 'react'
-import MediaQuery from 'react-responsive'
 import moment from 'moment'
 
 const CartItem = (props) => {
@@ -20,7 +19,6 @@ const CartItem = (props) => {
 
   return (
     <div className='CartItem'>
-      <MediaQuery minWidth={8}>
         {props.displayConfirmRemove ? '' :
           props.showsInCart.map(show =>
             <li className="px-4 py-2 list-item" key={show.id} id={show.id}>
@@ -48,7 +46,6 @@ const CartItem = (props) => {
               </div>
             </li>)
         }
-      </MediaQuery>
     </div>
   )
 }

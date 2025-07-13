@@ -1,12 +1,9 @@
 import React from 'react'
 import Show from './Show'
-import MediaQuery from 'react-responsive';
 
 const ShowList = (props) => {
   return (
     <div className='ShowList'>
-      {/* Desktop View */}
-      <MediaQuery minWidth={8}>
         <div className='container'>
           <div className="list-group">
             <div className="list-group-item show-header">
@@ -46,8 +43,6 @@ const ShowList = (props) => {
             </div>
           </div>
         </div>
-      </MediaQuery>
-      {/* End Desktop View */}
     </div>
   )
 }

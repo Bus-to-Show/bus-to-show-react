@@ -1,6 +1,5 @@
 import React from 'react'
 import moment from 'moment'
-import MediaQuery from 'react-responsive';
 
 const Show = (props) => {
   const filterString = props.filterString.toLowerCase()
@@ -18,8 +17,6 @@ const Show = (props) => {
 
   return (
     <div className='Shows'>
-      {/* Desktop View */}
-      <MediaQuery minWidth={8}>
         {filterShows.length > 0 ? filterShows.map(show =>
           <li className="list-group-item highlightOnHover show-list-item" key={show.id} id={show.id}>
             <div className="row" id={show.id}>
@@ -52,8 +49,6 @@ const Show = (props) => {
               </div>
             </div>
           </li>}
-      </MediaQuery>
-      {/* End Desktop */}
     </div>
   )
 }

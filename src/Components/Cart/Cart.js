@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState}  from 'react'
 import CartItem from './CartItem'
 import PurchaseButton from './PurchaseButton'
-import MediaQuery from 'react-responsive'
 import logo from '../../Images/Logos/bts-logo-gray.png'
 import {useStore} from '../../Store'
 
@@ -43,8 +42,6 @@ const Cart = (props) => {
 
   return (
     <div className='Cart'>
-      {/* Desktop View */}
-      <MediaQuery minWidth={8}>
         <React.Fragment>
           {props.inCart.length === 0 ?
             <div className="nothing-in-cart">
@@ -55,13 +52,11 @@ const Cart = (props) => {
                       <h2>Thank you for your purchase to {showInfo.headliner} on {showInfo.date}!</h2>
                       <h4>You should receive a confirmation email shortly</h4>
                       <h6>Please email reservations@bustoshow.org or call (844) BUS-SHOW [844.287.7469] with any questions.</h6>
-                      <MediaQuery maxWidth={799}>
                         <button
                           id='backToCalendar'
                           onClick={props.backToCalendar}
                           type="button"
                           className='btn detail-btn my-4 col-md-2'>Back to Calendar</button>
-                      </MediaQuery>
                     </div>
                     : <h1>Nothing in Cart!</h1>}
                 </div>
@@ -310,8 +305,6 @@ const Cart = (props) => {
                 </div> : ''}
             </div>}
         </React.Fragment>
-      </MediaQuery>
-      {/* End Desktop View */}
     </div >
   )
 }
