@@ -198,3 +198,63 @@ p {
 .add-top-margin {
   margin-top: 4.5vh;
 }
+
+/* New stuff! */
+
+a,
+.btn-link {
+  color: #ff420f;
+}
+
+a:hover,
+.btn-link:hover {
+  color: #e63100;
+}
+
+.btn-primary {
+  background-color: #ff420f;
+  border-color: #ff420f;
+}
+
+.btn-primary:hover,
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-group.show > .btn-primary.dropdown-toggle:focus {
+  background-color: #e63100;
+  border-color: #e63100;
+}
+
+.btn-outline-primary {
+  border-color: #ff420f;
+  color: #ff420f;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:not(:disabled):not(.disabled).active,
+.btn-outline-primary:not(:disabled):not(.disabled):active {
+  background-color: #ff420f;
+  border-color: #ff420f;
+}
+
+label {
+  font-weight: bold;
+}
+
+.loading {
+  animation: 1s ease-out infinite loading;
+  background-color: #fac5b5;
+  background-image: linear-gradient(#ff420f, #ff420f);
+  background-repeat: no-repeat;
+  background-size: 50%;
+  height: 2px;
+}
+
+@keyframes loading {
+  0%   {background-position: -200% 0;}
+  100% {background-position:  300% 0;}
+}
+
+.validation-error {
+  color: red;
+  font-size: 14px;
+}

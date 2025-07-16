@@ -9,12 +9,14 @@ import './App.css';
 
 // Pages
 import LayoutPage from './Pages/LayoutPage';
-import VerifyPage from './Pages/VerifyPage';
-import ResetPage from './Pages/ResetPage';
 
 // Components
 import Header from './Components/Header';
-import LoginView from './Components/LoginView/LoginView';
+import Login from './Components/Account/Login';
+import Orders from './Components/Account/Orders';
+import Register from './Components/Account/Register';
+import Reset from './Components/Account/Reset';
+import Verify from './Components/Account/Verify';
 import { useStore } from './Store';
 
 if (process.env.NODE_ENV === 'production') {
@@ -289,29 +291,12 @@ const App = () => {
       <div ref={appRef}>
         <Header />
         <Routes>
-          <Route exact path="/" element={<LayoutPage />} />
-          <Route exact path="/login" element={
-            <LoginView
-              displayReservations={displayReservations}
-              logout={logout}
-              showRegisterForm={showRegisterForm}
-              toggleRegister={toggleRegister}
-              requestRegistration={requestRegistration}
-              registerResponse={registerResponse}
-              profileClick={profileClick}
-              toggleReservationView={toggleReservationView}
-              responseLogin={responseLogin}
-              toggleFuturePast={toggleFuturePast}
-              displayFuture={displayFuture}
-              displayPast={displayPast}
-              displayUserReservationSummary={displayUserReservationSummary}
-              reservationEditField={reservationEditField}
-              submitReservationForm={submitReservationForm}
-              toggleEditSuccess={toggleEditSuccess}
-            />
-          } />
-          <Route path="/verify/:token" element={<VerifyPage />} />
-          <Route path="/reset/:token" element={<ResetPage />} />
+          <Route path="/" element={<LayoutPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/reset/:token?" element={<Reset />} />
+          <Route path="/verify/:token" element={<Verify />} />
         </Routes>
       </div>
     </Router>
