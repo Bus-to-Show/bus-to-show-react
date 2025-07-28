@@ -1,8 +1,0 @@
-{
-  "public": "build",
-  "rewrites": [
-    {"source": "/bus-to-show-react", "destination": "/index.html"},
-    {"source": "/bus-to-show-react/static/css/:path", "destination": "/static/css/:path"},
-    {"source": "/bus-to-show-react/static/js/:path", "destination": "/static/js/:path"}
-  ]
-}

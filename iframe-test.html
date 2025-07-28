@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        text-align: center;
+      }
+
+      @media (min-width: 800px) {
+        body {
+          margin: auto;
+          width: 800px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="#">Home</a>
+        <a href="#">Calendar</a>
+        <a href="#">About</a>
+      </nav>
+    </header>
+
+    <section>
+      <h1>Bus To Show</h1>
+      <button>Ride With Us</button>
+    </section>
+
+    <section>
+      <h2>Bus Party Calendar</h2>
+      <iframe scrolling="no" src="http://localhost:4200/bus-to-show-react"
+        style="border: none; overflow: hidden; width: 100%;"></iframe>
+    </section>
+
+    <footer>
+      Copyright
+    </footer>
+
+    <script>
+      (function () {
+        // Due to cross-origin security things, we can't read the contents of the iframe,
+        // so we have to exchange messages like this.
+        addEventListener('message', event => {
+          if (event.origin === 'http://localhost:4200' && event.data.type === 'resize-iframe') {
+            document.querySelector('iframe').style.height = `${event.data.height}px`;
+          }
+        });
+      }());
+    </script>
+  </body>
+</html>
