@@ -19,7 +19,7 @@ const Cart = (props) => {
     //if so, disable use season pass checkBox
 
     const checkSeasonPassEventStatus = async () => {
-      const response = await  fetch(`${process.env.REACT_APP_API_URL}/discount_codes/${btsUser.userID}/${props.displayShow.id}`)
+      const response = await  fetch(`${process.env.REACT_APP_API_URL}/discount_codes/${btsUser.id}/${props.displayShow.id}`)
       let result = await response.json()
       setPassStatus(result)
       return result;

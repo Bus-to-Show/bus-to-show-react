@@ -26,29 +26,7 @@ if (process.env.NODE_ENV === 'production') {
 const fetchUrl = `${process.env.REACT_APP_API_URL}`;
 
 const App = () => {
-  const {
-    btsUser,
-    setBtsUser,
-  } = useStore();
-
-  const toggleLoggedIn = (boolean) => {
-    if (boolean === false) {
-      setBtsUser({
-        isLoggedIn: false,
-        userID: '',
-        name: '',
-        email:'',
-        picture:'',
-        userDetails: {
-          isAdmin: false,
-          isStaff: false,
-          isDriver: false,
-        },
-      })
-
-      localStorage.setItem('jwt', '')
-    }
-  }
+  const {setBtsUser} = useStore();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -70,14 +48,14 @@ const App = () => {
 
       if (userObj && userObj.id) {
         setBtsUser({
-          ...btsUser,
           isLoggedIn: true,
-          userID: userObj.id,
-          email:userObj.email,
-          userDetails:userObj
+          id: userObj.id,
+          firstName: userObj.firstName,
+          lastName: userObj.lastName,
+          email: userObj.email,
         })
       } else {
-        toggleLoggedIn(false)
+        localStorage.setItem('jwt', '')
       }
     }
 

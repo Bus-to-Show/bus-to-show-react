@@ -3,11 +3,8 @@ import { create } from 'zustand'
 export const useStore = create((set) => ({
   btsUser: {
     isLoggedIn: false,
-    userID: '1',
-    name: 'guest',
-    email: '',
-    picture: '',
-    userDetails: {},
+    id: '1',
+    firstName: 'Guest',
   },
   setBtsUser: (user) => set((state) => ({ btsUser: user })),
 

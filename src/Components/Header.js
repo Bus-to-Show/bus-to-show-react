@@ -14,9 +14,8 @@ const Header = () => {
 
     setBtsUser({
       isLoggedIn: false,
-      userID: '',
-      email: '',
-      userDetails: {},
+      id: '1',
+      firstName: 'Guest',
     });
   };
 
@@ -54,7 +53,7 @@ const Header = () => {
         <div className="btn-group">
           <button className="btn btn-primary dropdown-toggle" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-            {btsUser.name || 'Account'}
+            {btsUser.firstName || 'Account'}
           </button>
           <div className="dropdown-menu dropdown-menu-right">
             <button className="dropdown-item" onClick={() => navigate('/orders')}>Orders</button>

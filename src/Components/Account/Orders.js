@@ -28,7 +28,7 @@ const Orders = () => {
     setLoading(true);
 
     const result = await sendRequest({
-      path: `orders/${btsUser.userID}`,
+      path: `orders/${btsUser.id}`,
     });
 
     setLoading(false);

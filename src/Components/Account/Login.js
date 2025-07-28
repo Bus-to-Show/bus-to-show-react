@@ -64,9 +64,10 @@ const Login = () => {
 
     setBtsUser({
       isLoggedIn: true,
-      userID: result.id,
+      id: result.id,
+      firstName: result.firstName,
+      lastName: result.lastName,
       email: result.email,
-      userDetails: result,
     });
   };
 

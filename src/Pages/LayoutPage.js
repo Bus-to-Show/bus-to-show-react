@@ -442,7 +442,7 @@ class LayoutPage extends Component {
     newState.cartToSend.ticketQuantity = 0
     newState.cartToSend.totalCost = 0
     newState.cartToSend.discountCode = null
-    newState.cartToSend.userId = useStore.getState().btsUser.userDetails.id
+    newState.cartToSend.userId = useStore.getState().btsUser.id
 
     newState.validatedElements = {
       firstName: null,
@@ -579,7 +579,7 @@ class LayoutPage extends Component {
 
     const cartObj = this.state.cartToSend
     cartObj.discountCode = this.state.afterDiscountObj.discountCodeId
-    cartObj.userId = useStore.getState().btsUser.userDetails.id
+    cartObj.userId = useStore.getState().btsUser.id
 
     const response = await fetch(`${fetchUrl}/orders`, {
       method: 'POST',
@@ -609,7 +609,7 @@ class LayoutPage extends Component {
   comp = async (details) => {
     this.ticketTimer(false)
     const cartObj = this.state.cartToSend
-    cartObj.userId = useStore.getState().btsUser.userDetails.id
+    cartObj.userId = useStore.getState().btsUser.id
     cartObj.discountCode = this.state.afterDiscountObj.discountCodeId
 
     const response = await fetch(`${fetchUrl}/orders`, {
@@ -728,7 +728,7 @@ class LayoutPage extends Component {
         ticketQuantity: parseInt(this.state.ticketQuantity),
         pickupLocationId: parseInt(this.state.pickupLocationId),
         totalCost: Number(this.state.totalCost),
-        userId: useStore.getState().btsUser.userDetails.userId,
+        userId: useStore.getState().btsUser.id,
         willCallFirstName: (newValidElems.wcFirstName || newValidElems.firstName),
         willCallLastName: (newValidElems.wcLastName || newValidElems.lastName)
       }
