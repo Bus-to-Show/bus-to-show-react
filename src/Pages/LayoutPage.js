@@ -63,8 +63,6 @@ class LayoutPage extends Component {
   }
 
   async componentDidMount() {
-    await this.getVerify()
-
     const today = new Date().toLocaleDateString('en-US');
 
     const eventsParams = new URLSearchParams([
@@ -79,12 +77,6 @@ class LayoutPage extends Component {
     const pickupLocations = await pickupLocationsResponse.json()
 
     this.setState({ pickupLocations, upcomingShows })
-  }
-
-  getVerify = async () => {
-    const response = await fetch(`${fetchUrl}/api`)
-    const json = await response.json()
-    document.cookie = `token=${json.token}; secure`
   }
 
   getPickupParties = async (eventId) => {
