@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/bus-to-show-react/static/css/main.cd9b1997.css",
-    "main.js": "/bus-to-show-react/static/js/main.f310725f.js",
+    "main.css": "/bus-to-show-react/static/css/main.7881d075.css",
+    "main.js": "/bus-to-show-react/static/js/main.a286262d.js",
     "static/media/bts-logo-gray.png": "/bus-to-show-react/static/media/bts-logo-gray.3e6c741ff48874370564.png",
     "index.html": "/bus-to-show-react/index.html",
-    "main.cd9b1997.css.map": "/bus-to-show-react/static/css/main.cd9b1997.css.map",
-    "main.f310725f.js.map": "/bus-to-show-react/static/js/main.f310725f.js.map"
+    "main.7881d075.css.map": "/bus-to-show-react/static/css/main.7881d075.css.map",
+    "main.a286262d.js.map": "/bus-to-show-react/static/js/main.a286262d.js.map"
   },
   "entrypoints": [
-    "static/css/main.cd9b1997.css",
-    "static/js/main.f310725f.js"
+    "static/css/main.7881d075.css",
+    "static/js/main.a286262d.js"
   ]
 }
