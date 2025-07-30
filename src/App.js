@@ -81,7 +81,7 @@ const App = () => {
 
   return (
     <Router basename="/bus-to-show-react">
-      <div ref={appRef}>
+      <div id="app" ref={appRef}>
         <Header />
         <Routes>
           <Route path="/" element={<LayoutPage />} />

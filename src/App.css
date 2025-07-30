@@ -1,5 +1,10 @@
 body {
-  margin: 0px;
+  background-color: transparent;
+  margin: 0;
+}
+
+#app {
+  padding: 1em;
 }
 
 .headliner-img {
