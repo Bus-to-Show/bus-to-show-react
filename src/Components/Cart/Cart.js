@@ -1,8 +1,6 @@
 import React, {useEffect, useRef, useState}  from 'react'
-import '../../App.css'
 import CartItem from './CartItem'
 import PurchaseButton from './PurchaseButton'
-import MediaQuery from 'react-responsive'
 import logo from '../../Images/Logos/bts-logo-gray.png'
 import {useStore} from '../../Store'
 
@@ -21,14 +19,13 @@ const Cart = (props) => {
     //if so, disable use season pass checkBox
 
     const checkSeasonPassEventStatus = async () => {
-      const response = await  fetch(`${process.env.REACT_APP_API_URL}/discount_codes/${btsUser.userID}/${props.displayShow.id}`)
+      const response = await  fetch(`${process.env.REACT_APP_API_URL}/discount_codes/${btsUser.id}/${props.displayShow.id}`)
       let result = await response.json()
       setPassStatus(result)
       return result;
     }
 
     if(btsUser.isLoggedIn) checkSeasonPassEventStatus()
-
   }, []);
 
   const maskPhoneInput = (e) => {
@@ -45,8 +42,6 @@ const Cart = (props) => {
 
   return (
     <div className='Cart'>
-      {/* Desktop View */}
-      <MediaQuery minWidth={8}>
         <React.Fragment>
           {props.inCart.length === 0 ?
             <div className="nothing-in-cart">
@@ -57,13 +52,11 @@ const Cart = (props) => {
                       <h2>Thank you for your purchase to {showInfo.headliner} on {showInfo.date}!</h2>
                       <h4>You should receive a confirmation email shortly</h4>
                       <h6>Please email reservations@bustoshow.org or call (844) BUS-SHOW [844.287.7469] with any questions.</h6>
-                      <MediaQuery maxWidth={799}>
                         <button
                           id='backToCalendar'
                           onClick={props.backToCalendar}
                           type="button"
                           className='btn detail-btn my-4 col-md-2'>Back to Calendar</button>
-                      </MediaQuery>
                     </div>
                     : <h1>Nothing in Cart!</h1>}
                 </div>
@@ -109,26 +102,17 @@ const Cart = (props) => {
                   </div>
                 </div>
               ) : ''}
-
               <div className="row">
                 <div className="col-md-12">
                   <CartItem
-                    closeAlert={props.closeAlert}
-                    confirmedRemove={props.confirmedRemove}
-                    confirmRemove={props.confirmRemove}
                     displayConfirmRemove={props.displayConfirmRemove}
                     firstBusLoad={props.firstBusLoad}
-                    getPickupParty={props.getPickupParty}
                     lastDepartureTime={props.lastDepartureTime}
                     pickupLocationId={props.pickupLocationId}
                     pickupLocations={props.pickupLocations}
-                    pickupParties={props.pickupParties}
                     removeFromCart={props.removeFromCart}
-                    shows={props.shows}
                     showsInCart={props.showsInCart}
-                    ticketPrice={props.ticketPrice}
-                    ticketQuantity={props.ticketQuantity}
-                    totalCost={props.totalCost} />
+                    ticketQuantity={props.ticketQuantity} />
                 </div>
               </div>
               <div className="alert alert-warning">Cart will reset after 6 minutes</div>
@@ -208,7 +192,6 @@ const Cart = (props) => {
                           }
                           </div>
                         </div>
-
                         <div className="form-check mb-3">
                           <input
                             type="checkbox"
@@ -224,7 +207,6 @@ const Cart = (props) => {
                             By completing this purchase and riding with Bus to Show, I (and my guests) agree to the <a href="/waiver" target="_blank" rel="noopener noreferrer">waiver terms and refund policy</a>.
                           </label>
                         </div>
-
                         {/* Ternary to display will call name fields or button to show fields */}
                         {props.checked ?
                         //close button with onClick to remove will call name fields and set props.checked to false
@@ -264,10 +246,7 @@ const Cart = (props) => {
                               <button
                                 onClick={props.handleCheck}
                                 type="button"
-                                disabled={props.isUseSeasonPassChecked}
-                                ref={myRef} data-toggle="tooltip" data-placement="bottom" title={!props.isUseSeasonPassChecked ?
-                                  "If you want to enter the name of another person who is authorized be to to claim these tickets." : ""
-                                }
+                                ref={myRef} data-toggle="tooltip" data-placement="bottom"
                                 className="btn btn-outline-primary">Reserving for someone else?</button>
                             </div>
                           </div>}
@@ -288,7 +267,6 @@ const Cart = (props) => {
                             }
                           </div>
                         </div>
-
                         {props.afterDiscountObj.totalSavings ?
                           <div className="mb-3 text-right">
                             <h5>
@@ -297,14 +275,12 @@ const Cart = (props) => {
                             </h5>
                           </div>
                           : ""}
-
                         <div className="mb-3 text-right">
                           <h3>
                             Cart Total:
                             <span className="badge badge-success ml-1">${props.totalCost}</span>
                           </h3>
                         </div>
-
                         <div className='mb-3 text-right'>
                           <div>
                           <button onClick={props.removeFromCart} type="button" className="btn btn-outline-danger mr-1">Cancel</button>
@@ -329,11 +305,7 @@ const Cart = (props) => {
                 </div> : ''}
             </div>}
         </React.Fragment>
-      </MediaQuery>
-      {/* End Desktop View */}
-
     </div >
-
   )
 }
 
